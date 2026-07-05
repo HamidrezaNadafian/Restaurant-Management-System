@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RoleSelectionWindow</class>
+ <widget class="QMainWindow" name="RoleSelectionWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1062</width>
+    <height>614</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RoleSelectionWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QLabel {
+    font-size: 24px;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>30</y>
+      <width>261</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: &quot;Segoe UI&quot;;
+    letter-spacing: 1px;
+}</string>
+    </property>
+    <property name="text">
+     <string>  Select your role          </string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>150</y>
+      <width>611</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="customerButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #3B82F6;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}
+
+QPushButton:pressed {
+    background-color: #1D4ED8;
+}</string>
+       </property>
+       <property name="text">
+        <string>Customer</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ownerButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #3B82F6;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}
+
+QPushButton:pressed {
+    background-color: #1D4ED8;
+}</string>
+       </property>
+       <property name="text">
+        <string>Restaurant Owner</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="adminButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #3B82F6;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}
+
+QPushButton:pressed {
+    background-color: #1D4ED8;
+}</string>
+       </property>
+       <property name="text">
+        <string>Admin</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1062</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
