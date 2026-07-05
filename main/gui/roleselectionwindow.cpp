@@ -1,6 +1,10 @@
 #include "roleselectionwindow.h"
 #include "./ui_roleselectionwindow.h"
+
 #include <QMessageBox>
+#include <QSettings>
+
+#include "loginwindow.h"
 
 RoleSelectionWindow::RoleSelectionWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,19 +20,24 @@ RoleSelectionWindow::~RoleSelectionWindow()
 
 void RoleSelectionWindow::on_customerButton_clicked()
 {
-    QMessageBox::information(this, "Test", "Customer clicked");
+    LoginWindow *loginPage = new LoginWindow("Customer");
+    loginPage->show();
+    this->close();
 }
 
 
 void RoleSelectionWindow::on_ownerButton_clicked()
 {
-    QMessageBox::information(this, "Test", "Owner clicked");
+    LoginWindow *loginPage  = new LoginWindow("RestaurantOwner");
+    loginPage->show();
+    this->close();
 }
 
 
 void RoleSelectionWindow::on_adminButton_clicked()
 {
-    QMessageBox::information(this, "Test", "Admin clicked");
-
+    LoginWindow *loginPage = new LoginWindow("Admin");
+    loginPage->show();
+    this->close();
 }
 
