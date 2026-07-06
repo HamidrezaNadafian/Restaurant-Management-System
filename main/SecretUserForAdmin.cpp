@@ -1,4 +1,4 @@
-#include "lib.h"
+#include "SecretUserForAdmin.h"
 
 
 string get_hidden_string(const vector<unsigned char>& bytes) {
