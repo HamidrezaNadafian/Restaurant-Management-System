@@ -19,8 +19,8 @@ public:
 
     void exec(const string& s);
     void CreateLOGINTable();
-    bool RegisterUser(const string username, const string password, string UserRoles);
-    bool LoginUser(const string username, const string password);
+    bool RegisterUser(const string username, const string password, string UserRoles, string& message);
+    bool LoginUser(const string username, const string password , string& message);
     int getUserIdByUsername(string& username);
     int getTotalUsers();
 };

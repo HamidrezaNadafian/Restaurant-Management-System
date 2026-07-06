@@ -1,5 +1,7 @@
 #include "Login_and_SignUp.h"
 
+
+
 LOGINDAO::LOGINDAO(DataBase& DB) : db(DB.getdb()) {}
 
 void LOGINDAO::exec(const string& s)
@@ -23,7 +25,7 @@ void LOGINDAO::CreateLOGINTable()
     exec(sql);    
 }
 
-bool LOGINDAO::RegisterUser(const string username, const string password , string UserRoles)
+bool LOGINDAO:: RegisterUser(const string username, const string password, string UserRoles, string& message)   
 {
     const char* sql = "INSERT INTO users (Username, Password , Role) VALUES (?, ? , ?);";
     sqlite3_stmt* stmt;
@@ -38,11 +40,10 @@ bool LOGINDAO::RegisterUser(const string username, const string password , strin
     sqlite3_finalize(stmt);
 
     if(rc == SQLITE_DONE){
-        cout << "You have successfully registered!!!!!!\n";
         return true;
     }
     else{
-        cout << "The username is duplicated.\n" << sqlite3_errmsg(db) <<"\n";
+        message = "The username is duplicated." ;
         return false;
     }
 }
@@ -52,7 +53,7 @@ bool LOGINDAO::IsUsernameTrue(int rc)
     return(rc == SQLITE_ROW);
 }
 
-bool LOGINDAO::LoginUser(const string username , const string password)
+bool LOGINDAO::LoginUser(const string username, const string password, string& message)
 {
     const char* sql = "SELECT Password FROM users WHERE Username = ?;";
     sqlite3_stmt* stmt;
@@ -63,20 +64,20 @@ bool LOGINDAO::LoginUser(const string username , const string password)
     int rc = sqlite3_step(stmt);
     
     if(IsUsernameTrue(rc)){
-        // مقایسه صحیح رشته‌ها در ++C
+        
         string dbPassword = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
         if(dbPassword == password) {
             sqlite3_finalize(stmt);
             return true;
         }
         else{
-            cout <<"PASSWORD is WRONG!\n";
+            message = "PASSWORD is WRONG!";
             sqlite3_finalize(stmt);
             return false;
         }
     }
     else{
-        cout << "USERNAME Not Found \n";
+        message =  "USERNAME Not Found ";
         sqlite3_finalize(stmt);
         return false;
     }
@@ -89,7 +90,7 @@ int LOGINDAO::getUserIdByUsername(string& username){
     sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
     sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
 
-    int userId = -1; // مقدار پیش‌فرض در صورت پیدا نشدن
+    int userId = -1; 
     if (sqlite3_step(stmt) == SQLITE_ROW) {
         userId = sqlite3_column_int(stmt, 0); 
     }

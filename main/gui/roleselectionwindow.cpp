@@ -2,7 +2,7 @@
 #include "./ui_roleselectionwindow.h"
 
 #include <QMessageBox>
-#include <QSettings>
+
 
 #include "loginwindow.h"
 
