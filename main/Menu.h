@@ -32,6 +32,10 @@ class MenuItem
         {
             return name;
         }
+        
+        string getDescription() {
+            return description;
+        }
 
         virtual string FoodOrDrink() const = 0;
         virtual int CookOrVol() const = 0;

@@ -4,9 +4,15 @@
 #include <QDialog>
 #include <QWidget>
 #include <QString>
+#include <QListWidgetItem>
+#include <memory>
+#include <vector>
 
-#include "../Restaurantdb.h"
+
 #include "../Restaurant.h"
+#include "../Menu.h"
+#include "../Order.h"
+
 
 namespace Ui {
 class customerwindow;
@@ -29,6 +35,15 @@ private slots:
 
     void on_btnEnterRestaurant_clicked();
 
+    void loadMenu(int restaurantId);
+
+    void showItemDetails(int currentRow);
+    void addToCart(QListWidgetItem *item);
+
+    void removeFromCart(QListWidgetItem *item);
+
+    void processCheckout();
+
 private:
 
     Ui::customerwindow *ui;
@@ -37,6 +52,7 @@ private:
 
     vector<Restaurant> displayedRestaurants;
     int selectedRestaurantId;
+    string RestaurantName;
 
     enum Pages {
         HOME = 0,
@@ -44,6 +60,9 @@ private:
         MENULIST = 2,
         MYORDER = 3
     };
+
+    vector<std::unique_ptr<MenuItem>> currentMenuItems;
+    double cartTotal = 0.0;
 
 };
 

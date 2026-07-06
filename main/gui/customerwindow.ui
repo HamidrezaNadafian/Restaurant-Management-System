@@ -19,30 +19,88 @@
 }
 </string>
   </property>
-  <widget class="QStackedWidget" name="stackedWidget">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1091</width>
-     <height>621</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>1</number>
-   </property>
-   <widget class="QWidget" name="page">
-    <widget class="QPushButton" name="btnBrowseRestaurants">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>150</y>
-       <width>531</width>
-       <height>61</height>
-      </rect>
-     </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
      <property name="styleSheet">
-      <string notr="true">QPushButton {
+      <string notr="true">
+QWidget {
+    background-color: #1e1e24;
+    color: #ffffff;
+    font-family: &quot;Segoe UI&quot;, Tahoma, Arial;
+}
+
+
+#menuListWidget {
+    background-color: #2b2b36;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+}
+#menuListWidget::item {
+    background-color: #363644;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 5px;
+    color: #e0e0e0;
+    font-size: 15px;
+    font-weight: bold;
+}
+#menuListWidget::item:hover {
+    background-color: #454555;
+    border-left: 4px solid #ff4757;
+}
+#menuListWidget::item:selected {
+    background-color: #ff4757;
+    color: white;
+}
+
+
+#lblDetailName { font-size: 22px; font-weight: bold; color: #ffffff; margin-bottom: 5px; }
+#lblDetailPrice { font-size: 20px; font-weight: bold; color: rgb(208, 169, 255); margin-bottom: 15px; }
+#lblDetailDesc { font-size: 13px; color: #b2b2b2; background-color: #2b2b36; padding: 15px; border-radius: 8px; }
+#lblDetailStatus { font-size: 14px; font-weight: bold; color: #2ed573; margin-top: 10px; }
+
+
+#cartListWidget {
+    background-color: #2b2b36;
+    border: 1px dashed #555566;
+    border-radius: 12px;
+    padding: 5px;
+}
+#cartListWidget::item {
+    background-color: #363644;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+#lblTotalPrice { font-size: 22px; font-weight: bold; color: #ff4757; padding: 15px 0; }
+
+
+QPushButton#btnBack {
+    background-color: #ff4757;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 8px 15px;
+}
+QPushButton#btnBack:hover { background-color: #ff6b77; }</string>
+     </property>
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="QWidget" name="page">
+      <widget class="QPushButton" name="btnBrowseRestaurants">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>150</y>
+         <width>531</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
     font-size: 18px;
     font-weight: bold;
     color: white;
@@ -58,22 +116,22 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #1D4ED8;
 }</string>
-     </property>
-     <property name="text">
-      <string>Browse Restaurants</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnMyOrders">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>310</y>
-       <width>531</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
+       </property>
+       <property name="text">
+        <string>Browse Restaurants</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnMyOrders">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>310</y>
+         <width>531</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
     font-size: 18px;
     font-weight: bold;
     color: white;
@@ -89,24 +147,24 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #1D4ED8;
 }</string>
-     </property>
-     <property name="text">
-      <string>My Orders</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="page_3">
-    <widget class="QPushButton" name="btnBack">
-     <property name="geometry">
-      <rect>
-       <x>910</x>
-       <y>20</y>
-       <width>101</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
+       </property>
+       <property name="text">
+        <string>My Orders</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <widget class="QPushButton" name="btnBack">
+       <property name="geometry">
+        <rect>
+         <x>910</x>
+         <y>20</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
     background-color: rgb(255, 0, 0);
     color: white;
     border-radius: 8px;
@@ -118,22 +176,22 @@ QPushButton:pressed {
 QPushButton:hover {
     background-color: #2563EB;
 }</string>
-     </property>
-     <property name="text">
-      <string>Back</string>
-     </property>
-    </widget>
-    <widget class="QListWidget" name="restaurantListWidget">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>110</y>
-       <width>391</width>
-       <height>411</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QListWidget {
+       </property>
+       <property name="text">
+        <string>Back</string>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="restaurantListWidget">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>110</y>
+         <width>391</width>
+         <height>411</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QListWidget {
     background-color: #1a1a1a;  
     border: 2px solid #2d2d2d;
     border-radius: 12px;        
@@ -164,19 +222,19 @@ QListWidget::item:selected {
     font-weight: bold;           
     border: 1px solid #ff8566;  
 }</string>
-     </property>
-    </widget>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="geometry">
-      <rect>
-       <x>460</x>
-       <y>80</y>
-       <width>581</width>
-       <height>441</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="geometry">
+        <rect>
+         <x>460</x>
+         <y>80</y>
+         <width>581</width>
+         <height>441</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
 QGroupBox * {
     font-size: 20px;
 }
@@ -202,86 +260,86 @@ QGroupBox::title {
     background-color: #ff6b4a; 
     border-radius: 15px;        
 }</string>
-     </property>
-     <property name="title">
-      <string>                                                  Restaurant Details                                                     </string>
-     </property>
-     <widget class="QLabel" name="Namelbl">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>50</y>
-        <width>561</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Name </string>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Addresslbl">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>140</y>
-        <width>561</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Address</string>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Phnumberlbl">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>230</y>
-        <width>551</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Phone Number</string>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="desclbl">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>320</y>
-        <width>551</width>
-        <height>101</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Description</string>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QPushButton" name="btnEnterRestaurant">
-     <property name="geometry">
-      <rect>
-       <x>470</x>
-       <y>550</y>
-       <width>141</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
+       </property>
+       <property name="title">
+        <string>                                                  Restaurant Details                                                     </string>
+       </property>
+       <widget class="QLabel" name="Namelbl">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>561</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Name </string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="Addresslbl">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>561</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Address</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="Phnumberlbl">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>230</y>
+          <width>551</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Phone Number</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="desclbl">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>320</y>
+          <width>551</width>
+          <height>101</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Description</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QPushButton" name="btnEnterRestaurant">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>550</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
     background-color: rgb(0, 85, 0);
     color: white;
     border-radius: 8px;
@@ -293,24 +351,24 @@ QGroupBox::title {
 QPushButton:hover {
     background-color: #2563EB;
 }</string>
-     </property>
-     <property name="text">
-      <string>Enter Restaurant</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="page_4">
-    <widget class="QPushButton" name="btnBack_2">
-     <property name="geometry">
-      <rect>
-       <x>910</x>
-       <y>50</y>
-       <width>101</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
+       </property>
+       <property name="text">
+        <string>Enter Restaurant</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_4">
+      <widget class="QPushButton" name="btnBack_2">
+       <property name="geometry">
+        <rect>
+         <x>900</x>
+         <y>0</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
     background-color: rgb(255, 0, 0);
     color: white;
     border-radius: 8px;
@@ -322,24 +380,227 @@ QPushButton:hover {
 QPushButton:hover {
     background-color: #2563EB;
 }</string>
-     </property>
-     <property name="text">
-      <string>Back</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="page_2">
-    <widget class="QPushButton" name="btnBack_5">
-     <property name="geometry">
-      <rect>
-       <x>900</x>
-       <y>60</y>
-       <width>101</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
+       </property>
+       <property name="text">
+        <string>Back</string>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frameLeftMenu">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>60</y>
+         <width>651</width>
+         <height>541</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QListWidget" name="menuListWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>631</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <property name="movement">
+         <enum>QListView::Movement::Static</enum>
+        </property>
+        <property name="resizeMode">
+         <enum>QListView::ResizeMode::Adjust</enum>
+        </property>
+        <property name="spacing">
+         <number>12</number>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::ViewMode::IconMode</enum>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frameMiddleDetails">
+       <property name="geometry">
+        <rect>
+         <x>650</x>
+         <y>60</y>
+         <width>211</width>
+         <height>541</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QWidget" name="verticalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>211</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="lblDetailName_2">
+           <property name="text">
+            <string> TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblDetailDesc">
+           <property name="text">
+            <string> TextLabel</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblDetailPrice">
+           <property name="text">
+            <string> TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblDetailStatus">
+           <property name="text">
+            <string> TextLabel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frameRightCart">
+       <property name="geometry">
+        <rect>
+         <x>870</x>
+         <y>60</y>
+         <width>201</width>
+         <height>551</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QListWidget" name="cartListWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>60</y>
+          <width>201</width>
+          <height>371</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>10</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Your Cart</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblTotalPrice">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>440</y>
+          <width>171</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Total = 0</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnCheckout">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>500</y>
+          <width>101</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: rgb(255, 85, 0);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}</string>
+        </property>
+        <property name="text">
+         <string>Checkout</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>10</y>
+         <width>421</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 8px 14px;
+    background-color: qlineargradient(
+        x1:0, y1:0, x2:1, y2:0,
+        stop:0 #ff6b4a,
+        stop:1 #ff8f6b
+    );
+    border-radius: 12px;
+}</string>
+       </property>
+       <property name="text">
+        <string>                      Menu Items</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <widget class="QPushButton" name="btnBack_5">
+       <property name="geometry">
+        <rect>
+         <x>900</x>
+         <y>60</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
     background-color: rgb(255, 0, 0);
     color: white;
     border-radius: 8px;
@@ -351,13 +612,15 @@ QPushButton:hover {
 QPushButton:hover {
     background-color: #2563EB;
 }</string>
-     </property>
-     <property name="text">
-      <string>Back</string>
-     </property>
+       </property>
+       <property name="text">
+        <string>Back</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
-   </widget>
-  </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
