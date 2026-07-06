@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>customerwindow</class>
+ <widget class="QDialog" name="customerwindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1087</width>
+    <height>623</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QLabel {
+    font-size: 24px;
+}
+</string>
+  </property>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1091</width>
+     <height>621</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="page">
+    <widget class="QPushButton" name="btnBrowseRestaurants">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>150</y>
+       <width>531</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #3B82F6;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}
+
+QPushButton:pressed {
+    background-color: #1D4ED8;
+}</string>
+     </property>
+     <property name="text">
+      <string>Browse Restaurants</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnMyOrders">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>310</y>
+       <width>531</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #3B82F6;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}
+
+QPushButton:pressed {
+    background-color: #1D4ED8;
+}</string>
+     </property>
+     <property name="text">
+      <string>My Orders</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_3">
+    <widget class="QPushButton" name="btnBack">
+     <property name="geometry">
+      <rect>
+       <x>910</x>
+       <y>20</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: rgb(255, 0, 0);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}</string>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="restaurantListWidget">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>110</y>
+       <width>391</width>
+       <height>411</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QListWidget {
+    background-color: #1a1a1a;  
+    border: 2px solid #2d2d2d;
+    border-radius: 12px;        
+    padding: 8px;
+}
+
+
+QListWidget::item {
+    background-color: #222222;  
+    color: #e0e0e0;
+    padding: 14px 18px;         
+    border-radius: 8px;          
+    margin-bottom: 8px;          
+    border: 1px solid #2d2d2d;   
+}
+
+
+QListWidget::item:hover {
+    background-color: #2a2a2a;   
+    color: #ffffff;
+    border: 1px solid #3d3d3d;
+}
+
+
+QListWidget::item:selected {
+    background-color: #ff6b4a;  
+    color: #ffffff;             
+    font-weight: bold;           
+    border: 1px solid #ff8566;  
+}</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>80</y>
+       <width>581</width>
+       <height>441</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+QGroupBox * {
+    font-size: 20px;
+}
+
+QGroupBox {
+    border: 2px solid #2d2d2d;
+    border-radius: 12px;       
+    margin-top: 30px;          
+    padding-top: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #1a1a1a; 
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 15px;               
+    padding: 6px 14px;         
+    color: #ffffff;            
+    font-weight: 800;      
+    font-size: 20px;         
+    background-color: #ff6b4a; 
+    border-radius: 15px;        
+}</string>
+     </property>
+     <property name="title">
+      <string>                                                  Restaurant Details                                                     </string>
+     </property>
+     <widget class="QLabel" name="Namelbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>561</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Name </string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Addresslbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>561</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Address</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Phnumberlbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>230</y>
+        <width>551</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Phone Number</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="desclbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>320</y>
+        <width>551</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Description</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="btnEnterRestaurant">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>550</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: rgb(0, 85, 0);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}</string>
+     </property>
+     <property name="text">
+      <string>Enter Restaurant</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_4">
+    <widget class="QPushButton" name="btnBack_2">
+     <property name="geometry">
+      <rect>
+       <x>910</x>
+       <y>50</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: rgb(255, 0, 0);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}</string>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <widget class="QPushButton" name="btnBack_5">
+     <property name="geometry">
+      <rect>
+       <x>900</x>
+       <y>60</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: rgb(255, 0, 0);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #2563EB;
+}</string>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

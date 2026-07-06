@@ -12,10 +12,11 @@ class DataBase
     public:
         DataBase()
         {
-            int exit = sqlite3_open("Maindb.db", &db);
-            if (exit){
-                cerr << "Error open DB: " << sqlite3_errmsg(db) << endl;
-            } 
+           const char* path = "C:/Users/User/Desktop/Project/main/Maindb.db";
+
+            int exit = sqlite3_open(path, &db);
+
+         
         }
 
         sqlite3* getdb(){

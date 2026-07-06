@@ -28,6 +28,18 @@ class Restaurant
         string getName(){
             return name;
         }
+        string getPhone(){
+            return PhoneNumber;
+        }
+        
+        string getDescription() {
+            return Description;
+        }
+
+        string getAddress(){
+            return adress;
+        }
+        
 };
 
 #endif

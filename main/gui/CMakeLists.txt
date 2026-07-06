@@ -17,10 +17,17 @@ set(PROJECT_SOURCES
     roleselectionwindow.cpp
     roleselectionwindow.h
     roleselectionwindow.ui
+
     loginwindow.h
     loginwindow.cpp
     loginwindow.ui
+
+    customerwindow.h
+    customerwindow.cpp
+    customerwindow.ui
+
     main_window.cpp
+
 
 
     ../Menudb.cpp
@@ -31,12 +38,16 @@ set(PROJECT_SOURCES
     ../Login_and_SignUp.cpp
     ../SecretUserForAdmin.cpp
     ../sqlite3.c
+    ../Maindb.db
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(gui
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        customerwindow.h customerwindow.cpp customerwindow.ui
+
+
     )
 else()
     if(ANDROID)

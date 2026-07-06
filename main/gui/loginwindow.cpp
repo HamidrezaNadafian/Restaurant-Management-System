@@ -5,6 +5,9 @@
 #include "../Login_and_SignUp.h"
 #include "../SecretUserForAdmin.h"
 
+#include "customerwindow.h"
+
+
 LoginWindow::LoginWindow(QString role , QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::LoginWindow)
@@ -69,6 +72,7 @@ void LoginWindow::on_loginButton_clicked()
 
     DataBase dbmain;
     LOGINDAO dbaslog(dbmain);
+    dbaslog.CreateLOGINTable();
 
     if(isLoginMode)
     {
@@ -84,6 +88,7 @@ void LoginWindow::on_loginButton_clicked()
             else{
 
                 QMessageBox::information(this, "Success", QString::fromStdString("Welcome Admin!!!!!!!"));
+
                 // Move to next pages
             }
         }
@@ -94,8 +99,20 @@ void LoginWindow::on_loginButton_clicked()
                 QMessageBox::critical(this, "Error", QString::fromStdString(responseMessage));
 
             else{
-                QMessageBox::information(this, "Success", QString::fromStdString(responseMessage));
-                // Move to next pages
+
+                if(currentRole.toStdString() == "Customer"){
+
+                    customerwindow *CustomerPage = new customerwindow(QString::fromStdString(username));
+                    CustomerPage->show();
+                    this->close();
+
+                }
+
+                else{
+                    // Move to next pages
+                }
+
+
             }
         }
     }
