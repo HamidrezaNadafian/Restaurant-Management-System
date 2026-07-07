@@ -17,6 +17,17 @@ public:
 
 private:
     Ui::RestaurantOwner *ui;
+
+    int EditRestaurantId = -1;
+    QString Username;
+
+private slots:
+
+    void loadOwnerRestaurants();
+    void on_btnEditRestaurant_clicked();
+    void on_btnManageMenu_clicked();
+    void on_btnManageOrders_clicked();
+
 };
 
 #endif // RESTAURANTOWNER_H

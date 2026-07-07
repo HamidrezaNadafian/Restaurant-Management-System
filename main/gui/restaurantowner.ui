@@ -42,34 +42,45 @@ QListWidget#listWidgetOwnerRestaurants::item:hover {
     border: 1px solid #f59e0b;
 }
 
-
-QPushButton#btnAddRestaurant {
-    background-color: #f59e0b;
-    color: white;
-    font-weight: bold;
-    border-radius: 8px;
-    padding: 10px 15px;
-}
-QPushButton#btnAddRestaurant:hover {
-    background-color: #fbbf24;
+QListWidget#listWidgetOwnerRestaurants::item:selected {
+    background-color: #2b313e; 
+    border: 2px solid #f59e0b;  
+    color: #ffffff;            
 }
 
-QPushButton#btnEditRestaurant, QPushButton#btnManageOrders {
-    background-color: #2d3748;
-    color: #ffffff;
-    font-size: 14px;
-    border: 1px solid #4a5568;
-    border-radius: 8px;
+QPushButton#btnEditRestaurant, 
+QPushButton#btnManageMenu, 
+QPushButton#btnManageOrders {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #2a313d, stop:1 #1e232c); 
+    color: #e2e8f0; 
+    font-size: 13px;
+    font-weight: 600; 
+    font-family: &quot;Segoe UI&quot;, &quot;Tahoma&quot;, sans-serif;
+    border: 1px solid #3b4252; 
+    border-radius: 8px; 
     padding: 10px 18px;
+    min-height: 22px;
 }
 
-QPushButton#btnEditRestaurant:hover, QPushButton#btnManageOrders:hover {
-    background-color: #4a5568;
+
+QPushButton#btnEditRestaurant:hover, 
+QPushButton#btnManageMenu:hover, 
+QPushButton#btnManageOrders:hover {
+    background-color: #2d3545; 
+    color: #ffffff; 
     border: 1px solid #f59e0b; 
+}
+
+
+QPushButton#btnEditRestaurant:pressed, 
+QPushButton#btnManageMenu:pressed, 
+QPushButton#btnManageOrders:pressed {
+    background-color: #1a1f26;
+    border: 1px solid #d97706;
 }</string>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QListWidget" name="listWidgetOwnerRestaurants">
@@ -93,13 +104,6 @@ QPushButton#btnEditRestaurant:hover, QPushButton#btnManageOrders:hover {
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="btnAddRestaurant">
-        <property name="text">
-         <string>Add New Restaurant</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btnEditRestaurant">
         <property name="text">
          <string>Edit Restaurant info</string>
@@ -107,9 +111,9 @@ QPushButton#btnEditRestaurant:hover, QPushButton#btnManageOrders:hover {
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnManageOrders_2">
+       <widget class="QPushButton" name="btnManageMenu">
         <property name="text">
-         <string>Manage Orders</string>
+         <string>Manage Menu</string>
         </property>
        </widget>
       </item>
@@ -135,16 +139,16 @@ QPushButton#btnEditRestaurant:hover, QPushButton#btnManageOrders:hover {
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="txtRestName"/>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_4"/>
+       <widget class="QLineEdit" name="txtRestDesc"/>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="txtRestAddress"/>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="txtRestPhone"/>
       </item>
      </layout>
     </widget>

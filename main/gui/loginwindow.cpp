@@ -1,5 +1,7 @@
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
+
+#include <QDebug>
 #include <QMessageBox>
 
 #include "../Login_and_SignUp.h"
