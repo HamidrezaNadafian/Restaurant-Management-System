@@ -28,6 +28,8 @@ private slots:
     void on_btnManageMenu_clicked();
     void on_btnManageOrders_clicked();
 
+    void on_btnSaveRestaurant_clicked();
+
 };
 
 #endif // RESTAURANTOWNER_H
