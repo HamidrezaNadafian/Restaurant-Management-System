@@ -26,6 +26,10 @@ set(PROJECT_SOURCES
     customerwindow.cpp
     customerwindow.ui
 
+    restaurantowner.h
+    restaurantowner.cpp
+    restaurantowner.ui
+
     main_window.cpp
 
 
@@ -46,6 +50,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         customerwindow.h customerwindow.cpp customerwindow.ui
+        restaurantowner.h restaurantowner.cpp restaurantowner.ui
 
 
     )

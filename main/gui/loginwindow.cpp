@@ -6,6 +6,7 @@
 #include "../SecretUserForAdmin.h"
 
 #include "customerwindow.h"
+#include "restaurantowner.h"
 
 
 LoginWindow::LoginWindow(QString role , QWidget *parent)
@@ -109,7 +110,9 @@ void LoginWindow::on_loginButton_clicked()
                 }
 
                 else{
-                    // Move to next pages
+                    RestaurantOwner *RestaurantOwnerPage = new RestaurantOwner(QString::fromStdString(username));
+                    RestaurantOwnerPage->show();
+                    this->close();
                 }
 
 

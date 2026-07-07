@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RestaurantOwner</class>
+ <widget class="QDialog" name="RestaurantOwner">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1071</width>
+    <height>624</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1071</width>
+     <height>631</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QListWidget#listWidgetOwnerRestaurants {
+    background-color: #1a1d24;
+    border: none;
+    outline: 0;
+    padding: 10px;
+}
+QListWidget#listWidgetOwnerRestaurants::item {
+    background-color: #222731;
+    border: 1px solid #2d3545;
+    border-radius: 12px;
+    color: #ffffff;
+    padding: 18px;
+    margin-bottom: 12px;
+}
+QListWidget#listWidgetOwnerRestaurants::item:hover {
+    border: 1px solid #f59e0b;
+}
+
+
+QPushButton#btnAddRestaurant {
+    background-color: #f59e0b;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+QPushButton#btnAddRestaurant:hover {
+    background-color: #fbbf24;
+}
+
+QPushButton#btnEditRestaurant, QPushButton#btnManageOrders {
+    background-color: #2d3748;
+    color: #ffffff;
+    font-size: 14px;
+    border: 1px solid #4a5568;
+    border-radius: 8px;
+    padding: 10px 18px;
+}
+
+QPushButton#btnEditRestaurant:hover, QPushButton#btnManageOrders:hover {
+    background-color: #4a5568;
+    border: 1px solid #f59e0b; 
+}</string>
+   </property>
+   <property name="currentIndex">
+    <number>3</number>
+   </property>
+   <widget class="QWidget" name="page">
+    <widget class="QListWidget" name="listWidgetOwnerRestaurants">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>1031</width>
+       <height>531</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>1031</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="btnAddRestaurant">
+        <property name="text">
+         <string>Add New Restaurant</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnEditRestaurant">
+        <property name="text">
+         <string>Edit Restaurant info</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnManageOrders_2">
+        <property name="text">
+         <string>Manage Orders</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnManageOrders">
+        <property name="text">
+         <string>Manage Orders</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>20</y>
+       <width>611</width>
+       <height>511</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="lineEdit"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEdit_4"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEdit_2"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEdit_3"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>90</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Name : </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>210</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>description :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>320</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Address : </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>430</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Phone Number :</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>570</y>
+       <width>90</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>✔️Save</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>570</y>
+       <width>90</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>❌ Cancel</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_3">
+    <widget class="QListWidget" name="listWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>70</y>
+       <width>601</width>
+       <height>481</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>70</y>
+       <width>351</width>
+       <height>481</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLineEdit" name="txtMenuName"/>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="txtMenuPrice"/>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="txtMenuDesc"/>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cmbMenuType"/>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cmbMenuAvailable"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="btnBackFromMenu">
+     <property name="geometry">
+      <rect>
+       <x>900</x>
+       <y>20</y>
+       <width>90</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>570</y>
+       <width>861</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="text">
+         <string>Save Menu Item</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>Add New Menu Item</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="text">
+         <string>Delete Menu Item</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_4">
+    <widget class="QListWidget" name="listWidgetRestOrders">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>80</y>
+       <width>791</width>
+       <height>461</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnUpdateOrderStatus">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>570</y>
+       <width>171</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Update Order Status</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnBackFromOrders">
+     <property name="geometry">
+      <rect>
+       <x>920</x>
+       <y>20</y>
+       <width>90</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>back</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
