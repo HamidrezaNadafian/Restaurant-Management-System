@@ -42,6 +42,8 @@ customerwindow::customerwindow(QString username , QWidget *parent)
 
     CurrentCustomerUsername = username;
     ui->stackedWidget->setCurrentIndex(Pages::HOME);
+
+    connect(ui->listWidgetOrders, &QListWidget::itemClicked, this, &customerwindow::onOrderClicked);
 }
 
 customerwindow::~customerwindow()
@@ -74,6 +76,10 @@ void customerwindow::on_btnBrowseRestaurants_clicked()
 
 void customerwindow::on_restaurantListWidget_currentRowChanged(int currentRow)
 {
+    if (currentRow < 0 || currentRow >= displayedRestaurants.size()) {
+        return;
+    }
+
     Restaurant selectedRest = displayedRestaurants[currentRow];
 
     ui->Namelbl->setText(QString::fromStdString(selectedRest.getName()));
@@ -101,6 +107,7 @@ void customerwindow::on_btnEnterRestaurant_clicked()
 
 void customerwindow::on_btnMyOrders_clicked()
 {
+    loadOrdersList();
     ui->stackedWidget->setCurrentIndex(Pages::MYORDER);
 }
 
@@ -109,7 +116,7 @@ void customerwindow::loadMenu(int restaurantId)
     ui->menuListWidget->clear();
     ui->cartListWidget->clear();
     cartTotal = 0;
-    ui->lblDetailPrice->setText("Total = $0");
+    ui->lblDetailPrice->setText("Total = $ 0");
 
     ui->lblDetailName_2->clear();
     ui->lblDetailPrice->clear();
@@ -236,3 +243,86 @@ void customerwindow::processCheckout()
 
 }
 
+void customerwindow::loadOrdersList()
+{
+    ui->listWidgetOrders->clear();
+
+    DataBase dbmain;
+    OrderDAO ord(dbmain);
+
+
+    ord.CreateOrderTable();
+
+
+    LOGINDAO dbaslog(dbmain);
+    dbaslog.CreateLOGINTable();
+
+    string Username = CurrentCustomerUsername.toStdString();
+    int UserID = dbaslog.getUserIdByUsername(Username);
+
+    vector<Order> userOrders = ord.AllOrders("UserID", UserID);
+
+
+    for (auto &order : userOrders) {
+
+        QString RestName = QString::fromStdString(order.getRestaurantName());
+        int orderId = order.getID();
+
+        QListWidgetItem *item = new QListWidgetItem(RestName + "\nOrder ID: #" + QString::number(orderId));
+
+        item->setData(Qt::UserRole, orderId);
+        ui->listWidgetOrders->addItem(item);
+    }
+
+}
+
+void customerwindow::onOrderClicked(QListWidgetItem *item)
+{
+    ui->listWidgetItems->clear();
+
+    int OrderId = item->data(Qt::UserRole).toInt();
+
+    DataBase dbmain;
+    OrderDAO orderDao(dbmain);
+
+    LOGINDAO dbaslog(dbmain);
+
+    string Username = CurrentCustomerUsername.toStdString();
+    int UserID = dbaslog.getUserIdByUsername(Username);
+
+    vector<Order> userOrders = orderDao.AllOrders("UserID", UserID);
+
+    Order* FoundOrder = nullptr;
+    for (Order &order : userOrders) {
+        if (order.getID() == OrderId) {
+            FoundOrder = &order;
+            break;
+        }
+    }
+
+    ui->lblDetailName->setText(QString::fromStdString(FoundOrder->getRestaurantName()));
+    ui->lblDetailPrice_2->setText(QString::number(FoundOrder->getPrice(), 'f', 2) + " $");
+
+    QString status = QString::fromStdString(FoundOrder->getStatus());
+    ui->lblDetailStatus_2->setText(status);
+
+    if (status == "Delivered"){
+        ui->lblDetailStatus_2->setStyleSheet("color: #2ed573; font-weight: bold; font-size: 14px;");
+    }
+    else if(status[0] == 'A'){
+         ui->lblDetailStatus_2->setStyleSheet("color: #f1c40f; font-weight: bold; font-size: 14px;");
+    }
+    else{
+        ui->lblDetailStatus_2->setStyleSheet("color: #ff4757; font-weight: bold; font-size: 14px;");
+    }
+
+    OrderItemsDAO orderItemsDao(dbmain);
+    std::vector<OrderItem> items = orderItemsDao.GetItemsForOrder(OrderId);
+
+    for (auto &orderItem : items) {
+
+        QString FoodName = QString::fromStdString(orderItem.getItemName());
+        ui->listWidgetItems->addItem(FoodName);
+    }
+
+}

@@ -23,9 +23,11 @@ class Order {
             else cout << "\x1b[33m" << status << "\x1b[0m" << endl;
         }
 
-        int getID(){
-            return id;
-        }
+        int getID() const { return id; }
+
+        string getRestaurantName() const { return RestaurantName; }
+        double getPrice() const { return Price; }
+        string getStatus() const { return status; }
 };
 
 class OrderItem {
@@ -47,6 +49,9 @@ class OrderItem {
             cout << "Price : " << Price<<"\n"; 
             
         }
+        
+        string getItemName() const { return ItemName; }
+        int getQuantity() const { return Quantity; }
 };
 
 #endif

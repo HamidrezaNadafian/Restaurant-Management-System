@@ -37,6 +37,9 @@ private slots:
 
     void loadMenu(int restaurantId);
 
+    void loadOrdersList();
+    void onOrderClicked(QListWidgetItem *item);
+
     void showItemDetails(int currentRow);
     void addToCart(QListWidgetItem *item);
 

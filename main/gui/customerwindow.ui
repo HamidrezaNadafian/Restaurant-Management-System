@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1087</width>
+    <width>1077</width>
     <height>623</height>
    </rect>
   </property>
@@ -84,10 +84,118 @@ QPushButton#btnBack {
     border-radius: 8px;
     padding: 8px 15px;
 }
-QPushButton#btnBack:hover { background-color: #ff6b77; }</string>
+QPushButton#btnBack:hover { background-color: #ff6b77; }
+
+/* ۱. استایل کلی پس‌زمینه صفحه */
+QDialog {
+    background-color: #1a1d24; /* یک دارک ملایم و عمیق */
+    font-family: &quot;Segoe UI&quot;, &quot;Tahoma&quot;, sans-serif;
+}
+
+/* ۲. استایل لیست سمت چپ (لیست کل سفارش‌ها) */
+QListWidget#listWidgetOrders {
+    background-color: #222731; /* کمی روشن‌تر از بک‌گراند اصلی برای ایجاد عمق */
+    border: 1px solid #2d3545;
+    border-radius: 12px;
+    padding: 5px;
+    outline: 0; /* حذف خط فوکوس زشت دور لیست */
+}
+
+/* استایل تک‌تک آیتم‌های سفارش در سمت چپ */
+QListWidget#listWidgetOrders::item {
+    background-color: #2b313e;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 8px; /* ایجاد فاصله بین هر کارت سفارش */
+    font-size: 14px;
+}
+
+/* حالت هوور (وقتی موس روی کارت سفارش می‌رود) */
+QListWidget#listWidgetOrders::item:hover {
+    background-color: #353c4d;
+    border: 1px solid #4a5568;
+}
+
+/* حالت انتخاب شده (وقتی کاربر روی سفارش کلیک کرده است) */
+QListWidget#listWidgetOrders::item:selected {
+    background-color: #3b82f6; /* رنگ آبی جذاب مدرن */
+    color: #ffffff;
+    font-weight: bold;
+}
+
+
+/* ۳. استایل بخش جزئیات سمت راست (بالا) */
+#lblDetailName {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#lblDetailPrice {
+    font-size: 18px;
+    font-weight: bold;
+    color: #3b82f6; /* رنگ قیمت هماهنگ با تم انتخاب */
+}
+
+#lblDetailStatus {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* ۴. استایل لیست پایین سمت راست (ریز اقلام غذاها) */
+QListWidget#listWidgetItems {
+    background-color: #222731;
+    border: 1px solid #2d3545;
+    border-radius: 12px;
+    padding: 10px;
+    outline: 0;
+}
+
+/* استایل هر ردیف غذا */
+QListWidget#listWidgetItems::item {
+    color: #e2e8f0;
+    padding: 10px 12px;
+    border-bottom: 1px solid #2d3545; /* خط جداکننده باریک بین غذاها */
+    font-size: 14px;
+}
+
+/* ردیف آخر خط جداکننده نداشته باشد */
+QListWidget#listWidgetItems::item:last {
+    border-bottom: none;
+}
+
+/* غیرفعال کردن افکت کلیک روی لیست غذاها (چون صرفاً نمایشی است) */
+QListWidget#listWidgetItems::item:hover, 
+QListWidget#listWidgetItems::item:selected {
+    background-color: transparent;
+    color: #e2e8f0;
+}
+
+
+/* ۵. جادوگری: مدرن کردن اسکرول‌بارهای زشت و قدیمی ویندوز! */
+QScrollBar:vertical {
+    border: none;
+    background: #1a1d24;
+    width: 8px;
+    margin: 0px 0px 0px 0px;
+    border-radius: 4px;
+}
+QScrollBar::handle:vertical {
+    background: #4a5568;
+    min-height: 20px;
+    border-radius: 4px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #718096;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="page">
       <widget class="QPushButton" name="btnBrowseRestaurants">
@@ -594,7 +702,7 @@ QPushButton:hover {
        <property name="geometry">
         <rect>
          <x>900</x>
-         <y>60</y>
+         <y>20</y>
          <width>101</width>
          <height>41</height>
         </rect>
@@ -616,6 +724,83 @@ QPushButton:hover {
        <property name="text">
         <string>Back</string>
        </property>
+      </widget>
+      <widget class="QListWidget" name="listWidgetOrders">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>50</y>
+         <width>591</width>
+         <height>541</height>
+        </rect>
+       </property>
+       <property name="movement">
+        <enum>QListView::Movement::Static</enum>
+       </property>
+       <property name="resizeMode">
+        <enum>QListView::ResizeMode::Adjust</enum>
+       </property>
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <property name="viewMode">
+        <enum>QListView::ViewMode::IconMode</enum>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frameMiddleDetails_2">
+       <property name="geometry">
+        <rect>
+         <x>650</x>
+         <y>50</y>
+         <width>211</width>
+         <height>541</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <widget class="QWidget" name="verticalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>211</width>
+          <height>531</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QLabel" name="lblDetailName">
+           <property name="text">
+            <string> TextLabel</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblDetailPrice_2">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblDetailStatus_2">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="listWidgetItems"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </widget>
