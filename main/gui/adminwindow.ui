@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdminWindow</class>
+ <widget class="QDialog" name="AdminWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1076</width>
+    <height>604</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1081</width>
+     <height>631</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget#AdminWindow {
+    background-color: #0f1115
+}
+
+QPushButton#btnAddRestaurant, 
+QPushButton#btnManageStatus, 
+QPushButton#btnViewStatistics {
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #1e222b, stop:1 #14171e);
+	color: #cbd5e1;
+	font-size: 15px;
+    font-weight: 600;
+    font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+	border: 1px solid #232834;
+	border-radius: 16px;
+	padding: 30px 25px;        
+    min-width: 340px;          
+	 text-align: center;       
+	padding-left: 0px;
+}
+QPushButton#btnAddRestaurant:hover, 
+QPushButton#btnManageStatus:hover, 
+QPushButton#btnViewStatistics:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #252b37, stop:1 #1a1e27);
+    color: #ffffff;          
+    border: 1px solid #f59e0b; 
+    cursor: pointer;
+}
+
+
+QPushButton#btnAddRestaurant:pressed, 
+QPushButton#btnManageStatus:pressed, 
+QPushButton#btnViewStatistics:pressed {
+    background-color: #11141a;
+    border: 1px solid #d97706; 
+    color: #d97706;
+    padding-top: 32px;        
+    padding-bottom: 28px;
+}
+
+QLabel {
+    color: #ffffff;            
+    font-size: 14px;           
+    font-weight: 600;
+    font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+    qproperty-alignment: 'AlignLeft | AlignVCenter'; 
+}
+
+QLineEdit, QSpinBox, QTextEdit, QComboBox {
+    background-color: #1e222b; 
+    border: 1px solid #2d3545; 
+    border-radius: 10px;       
+    padding: 10px 12px;
+    color: #ffffff;            
+    font-size: 14px;
+    font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+}
+
+QLineEdit:focus, QSpinBox:focus, QTextEdit:focus, QComboBox:focus {
+    border: 1px solid #f59e0b;
+    background-color: #242935; 
+}
+
+QComboBox::drop-down {
+    border: none;
+    padding-right: 10px;
+}
+QComboBox QAbstractItemView {
+    background-color: #1e222b;
+    border: 1px solid #2d3545;
+    color: #ffffff;
+    selection-background-color: #f59e0b; 
+    selection-color: #0f1115;
+}
+
+QPushButton#btnAddRestaurant_2 {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f59e0b, stop:1 #d97706);
+    color: #0f1115;            
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    min-width: 150px;
+}
+QPushButton#btnAddRestaurant_2:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #fbbf24, stop:1 #f59e0b);
+    cursor: pointer;
+}
+QPushButton#btnBackToMenu {
+    background-color: rgb(255, 5, 18);
+    color: rgb(0, 0, 0);
+	 font-weight: bold;
+    border: 1px solid #2d3545;
+    font-size: 14px;
+    border-radius: 12px;
+    padding: 14px;
+    min-width: 100px;
+}
+
+QPushButton#btnBackToMenu:hover {
+    background-color: #1e222b;
+    color: #ffffff;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
+}</string>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="page">
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>50</y>
+       <width>661</width>
+       <height>511</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="btnAddRestaurant">
+        <property name="text">
+         <string>Add New Restaurant</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnManageStatus">
+        <property name="text">
+         <string>Manage Restaurant Status</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnViewStatistics">
+        <property name="text">
+         <string>View System Statistics</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <widget class="QWidget" name="verticalLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>10</y>
+       <width>101</width>
+       <height>551</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Name </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Manager ID</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Phone Number</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Address</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Description</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Status</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLineEdit" name="txtRestName_2">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>30</y>
+       <width>651</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinManagerId">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>130</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>1000000</number>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="txtDescription">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>380</y>
+       <width>651</width>
+       <height>85</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtPhone">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>220</y>
+       <width>651</width>
+       <height>41</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtAddress">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>310</y>
+       <width>651</width>
+       <height>41</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="cmbStatus">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>490</y>
+       <width>111</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Active</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>InActive</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QPushButton" name="btnAddRestaurant_2">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>540</y>
+       <width>178</width>
+       <height>47</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add Restaurant</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnBackToMenu">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>538</y>
+       <width>181</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_3"/>
+   <widget class="QWidget" name="page_4"/>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

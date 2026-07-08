@@ -7,9 +7,10 @@
 #include "../Login_and_SignUp.h"
 #include "../SecretUserForAdmin.h"
 
+
 #include "customerwindow.h"
 #include "restaurantowner.h"
-
+#include "adminwindow.h"
 
 LoginWindow::LoginWindow(QString role , QWidget *parent)
     : QDialog(parent)
@@ -92,7 +93,9 @@ void LoginWindow::on_loginButton_clicked()
 
                 QMessageBox::information(this, "Success", QString::fromStdString("Welcome Admin!!!!!!!"));
 
-                // Move to next pages
+                AdminWindow *AdminWindowPage = new AdminWindow();
+                AdminWindowPage->show();
+                this->close();
             }
         }
 

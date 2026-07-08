@@ -30,6 +30,10 @@ set(PROJECT_SOURCES
     restaurantowner.cpp
     restaurantowner.ui
 
+    adminwindow.h
+    adminwindow.cpp
+    adminwindow.ui
+
     main_window.cpp
 
 
@@ -51,6 +55,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         customerwindow.h customerwindow.cpp customerwindow.ui
         restaurantowner.h restaurantowner.cpp restaurantowner.ui
+        adminwindow.h adminwindow.cpp adminwindow.ui
 
 
     )
