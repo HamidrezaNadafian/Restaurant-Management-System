@@ -21,6 +21,7 @@ private slots:
     void loadRestaurantsTable();
     void onToggleStatusClicked();
 
+    void loadStatistics();
 
 private:
     Ui::AdminWindow *ui;

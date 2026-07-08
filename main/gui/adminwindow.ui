@@ -196,10 +196,48 @@ QPushButton#btnBackToMenu_2:hover {
     color: #ffffff;
     border: 1px solid #cbd5e1;
     cursor: pointer;
+}
+
+QFrame#frmRevenue, QFrame#frmOrders, QFrame#frmRestaurants, QFrame#frmUsers {
+    background-color: #14171e;
+    border: 1px solid #232834;
+    border-radius: 16px;     
+    padding: 15px;
+}
+
+QFrame#frmRevenue:hover, QFrame#frmOrders:hover, 
+QFrame#frmRestaurants:hover, QFrame#frmUsers:hover {
+    border: 1px solid #f59e0b; 
+    background-color: #1a1e27; 
+}
+
+QLabel#lblTitleRevenue, QLabel#lblTitleOrders, 
+QLabel#lblTitleRestaurants, QLabel#lblTitleUsers {
+    color: #94a3b8;           
+    font-size: 13px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+    background: transparent;
+    border: none;
+}
+
+QLabel#lblValueRevenue, QLabel#lblValueOrders, 
+QLabel#lblValueRestaurants, QLabel#lblValueUsers {
+    color: #ffffff;            
+    font-size: 32px;        
+    font-weight: 800;     
+    font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+    background: transparent;
+    border: none;
+    margin-top: 10px;   
+}
+
+QLabel#lblValueRevenue {
+    color: #f59e0b; 
 }</string>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="verticalLayoutWidget">
@@ -462,7 +500,211 @@ QPushButton#btnBackToMenu_2:hover {
      </layout>
     </widget>
    </widget>
-   <widget class="QWidget" name="page_4"/>
+   <widget class="QWidget" name="page_4">
+    <widget class="QWidget" name="gridLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>911</width>
+       <height>571</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QFrame" name="frame">
+        <property name="frameShape">
+         <enum>QFrame::Shape::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <widget class="QFrame" name="frmRevenue">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>461</width>
+           <height>281</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>30</y>
+            <width>301</width>
+            <height>211</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="lblTitleRevenue">
+             <property name="text">
+              <string>Total Revenue</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblValueRevenue">
+             <property name="text">
+              <string>$ 0.00 </string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QFrame" name="frmUsers">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>280</y>
+           <width>461</width>
+           <height>291</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget_5">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>30</y>
+            <width>301</width>
+            <height>221</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="lblTitleRestaurants">
+             <property name="text">
+              <string>Active Restaurants</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblValueRestaurants">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QFrame" name="frmRestaurants">
+         <property name="geometry">
+          <rect>
+           <x>460</x>
+           <y>280</y>
+           <width>451</width>
+           <height>291</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget_6">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>30</y>
+            <width>291</width>
+            <height>211</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QLabel" name="lblTitleUsers">
+             <property name="text">
+              <string>Total Users</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblValueUsers">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QFrame" name="frmOrders">
+         <property name="geometry">
+          <rect>
+           <x>460</x>
+           <y>0</y>
+           <width>451</width>
+           <height>281</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget_4">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>30</y>
+            <width>291</width>
+            <height>211</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="lblTitleOrders">
+             <property name="text">
+              <string>Total Orders</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblValueOrders">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="btnBack">
+     <property name="geometry">
+      <rect>
+       <x>959</x>
+       <y>28</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>

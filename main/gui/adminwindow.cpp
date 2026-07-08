@@ -5,6 +5,8 @@
 #include <QDebug>
 
 #include "Restaurantdb.h"
+#include "Login_and_SignUp.h"
+#include "Orderdb.h"
 
 AdminWindow::AdminWindow(QWidget *parent)
     : QDialog(parent)
@@ -23,6 +25,7 @@ AdminWindow::AdminWindow(QWidget *parent)
 
     connect(ui->btnViewStatistics, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentIndex(3);
+        loadStatistics();
     });
 
     connect(ui->btnAddRestaurant_2, &QPushButton::clicked, this, &AdminWindow::onSaveRestaurantClicked);
@@ -34,6 +37,11 @@ AdminWindow::AdminWindow(QWidget *parent)
     connect(ui->btnBackToMenu_2, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentIndex(0);
     });
+
+    connect(ui->btnBack, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(0);
+    });
+
 
     connect(ui->btnToggleStatus, &QPushButton::clicked, this, &AdminWindow::onToggleStatusClicked);
 
@@ -133,4 +141,29 @@ void AdminWindow::onToggleStatusClicked()
 
     loadRestaurantsTable();
     QMessageBox::information(this, "Success", "Restaurant status updated successfully!");
+}
+
+void AdminWindow::loadStatistics()
+{
+    DataBase db;
+
+    RestaurantDAO Restdb(db);
+
+    int CountActiveRestaurant = 0;
+    vector<Restaurant> Restaurants = Restdb.getRestaurants();
+    for(int i = 0 ; i < (int)Restaurants.size() ; i++){
+        if(Restaurants[i].getActive())CountActiveRestaurant++;
+    }
+    ui->lblValueRestaurants->setText(QString::number(CountActiveRestaurant));
+
+    LOGINDAO Userdb(db);
+    int TotalUsers = Userdb.getTotalUsers();
+    ui->lblValueUsers->setText(QString::number(TotalUsers));
+
+    OrderDAO ord(db);
+    int TotalOrders = ord.getTotalOrders();
+    double TotalRtevenue = ord.getTotalPrice();
+
+    ui->lblValueOrders->setText(QString::number(TotalOrders));
+    ui->lblValueRevenue->setText("$ " + QString::number(TotalRtevenue));
 }
