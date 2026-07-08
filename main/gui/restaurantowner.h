@@ -2,6 +2,7 @@
 #define RESTAURANTOWNER_H
 
 #include <QDialog>
+#include <QListWidgetItem>
 
 namespace Ui {
 class RestaurantOwner;
@@ -21,6 +22,8 @@ private:
     int EditRestaurantId = -1;
     QString Username;
 
+    int EditMenuId = -1;
+
 private slots:
 
     void loadOwnerRestaurants();
@@ -30,6 +33,11 @@ private slots:
 
     void on_btnSaveRestaurant_clicked();
 
+    void loadRestaurantMenu();
+    void on_listMenu_itemClicked(QListWidgetItem *item);
+    void on_btnAddNewMenuItem_clicked();
+    void on_btnSaveMenuItem_clicked();
+    void on_btnDeleteMenuItem_clicked();
 };
 
 #endif // RESTAURANTOWNER_H

@@ -131,7 +131,7 @@ void customerwindow::loadMenu(int restaurantId)
 
 
 
-    for (const auto& item : currentMenuItems) {
+    for(const auto& item : currentMenuItems) {
 
         QString name = QString::fromStdString(item->getName());
         QString price = "$ " + QString::number(item->getPrice());

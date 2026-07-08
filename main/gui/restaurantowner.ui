@@ -77,10 +77,146 @@ QPushButton#btnManageMenu:pressed,
 QPushButton#btnManageOrders:pressed {
     background-color: #1a1f26;
     border: 1px solid #d97706;
+}
+
+
+QListWidget#listMenu {
+    background-color: #1a1d24; 
+    border: 1px solid #2d3545;
+    border-radius: 10px;
+    padding: 8px;
+    outline: none;
+}
+
+QListWidget#listMenu::item {
+    background-color: #222731;
+    border: 1px solid #2d3545;
+    border-radius: 8px;
+    color: #e2e8f0;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+QListWidget#listMenu::item:hover {
+    background-color: #2b313e;
+    border: 1px solid #4a5568;
+}
+
+QListWidget#listMenu::item:selected {
+    background-color: #2b313e;
+    border: 2px solid #f59e0b; 
+    color: #ffffff;
+}
+
+
+QLineEdit#txtFoodName, 
+QDoubleSpinBox#spinFoodPrice, 
+QSpinBox#spinFoodPrice, 
+QPlainTextEdit#txtFoodDesc, 
+QTextEdit#txtFoodDesc {
+    background-color: #222731;
+    border: 1px solid #2d3545;
+    border-radius: 8px;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 13px;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+}
+
+
+QLineEdit#txtFoodName:focus, 
+QDoubleSpinBox#spinFoodPrice:focus, 
+QSpinBox#spinFoodPrice:focus, 
+QPlainTextEdit#txtFoodDesc:focus, 
+QTextEdit#txtFoodDesc:focus {
+    border: 1px solid #f59e0b;
+    background-color: #262c38;
+}
+
+
+QComboBox#comboBox {
+    background-color: #222731;
+    border: 1px solid #2d3545;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+QComboBox#comboBox:focus {
+    border: 1px solid #f59e0b;
+}
+
+
+QComboBox#comboBox::drop-down {
+    border-left: 1px solid #2d3545;
+    width: 35px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+
+QComboBox#comboBox QAbstractItemView {
+    background-color: #222731;
+    border: 1px solid #f59e0b;
+    border-radius: 5px;
+    color: #ffffff;
+    selection-background-color: #f59e0b;
+    selection-color: #1a1d24;
+    outline: none;
+}
+
+
+QPushButton#btnSaveMenuItem, 
+QPushButton#btnAddNewMenuItem {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #2a313d, stop:1 #1e232c);
+    color: #e2e8f0;
+    font-weight: bold;
+    font-size: 13px;
+    border: 1px solid #3b4252;
+    border-radius: 8px;
+    padding: 10px 15px;
+    min-height: 20px;
+}
+
+QPushButton#btnSaveMenuItem:hover, 
+QPushButton#btnAddNewMenuItem:hover {
+    background-color: #2d3545;
+    color: #ffffff;
+    border: 1px solid #f59e0b; 
+}
+
+QPushButton#btnSaveMenuItem:pressed, 
+QPushButton#btnAddNewMenuItem:pressed {
+    background-color: #1a1f26;
+    border: 1px solid #d97706;
+}
+
+
+QPushButton#btnDeleteMenuItem {
+    background-color: #7f1d1d;
+    color: #fecaca;
+    font-weight: bold;
+    font-size: 13px;
+    border: 1px solid #991b1b;
+    border-radius: 8px;
+    padding: 10px 15px;
+    min-height: 20px;
+}
+
+QPushButton#btnDeleteMenuItem:hover {
+    background-color: #991b1b; 
+    color: #ffffff;
+    border: 1px solid #ef4444; 
+}
+
+QPushButton#btnDeleteMenuItem:pressed {
+    background-color: #450a0a;
+    border: 1px solid #7f1d1d;
 }</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QListWidget" name="listWidgetOwnerRestaurants">
@@ -268,7 +404,7 @@ QPushButton#btnManageOrders:pressed {
     </widget>
    </widget>
    <widget class="QWidget" name="page_3">
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QListWidget" name="listMenu">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -278,33 +414,6 @@ QPushButton#btnManageOrders:pressed {
       </rect>
      </property>
     </widget>
-    <widget class="QWidget" name="verticalLayoutWidget_2">
-     <property name="geometry">
-      <rect>
-       <x>700</x>
-       <y>70</y>
-       <width>351</width>
-       <height>481</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QLineEdit" name="txtMenuName"/>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="txtMenuPrice"/>
-      </item>
-      <item>
-       <widget class="QTextEdit" name="txtMenuDesc"/>
-      </item>
-      <item>
-       <widget class="QComboBox" name="cmbMenuType"/>
-      </item>
-      <item>
-       <widget class="QComboBox" name="cmbMenuAvailable"/>
-      </item>
-     </layout>
-    </widget>
     <widget class="QPushButton" name="btnBackFromMenu">
      <property name="geometry">
       <rect>
@@ -313,6 +422,25 @@ QPushButton#btnManageOrders:pressed {
        <width>90</width>
        <height>29</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #c0392b;
+}
+
+QPushButton:pressed {
+    background-color: #a93226;
+}</string>
      </property>
      <property name="text">
       <string>Back</string>
@@ -329,27 +457,77 @@ QPushButton#btnManageOrders:pressed {
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="btnSaveMenuItem">
         <property name="text">
          <string>Save Menu Item</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="text">
-         <string>Add New Menu Item</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_6">
+       <widget class="QPushButton" name="btnDeleteMenuItem">
         <property name="text">
          <string>Delete Menu Item</string>
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btnAddNewMenuItem">
+        <property name="text">
+         <string>Add New Menu Item</string>
+        </property>
+       </widget>
+      </item>
      </layout>
+    </widget>
+    <widget class="QLineEdit" name="txtFoodName">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>127</y>
+       <width>349</width>
+       <height>41</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="spinFoodPrice">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>180</y>
+       <width>349</width>
+       <height>41</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="txtFoodDesc">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>230</y>
+       <width>349</width>
+       <height>251</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>800</x>
+       <y>490</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Available</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>NotAvailable</string>
+      </property>
+     </item>
     </widget>
    </widget>
    <widget class="QWidget" name="page_4">

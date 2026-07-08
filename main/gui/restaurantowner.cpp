@@ -6,6 +6,7 @@
 
 #include "Login_and_SignUp.h"
 #include "Restaurantdb.h"
+#include "Menudb.h"
 
 RestaurantOwner::RestaurantOwner(QString username , QWidget *parent)
     : QDialog(parent)
@@ -20,6 +21,10 @@ RestaurantOwner::RestaurantOwner(QString username , QWidget *parent)
     connect(ui->btnManageOrders, &QPushButton::clicked, this, &RestaurantOwner::on_btnManageOrders_clicked);
 
     connect(ui->btnCancelEdit, &QPushButton::clicked, this, [=]() {
+        ui->stackedWidget->setCurrentIndex(0);
+    });
+
+    connect(ui->btnBackFromMenu, &QPushButton::clicked, this, [=]() {
         ui->stackedWidget->setCurrentIndex(0);
     });
 
@@ -115,6 +120,7 @@ void RestaurantOwner::on_btnManageMenu_clicked()
     EditRestaurantId = selectedItem->data(Qt::UserRole).toInt();
 
     ui->stackedWidget->setCurrentIndex(2);
+    loadRestaurantMenu();
 }
 
 void RestaurantOwner::on_btnManageOrders_clicked()
@@ -129,6 +135,7 @@ void RestaurantOwner::on_btnManageOrders_clicked()
     EditRestaurantId = selectedItem->data(Qt::UserRole).toInt();
 
     ui->stackedWidget->setCurrentIndex(3);
+
 }
 void RestaurantOwner::on_btnSaveRestaurant_clicked()
 {
@@ -162,3 +169,125 @@ void RestaurantOwner::on_btnSaveRestaurant_clicked()
     ui->stackedWidget->setCurrentIndex(0);
     loadOwnerRestaurants();
 }
+
+void RestaurantOwner::loadRestaurantMenu()
+{
+    ui->listMenu->clear();
+
+    EditMenuId = -1;
+
+    DataBase dbmain;
+    MenuItemDAO menudb(dbmain);
+
+    vector<unique_ptr<MenuItem>> MenuItems = menudb.MenuForRestaurant(EditRestaurantId);
+
+    for(const auto& item : MenuItems) {
+
+        QString name = QString::fromStdString(item->getName());
+        QString price = QString::number(item->getPrice());
+        QString desc = QString::fromStdString(item->getDescription());
+
+        QString avaible = QString::number(item->getAvailable());
+
+        int itemId = item->getID();
+
+        QString cardText = name + "\n$ " + price;
+        QListWidgetItem *listItem = new QListWidgetItem(cardText);
+
+        listItem->setData(Qt::UserRole, itemId);
+        listItem->setData(Qt::UserRole + 1, name);
+        listItem->setData(Qt::UserRole + 2, price);
+        listItem->setData(Qt::UserRole + 3, desc);
+        listItem->setData(Qt::UserRole + 4, avaible);
+
+        ui->listMenu->addItem(listItem);
+
+    }
+}
+
+void RestaurantOwner::on_listMenu_itemClicked(QListWidgetItem *item)
+{
+    EditMenuId = item->data(Qt::UserRole).toInt();
+
+    QString name = item->data(Qt::UserRole + 1).toString();
+    double price = item->data(Qt::UserRole + 2).toDouble();
+    QString desc = item->data(Qt::UserRole + 3).toString();
+    QString avaible = item->data(Qt::UserRole + 4).toString();
+
+    ui->txtFoodName->setText(name);
+    ui->spinFoodPrice->setValue(price);
+    ui->txtFoodDesc->setPlainText(desc);
+    if(avaible == "1"){
+        ui->comboBox->setCurrentText("Available");
+    }
+    else{
+        ui->comboBox->setCurrentText("NotAvailable");
+    }
+
+}
+
+
+
+void RestaurantOwner::on_btnAddNewMenuItem_clicked()
+{
+    EditMenuId = -1;
+
+    ui->txtFoodName->clear();
+    ui->spinFoodPrice->setValue(0.0);
+    ui->txtFoodDesc->clear();
+    ui->comboBox->setCurrentIndex(0);
+}
+
+
+void RestaurantOwner::on_btnSaveMenuItem_clicked()
+{
+    QString name = ui->txtFoodName->text().trimmed();
+    double price = ui->spinFoodPrice->value();
+    QString desc = ui->txtFoodDesc->toPlainText().trimmed();
+    QString avaible = ui->comboBox->currentText();
+
+    if(price <= 0){
+        QMessageBox::warning(this, "Error" ,"Price must be positive.");
+        return;
+    }
+
+    DataBase dbmain;
+    MenuItemDAO menudb(dbmain);
+
+    int Isavaible;
+    if(avaible == "Avaible")Isavaible = 1;
+    else Isavaible = 0;
+
+    if(EditMenuId == -1)
+    {
+        menudb.AddMenuItem(EditRestaurantId , name.toStdString() , desc.toStdString() , price , Isavaible , "Food" , 0);
+        QMessageBox::information(this, "Success" , "Menu item added successfully.");
+    }
+    else{
+
+        menudb.UpdateItem(EditMenuId, name.toStdString(), desc.toStdString(), price , Isavaible , 0);
+        QMessageBox::information(this, "Success" , "Changes saved successfully.");
+    }
+    loadRestaurantMenu();
+    on_btnAddNewMenuItem_clicked();
+}
+
+
+void RestaurantOwner::on_btnDeleteMenuItem_clicked()
+{
+    if (EditMenuId == -1){
+        QMessageBox::warning(this, "Error" ,"Please select a food item from the list first.");
+        return;
+    }
+
+    DataBase dbmain;
+    MenuItemDAO menudb(dbmain);
+
+    menudb.DeleateMenuItem(EditMenuId);
+
+    QMessageBox::information(this,"Success" ,"Item deleted successfully.");
+
+    loadRestaurantMenu();
+    on_btnAddNewMenuItem_clicked();
+}
+
