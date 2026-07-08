@@ -127,10 +127,79 @@ QPushButton#btnBackToMenu:hover {
     color: #ffffff;
     border: 1px solid #cbd5e1;
     cursor: pointer;
+}
+
+
+
+QTableWidget {
+    background-color: #1e222b;
+    color: #ffffff;
+    border: 1px solid #2d3545;
+    border-radius: 8px;
+    gridline-color: #2d3545; 
+    font-size: 14px;
+    font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+    outline: none; 
+}
+
+
+QTableWidget::item:selected {
+    background-color: #f59e0b; 
+    color: #0f1115;            
+    font-weight: bold;
+}
+
+
+QHeaderView::section {
+    background-color: #14171e;
+    color: #94a3b8;
+    padding: 8px;
+    border: none;
+    border-right: 1px solid #2d3545;
+    font-weight: bold;
+    font-size: 13px;
+    font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+    text-align: left;
+}
+
+
+QPushButton#btnToggleStatus {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #3b82f6, stop:1 #2563eb); 
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 150px;
+}
+
+QPushButton#btnToggleStatus:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #60a5fa, stop:1 #3b82f6);
+    cursor: pointer;
+}
+
+
+QPushButton#btnBackToMenu_2 {
+    background-color: rgb(170, 0, 0);
+    color: #rgb(255, 255, 255);
+    border: 1px solid #2d3545;
+	font-weight: bold;
+    font-size: 14px;
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 100px;
+}
+
+QPushButton#btnBackToMenu_2:hover {
+    background-color: #1e222b;
+    color: #ffffff;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
 }</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="verticalLayoutWidget">
@@ -325,7 +394,74 @@ QPushButton#btnBackToMenu:hover {
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page_3"/>
+   <widget class="QWidget" name="page_3">
+    <widget class="QTableWidget" name="tblRestaurants">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>30</y>
+       <width>741</width>
+       <height>481</height>
+      </rect>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+     </property>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>34</number>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>250</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Status</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>520</y>
+       <width>741</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QPushButton" name="btnToggleStatus">
+        <property name="text">
+         <string>Toggle Status</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnBackToMenu_2">
+        <property name="text">
+         <string>Back</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
    <widget class="QWidget" name="page_4"/>
   </widget>
  </widget>

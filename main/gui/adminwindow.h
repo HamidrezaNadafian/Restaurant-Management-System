@@ -18,6 +18,9 @@ public:
 private slots:
     void onSaveRestaurantClicked();
 
+    void loadRestaurantsTable();
+    void onToggleStatusClicked();
+
 
 private:
     Ui::AdminWindow *ui;

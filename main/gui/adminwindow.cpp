@@ -2,6 +2,8 @@
 #include "ui_adminwindow.h"
 
 #include <QMessageBox>
+#include <QDebug>
+
 #include "Restaurantdb.h"
 
 AdminWindow::AdminWindow(QWidget *parent)
@@ -16,6 +18,7 @@ AdminWindow::AdminWindow(QWidget *parent)
 
     connect(ui->btnManageStatus, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentIndex(2);
+        loadRestaurantsTable();
     });
 
     connect(ui->btnViewStatistics, &QPushButton::clicked, this, [this]() {
@@ -27,6 +30,15 @@ AdminWindow::AdminWindow(QWidget *parent)
     connect(ui->btnBackToMenu, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentIndex(0);
     });
+
+    connect(ui->btnBackToMenu_2, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(0);
+    });
+
+    connect(ui->btnToggleStatus, &QPushButton::clicked, this, &AdminWindow::onToggleStatusClicked);
+
+
+
 
 
     ui->stackedWidget->setCurrentIndex(0);
@@ -66,4 +78,59 @@ void AdminWindow::onSaveRestaurantClicked()
     ui->txtDescription->clear();
     ui->cmbStatus->setCurrentIndex(0);
 
+}
+
+void AdminWindow::loadRestaurantsTable()
+{
+    ui->tblRestaurants->setRowCount(0);
+
+    DataBase db;
+    RestaurantDAO Restdb(db);
+    vector<Restaurant> Restaurants = Restdb.getRestaurants();
+
+    for(int i = 0 ; i < (int)Restaurants.size() ; i++){
+
+        ui->tblRestaurants->insertRow(i);
+
+        QTableWidgetItem *IdItem = new QTableWidgetItem(QString::number(Restaurants[i].getID()));
+        ui->tblRestaurants->setItem(i, 0, IdItem);
+
+        QTableWidgetItem *NameItem = new QTableWidgetItem(QString::fromStdString(Restaurants[i].getName()));
+        ui->tblRestaurants->setItem(i, 1, NameItem);
+
+        QString StatusText;
+
+        if(Restaurants[i].getActive() == 1)StatusText = "Active";
+        else StatusText = "InActive";
+
+        QTableWidgetItem *StatusItem = new QTableWidgetItem(StatusText);
+        ui->tblRestaurants->setItem(i, 2, StatusItem);
+    }
+}
+
+void AdminWindow::onToggleStatusClicked()
+{
+    int EditRow = ui->tblRestaurants->currentRow();
+
+    if (EditRow == -1) {
+        QMessageBox::warning(this, "Selection Error", "Please select a restaurant first.");
+        return;
+    }
+
+    int RestaurantId = ui->tblRestaurants->item(EditRow, 0)->text().toInt();
+    QString Status = ui->tblRestaurants->item(EditRow, 2)->text();
+
+    string NewStatus;
+    if(Status == "Active")NewStatus = "0";
+    else NewStatus = "1";
+
+    qDebug() << NewStatus << "    " << Status;
+
+    DataBase db;
+    RestaurantDAO Restdb(db);
+
+    Restdb.UpdateINFO(RestaurantId, 5 , NewStatus);
+
+    loadRestaurantsTable();
+    QMessageBox::information(this, "Success", "Restaurant status updated successfully!");
 }
