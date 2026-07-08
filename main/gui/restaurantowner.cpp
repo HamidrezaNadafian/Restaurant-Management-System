@@ -7,6 +7,7 @@
 #include "Login_and_SignUp.h"
 #include "Restaurantdb.h"
 #include "Menudb.h"
+#include "Orderdb.h"
 
 RestaurantOwner::RestaurantOwner(QString username , QWidget *parent)
     : QDialog(parent)
@@ -24,7 +25,12 @@ RestaurantOwner::RestaurantOwner(QString username , QWidget *parent)
         ui->stackedWidget->setCurrentIndex(0);
     });
 
+
     connect(ui->btnBackFromMenu, &QPushButton::clicked, this, [=]() {
+        ui->stackedWidget->setCurrentIndex(0);
+    });
+
+    connect(ui->btnBackFromOrders, &QPushButton::clicked, this, [=]() {
         ui->stackedWidget->setCurrentIndex(0);
     });
 
@@ -134,6 +140,7 @@ void RestaurantOwner::on_btnManageOrders_clicked()
 
     EditRestaurantId = selectedItem->data(Qt::UserRole).toInt();
 
+    loadRestaurantOrders();
     ui->stackedWidget->setCurrentIndex(3);
 
 }
@@ -291,3 +298,97 @@ void RestaurantOwner::on_btnDeleteMenuItem_clicked()
     on_btnAddNewMenuItem_clicked();
 }
 
+void RestaurantOwner::loadRestaurantOrders()
+{
+    SelectedOrderId = -1;
+
+    ui->listOrders->clear();
+    ui->listOrderDetails->clear();
+    ui->lblCustomerID->setText(0);
+
+    ui->lblTotalPrice->setText("Total Cost : 0.00" );
+
+    DataBase dbmain;
+    OrderDAO ord(dbmain);
+
+    vector<Order> AllOrders = ord.AllOrders("restaurantId" , EditRestaurantId);
+
+    for (auto &ord : AllOrders)
+    {
+        int OrderId = ord.getID();
+        QString CustomerID = QString::number(ord.getID());
+        double TotalPrice = ord.getPrice();
+        QString status = QString::fromStdString(ord.getStatus());
+
+        QString cardText = "Order ID : " + QString::number(OrderId) + "\n" + status;
+        QListWidgetItem *item = new QListWidgetItem(cardText);
+
+        item->setData(Qt::UserRole, OrderId);
+        item->setData(Qt::UserRole + 1, CustomerID);
+        item->setData(Qt::UserRole + 2, TotalPrice);
+        item->setData(Qt::UserRole + 3, status);
+
+        ui->listOrders->addItem(item);
+    }
+}
+
+void RestaurantOwner::on_listOrders_itemClicked(QListWidgetItem *item)
+{
+    ui->listOrderDetails->clear();
+
+    SelectedOrderId = item->data(Qt::UserRole).toInt();
+    int CustomerID = item->data(Qt::UserRole + 1).toInt();
+    double totalPrice = item->data(Qt::UserRole + 2).toDouble();
+
+    ui->lblCustomerID->setText("Customer ID : " + QString::number(CustomerID));
+    ui->lblTotalPrice->setText("Total Cost : $ " + QString::number(totalPrice));
+
+
+    DataBase dbmain;
+    OrderItemsDAO ordItm(dbmain);
+
+    vector<OrderItem> OrdItems = ordItm.GetItemsForOrder(SelectedOrderId);
+
+    for (auto &Item : OrdItems){
+        QString ItemName = QString::fromStdString(Item.getItemName());
+        int quantity = Item.getQuantity();
+
+        QString cardText = ItemName + "    X" + QString::number(quantity);
+
+        ui->listOrderDetails->addItem(cardText);
+    }
+}
+
+void RestaurantOwner::ChangeOrderStatus(const std::string& NewStatus)
+{
+    if(SelectedOrderId == -1)
+    {
+        QMessageBox::warning(this, "Error" , "Please select an order first.");
+        return;
+    }
+
+    DataBase dbmain;
+    OrderDAO ord(dbmain);
+
+    ord.UpdateStatusOrder(NewStatus , SelectedOrderId);
+
+    QMessageBox::information(this , "Success" , "Order status updated successfully.");
+
+    loadRestaurantOrders();
+}
+
+
+void RestaurantOwner::on_btnPreparing_clicked()
+{
+    ChangeOrderStatus("Preparing");
+}
+
+void RestaurantOwner::on_btnDelivered_clicked()
+{
+    ChangeOrderStatus("Delivered");
+}
+void RestaurantOwner :: on_btnCancelOrder_clicked()
+{
+    ChangeOrderStatus("Cancel");
+
+}

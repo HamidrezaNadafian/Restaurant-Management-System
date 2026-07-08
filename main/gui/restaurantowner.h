@@ -24,6 +24,8 @@ private:
 
     int EditMenuId = -1;
 
+    int SelectedOrderId = -1;
+
 private slots:
 
     void loadOwnerRestaurants();
@@ -38,6 +40,17 @@ private slots:
     void on_btnAddNewMenuItem_clicked();
     void on_btnSaveMenuItem_clicked();
     void on_btnDeleteMenuItem_clicked();
+
+    void loadRestaurantOrders();
+    void on_listOrders_itemClicked(QListWidgetItem *item);
+
+    void ChangeOrderStatus(const std::string& newStatus);
+
+    void on_btnPreparing_clicked();
+    void on_btnDelivered_clicked();
+    void on_btnCancelOrder_clicked();
+
+
 };
 
 #endif // RESTAURANTOWNER_H

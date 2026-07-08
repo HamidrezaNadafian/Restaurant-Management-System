@@ -300,18 +300,30 @@ void customerwindow::onOrderClicked(QListWidgetItem *item)
         }
     }
 
-    ui->lblDetailName->setText(QString::fromStdString(FoundOrder->getRestaurantName()));
-    ui->lblDetailPrice_2->setText(QString::number(FoundOrder->getPrice(), 'f', 2) + " $");
+    QString status;
+    if (FoundOrder){
+        ui->lblDetailName->setText(QString::fromStdString(FoundOrder->getRestaurantName()));
+        ui->lblDetailPrice_2->setText(QString::number(FoundOrder->getPrice(), 'f', 2) + " $");
+        status = QString::fromStdString(FoundOrder->getStatus());
+        ui->lblDetailStatus_2->setText(status);
+    }
 
-    QString status = QString::fromStdString(FoundOrder->getStatus());
-    ui->lblDetailStatus_2->setText(status);
+
+
+
+
 
     if (status == "Delivered"){
         ui->lblDetailStatus_2->setStyleSheet("color: #2ed573; font-weight: bold; font-size: 14px;");
     }
-    else if(status[0] == 'A'){
-         ui->lblDetailStatus_2->setStyleSheet("color: #f1c40f; font-weight: bold; font-size: 14px;");
+    else if(status == "Awaiting restaurant approval"){
+        ui->lblDetailStatus_2->setStyleSheet("color: #ff55ff; font-weight: bold; font-size: 14px;");
     }
+
+    else if(status == "Preparing"){
+        ui->lblDetailStatus_2->setStyleSheet("color: #f1c40f; font-weight: bold; font-size: 14px;");
+    }
+
     else{
         ui->lblDetailStatus_2->setStyleSheet("color: #ff4757; font-weight: bold; font-size: 14px;");
     }
