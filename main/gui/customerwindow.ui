@@ -86,46 +86,46 @@ QPushButton#btnBack {
 }
 QPushButton#btnBack:hover { background-color: #ff6b77; }
 
-/* ۱. استایل کلی پس‌زمینه صفحه */
+
 QDialog {
-    background-color: #1a1d24; /* یک دارک ملایم و عمیق */
+    background-color: #1a1d24; 
     font-family: &quot;Segoe UI&quot;, &quot;Tahoma&quot;, sans-serif;
 }
 
-/* ۲. استایل لیست سمت چپ (لیست کل سفارش‌ها) */
+
 QListWidget#listWidgetOrders {
-    background-color: #222731; /* کمی روشن‌تر از بک‌گراند اصلی برای ایجاد عمق */
+    background-color: #222731;
     border: 1px solid #2d3545;
     border-radius: 12px;
     padding: 5px;
-    outline: 0; /* حذف خط فوکوس زشت دور لیست */
+    outline: 0; 
 }
 
-/* استایل تک‌تک آیتم‌های سفارش در سمت چپ */
+
 QListWidget#listWidgetOrders::item {
     background-color: #2b313e;
     color: #ffffff;
     border-radius: 8px;
     padding: 12px 15px;
-    margin-bottom: 8px; /* ایجاد فاصله بین هر کارت سفارش */
+    margin-bottom: 8px;
     font-size: 14px;
 }
 
-/* حالت هوور (وقتی موس روی کارت سفارش می‌رود) */
+
 QListWidget#listWidgetOrders::item:hover {
     background-color: #353c4d;
     border: 1px solid #4a5568;
 }
 
-/* حالت انتخاب شده (وقتی کاربر روی سفارش کلیک کرده است) */
+
 QListWidget#listWidgetOrders::item:selected {
-    background-color: #3b82f6; /* رنگ آبی جذاب مدرن */
+    background-color: #3b82f6; 
     color: #ffffff;
     font-weight: bold;
 }
 
 
-/* ۳. استایل بخش جزئیات سمت راست (بالا) */
+
 #lblDetailName {
     font-size: 22px;
     font-weight: bold;
@@ -135,7 +135,7 @@ QListWidget#listWidgetOrders::item:selected {
 #lblDetailPrice {
     font-size: 18px;
     font-weight: bold;
-    color: #3b82f6; /* رنگ قیمت هماهنگ با تم انتخاب */
+    color: #3b82f6; 
 }
 
 #lblDetailStatus {
@@ -144,7 +144,7 @@ QListWidget#listWidgetOrders::item:selected {
 }
 
 
-/* ۴. استایل لیست پایین سمت راست (ریز اقلام غذاها) */
+
 QListWidget#listWidgetItems {
     background-color: #222731;
     border: 1px solid #2d3545;
@@ -153,20 +153,20 @@ QListWidget#listWidgetItems {
     outline: 0;
 }
 
-/* استایل هر ردیف غذا */
+
 QListWidget#listWidgetItems::item {
     color: #e2e8f0;
     padding: 10px 12px;
-    border-bottom: 1px solid #2d3545; /* خط جداکننده باریک بین غذاها */
+    border-bottom: 1px solid #2d3545;
     font-size: 14px;
 }
 
-/* ردیف آخر خط جداکننده نداشته باشد */
+
 QListWidget#listWidgetItems::item:last {
     border-bottom: none;
 }
 
-/* غیرفعال کردن افکت کلیک روی لیست غذاها (چون صرفاً نمایشی است) */
+
 QListWidget#listWidgetItems::item:hover, 
 QListWidget#listWidgetItems::item:selected {
     background-color: transparent;
@@ -174,7 +174,7 @@ QListWidget#listWidgetItems::item:selected {
 }
 
 
-/* ۵. جادوگری: مدرن کردن اسکرول‌بارهای زشت و قدیمی ویندوز! */
+
 QScrollBar:vertical {
     border: none;
     background: #1a1d24;
@@ -195,7 +195,7 @@ QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
 }</string>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page">
       <widget class="QPushButton" name="btnBrowseRestaurants">
