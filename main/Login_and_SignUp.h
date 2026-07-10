@@ -5,6 +5,7 @@
 #include "sqlite3.h"
 #include "OpenDataBase.h"
 #include "SecretUserForAdmin.h"
+#include "customer.h"
 
 class LOGINDAO
 {
@@ -23,6 +24,10 @@ public:
     bool LoginUser(const string username, const string password , string& message);
     int getUserIdByUsername(string& username);
     int getTotalUsers();
+
+    Customer* getCustomerByUsername(const string& username);
+    bool updateLoyalty(int ID , int points , string level);
+    
 };
 
 #endif

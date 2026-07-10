@@ -76,7 +76,7 @@ void LoginWindow::on_loginButton_clicked()
 
     DataBase dbmain;
     LOGINDAO dbaslog(dbmain);
-    dbaslog.CreateLOGINTable();
+
 
     if(isLoginMode)
     {

@@ -8,6 +8,7 @@
 #include "../Menudb.h"
 #include "../Orderdb.h"
 #include "Login_and_SignUp.h"
+#include "customer.h"
 
 customerwindow::customerwindow(QString username , QWidget *parent)
     : QDialog(parent)
@@ -125,7 +126,6 @@ void customerwindow::loadMenu(int restaurantId)
 
     DataBase dbmain;
     MenuItemDAO menuitm(dbmain);
-    menuitm.CreateTable();
 
     currentMenuItems = menuitm.MenuForRestaurant(restaurantId);
 
@@ -216,11 +216,7 @@ void customerwindow::processCheckout()
     OrderDAO ord(dbmain);
     OrderItemsDAO ordItm(dbmain);
 
-    ord.CreateOrderTable();
-    ordItm.CreateOrderItemsTable();
-
     LOGINDAO dbaslog(dbmain);
-    dbaslog.CreateLOGINTable();
 
     string Username = CurrentCustomerUsername.toStdString();
     int UserID = dbaslog.getUserIdByUsername(Username);
@@ -251,11 +247,11 @@ void customerwindow::loadOrdersList()
     OrderDAO ord(dbmain);
 
 
-    ord.CreateOrderTable();
+
 
 
     LOGINDAO dbaslog(dbmain);
-    dbaslog.CreateLOGINTable();
+
 
     string Username = CurrentCustomerUsername.toStdString();
     int UserID = dbaslog.getUserIdByUsername(Username);

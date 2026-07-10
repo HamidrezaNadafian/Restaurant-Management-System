@@ -45,8 +45,8 @@ set(PROJECT_SOURCES
     ../Orderdb.cpp
     ../Login_and_SignUp.cpp
     ../SecretUserForAdmin.cpp
+    ../customer.cpp
     ../sqlite3.c
-    ../Maindb.db
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

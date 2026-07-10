@@ -20,7 +20,10 @@ void LOGINDAO::CreateLOGINTable()
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 "Username TEXT UNIQUE NOT NULL,"
                 "Password TEXT NOT NULL,"
-                "Role TEXT NOT NULL);";
+                "Role TEXT NOT NULL, "
+                "loyalty_points INTEGER DEFAULT 0, "
+                "membership_level TEXT DEFAULT 'Normal'"
+                ");";
 
     exec(sql);    
 }
@@ -114,4 +117,34 @@ int LOGINDAO::getTotalUsers()
     }
     sqlite3_finalize(stmt);
     return row_count;
+}
+
+Customer* LOGINDAO::getCustomerByUsername(const string& username)
+{
+    string sql = "SELECT id, loyalty_points FROM users WHERE username = '" + username + "';";
+    sqlite3_stmt* stmt;
+
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK){
+        if (sqlite3_step(stmt) == SQLITE_ROW){
+            int ID = sqlite3_column_int(stmt, 0);
+            int Points = sqlite3_column_int(stmt, 1);
+            sqlite3_finalize(stmt);
+
+            return new Customer(ID, username, Points);
+        }
+    }
+    sqlite3_finalize(stmt);
+    return nullptr;
+}
+bool LOGINDAO::updateLoyalty (int ID , int points , string level)
+{
+    string query = "UPDATE users SET loyalty_points = " + std::to_string(points) + ", membership_level = '" + level + "' WHERE id = " + std::to_string(ID) + ";";
+
+    char* message = nullptr;
+    int rc = sqlite3_exec(db, query.c_str(), nullptr, nullptr, &message);
+    if (rc != SQLITE_OK) {
+        sqlite3_free(message);
+        return false;
+    }   
+    return true;
 }
