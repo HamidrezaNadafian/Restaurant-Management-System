@@ -11,7 +11,7 @@
 
 #include "../Restaurant.h"
 #include "../Menu.h"
-#include "../Order.h"
+
 
 
 namespace Ui {
@@ -49,6 +49,8 @@ private slots:
 
 private:
 
+    double CurrentShippingCost = 0.0;
+
     Ui::customerwindow *ui;
 
     QString CurrentCustomerUsername;
@@ -57,6 +59,8 @@ private:
     int selectedRestaurantId;
     string RestaurantName;
 
+    void updateLevelInfo();
+
     enum Pages {
         HOME = 0,
         RESTAURANTSLIST = 1,
@@ -64,7 +68,7 @@ private:
         MYORDER = 3
     };
 
-    vector<std::unique_ptr<MenuItem>> currentMenuItems;
+    vector<unique_ptr<MenuItem>> currentMenuItems;
     double cartTotal = 0.0;
 
 };

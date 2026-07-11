@@ -65,6 +65,7 @@ void AdminWindow::onSaveRestaurantClicked()
     QString PhoneNumber = ui->txtPhone->text().trimmed();
     QString Address = ui->txtAddress->text().trimmed();
     QString description = ui->txtDescription->toPlainText().trimmed();
+    double ShippingCost = ui->spinShippingCost->value();
 
     int isActive = (ui->cmbStatus->currentText() == "Active");
 
@@ -76,7 +77,7 @@ void AdminWindow::onSaveRestaurantClicked()
     DataBase db;
     RestaurantDAO restdb(db);
 
-    restdb.AddRestaurant(Name.toStdString() , ManagerID , Address.toStdString() , isActive , 0 , PhoneNumber.toStdString(), description.toStdString());
+    restdb.AddRestaurant(Name.toStdString() , ManagerID , Address.toStdString() , isActive , 0 , PhoneNumber.toStdString(), description.toStdString() , ShippingCost);
 
     QMessageBox::information(this, "Success", "Restaurant registered successfully!");
     ui->txtRestName_2->clear();
@@ -85,6 +86,7 @@ void AdminWindow::onSaveRestaurantClicked()
     ui->txtAddress->clear();
     ui->txtDescription->clear();
     ui->cmbStatus->setCurrentIndex(0);
+    ui->spinShippingCost->setValue(0.0);
 
 }
 
@@ -131,8 +133,6 @@ void AdminWindow::onToggleStatusClicked()
     string NewStatus;
     if(Status == "Active")NewStatus = "0";
     else NewStatus = "1";
-
-    qDebug() << NewStatus << "    " << Status;
 
     DataBase db;
     RestaurantDAO Restdb(db);

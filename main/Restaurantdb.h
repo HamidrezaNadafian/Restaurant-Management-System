@@ -16,7 +16,7 @@ class RestaurantDAO
         void exec(const string& s);
 
         void CreateRestaurantTable();
-        void AddRestaurant(string Name , int ManagerID ,string address , int active , int PrepTime , string PhoneNumber , string Description);
+        void AddRestaurant(string Name , int ManagerID ,string address , int active , int PrepTime , string PhoneNumber , string Description , double shippingCost);
         void DeleateRestuarant(int ID);
 
         void UpdateINFO(int ID , int NumberType , string newUpdate);

@@ -12,6 +12,13 @@ class MembershipLevel
         virtual double getDiscount() const = 0;
         virtual double getShippingCostdisc() const = 0;
         virtual double getPoints() const = 0;
+
+
+        virtual string getColorCode() const = 0;
+        
+        virtual string getNextLevelName() const { return ""; }
+        virtual string getNextLevelColorCode() const { return ""; }
+        virtual int getTargetPoints() const { return 0; }
 };
 
 class NormalLevel : public MembershipLevel
@@ -21,6 +28,12 @@ class NormalLevel : public MembershipLevel
         virtual double getDiscount() const override {return 0.0 ;}
         virtual double getShippingCostdisc() const override {return 1.0 ;}
         virtual double getPoints() const override {return 1.0 ;}
+
+
+        string getColorCode() const override {return "#7f8c8d"; }
+        string getNextLevelName() const override { return "Silver"; }
+        string getNextLevelColorCode() const override { return "#bdc3c7"; }
+        int getTargetPoints() const override { return 100; }
 };
 
 class SilverLevel : public MembershipLevel
@@ -30,6 +43,12 @@ class SilverLevel : public MembershipLevel
         virtual double getDiscount() const override {return 0.05 ;}
         virtual double getShippingCostdisc() const override {return 0.75 ;}
         virtual double getPoints() const override {return 1.2 ;}
+
+
+        string getColorCode() const override {return "#bdc3c7"; }
+        string getNextLevelName() const override { return "Gold"; }
+        string getNextLevelColorCode() const override { return "#f1c40f"; }
+        int getTargetPoints() const override { return 300; }
 };
 
 class GoldLevel : public MembershipLevel
@@ -39,6 +58,12 @@ class GoldLevel : public MembershipLevel
         virtual double getDiscount() const override {return 0.1 ;}
         virtual double getShippingCostdisc() const override {return 0.5 ;}
         virtual double getPoints() const override {return 1.5 ;}
+
+
+        string getColorCode() const override {return "#f1c40f"; }
+        string getNextLevelName() const override { return "VIP"; }
+        string getNextLevelColorCode() const override { return "#8e44ad"; }
+        int getTargetPoints() const override { return 700; }
 };
 
 class VIPLevel : public MembershipLevel
@@ -48,6 +73,9 @@ class VIPLevel : public MembershipLevel
         virtual double getDiscount() const override {return 0.15 ;}
         virtual double getShippingCostdisc() const override {return 0.0 ;}
         virtual double getPoints() const override {return 2.0 ;}
+
+        string getColorCode() const override {return "#8e44ad"; }
+
 };
 
 #endif

@@ -237,7 +237,7 @@ QLabel#lblValueRevenue {
 }</string>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="verticalLayoutWidget">
@@ -321,6 +321,13 @@ QLabel#lblValueRevenue {
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string>Status</string>
@@ -333,7 +340,7 @@ QLabel#lblValueRevenue {
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>30</y>
+       <y>20</y>
        <width>651</width>
        <height>51</height>
       </rect>
@@ -346,7 +353,7 @@ QLabel#lblValueRevenue {
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>130</y>
+       <y>110</y>
        <width>151</width>
        <height>41</height>
       </rect>
@@ -359,7 +366,7 @@ QLabel#lblValueRevenue {
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>380</y>
+       <y>320</y>
        <width>651</width>
        <height>85</height>
       </rect>
@@ -369,7 +376,7 @@ QLabel#lblValueRevenue {
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>220</y>
+       <y>190</y>
        <width>651</width>
        <height>41</height>
       </rect>
@@ -379,7 +386,7 @@ QLabel#lblValueRevenue {
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>310</y>
+       <y>260</y>
        <width>651</width>
        <height>41</height>
       </rect>
@@ -389,7 +396,7 @@ QLabel#lblValueRevenue {
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>490</y>
+       <y>500</y>
        <width>111</width>
        <height>51</height>
       </rect>
@@ -429,6 +436,16 @@ QLabel#lblValueRevenue {
      </property>
      <property name="text">
       <string>Back</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="spinShippingCost">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>430</y>
+       <width>111</width>
+       <height>41</height>
+      </rect>
      </property>
     </widget>
    </widget>

@@ -14,10 +14,11 @@ class Restaurant
         int PrepTime;
         string PhoneNumber;
         string Description;
+        double shippingCost;
 
     public:
-        Restaurant(int id , int ManagerID , string nm , string adr , int act , int apt , string PN , string Des):
-        id(id) , ManagerID(ManagerID) , name(nm) , adress(adr) , active(act) , PrepTime(apt) , PhoneNumber(PN) , Description(Des){}
+        Restaurant(int id , int ManagerID , string nm , string adr , int act , int apt , string PN , string Des , double shippingCost):
+        id(id) , ManagerID(ManagerID) , name(nm) , adress(adr) , active(act) , PrepTime(apt) , PhoneNumber(PN) , Description(Des) , shippingCost(shippingCost){}
 
         void displayInfo();
         bool getActive();
@@ -38,6 +39,10 @@ class Restaurant
 
         string getAddress(){
             return adress;
+        }
+
+        double getshippingCost() { 
+            return shippingCost; 
         }
         
 };

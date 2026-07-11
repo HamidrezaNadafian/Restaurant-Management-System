@@ -68,13 +68,17 @@ void RestaurantOwner::loadOwnerRestaurants()
         QString address = QString::fromStdString(res.getAddress());
         QString desc = QString::fromStdString(res.getDescription());
         QString Phonenmbr = QString::fromStdString(res.getPhone());
+        double ShppingCost = res.getshippingCost();
+
 
         QString status;
 
         if(res.getActive() == 0)status = "🔴 NotActive";
         if(res.getActive() == 1)status = "🟢 Active";
 
-        QString cardText = "Name : " + name + "\nAddress : " + address + "\n\nDescription : " + desc + "\n\nPhone Number : " + Phonenmbr + "\n" + status;
+        QString cardText = "Name : " + name + "\n\nAddress : " + address + "\n\nDescription : " + desc + "\n\nPhone Number : " + Phonenmbr + "\n\n"
+                            "Shipping Cost : $ " + QString::number( ShppingCost ,'f', 2 ) +"\n\n" + status ;
+            ;
 
         QListWidgetItem *item = new QListWidgetItem(cardText);
 
@@ -83,6 +87,7 @@ void RestaurantOwner::loadOwnerRestaurants()
         item->setData(Qt::UserRole + 2, address);
         item->setData(Qt::UserRole + 3, Phonenmbr);
         item->setData(Qt::UserRole + 4, desc);
+        item->setData(Qt::UserRole + 5, ShppingCost);
 
         ui->listWidgetOwnerRestaurants->addItem(item);
     }
@@ -103,13 +108,14 @@ void RestaurantOwner::on_btnEditRestaurant_clicked()
     QString OldAddress = selectedItem->data(Qt::UserRole + 2).toString();
     QString OldPhone = selectedItem->data(Qt::UserRole + 3).toString();
     QString OldDesc = selectedItem->data(Qt::UserRole + 4).toString();
+    double OldShppingCost = selectedItem->data(Qt::UserRole + 5).toDouble();
 
     ui->txtRestName->setText(OldName);
     ui->txtRestAddress->text();
     ui->txtRestAddress->setText(OldAddress);
     ui->txtRestPhone->setText(OldPhone);
     ui->txtRestDesc->setText(OldDesc);
-
+    ui->spinshippingcost->setValue(OldShppingCost);
 
     ui->stackedWidget->setCurrentIndex(1);
 }
@@ -150,18 +156,21 @@ void RestaurantOwner::on_btnSaveRestaurant_clicked()
     QString NewAddress = ui->txtRestAddress->text().trimmed();
     QString NewPhone = ui->txtRestPhone->text().trimmed();
     QString NewDesc = ui->txtRestDesc->text().trimmed();
+    double NewShppingCost = ui->spinshippingcost->value();
 
     QListWidgetItem *selectedItem = ui->listWidgetOwnerRestaurants->currentItem();
 
-    std::string OldName = selectedItem->data(Qt::UserRole + 1).toString().toStdString();
-    std::string OldAddress = selectedItem->data(Qt::UserRole + 2).toString().toStdString();
-    std::string OldPhone = selectedItem->data(Qt::UserRole + 3).toString().toStdString();
-    std::string OldDesc = selectedItem->data(Qt::UserRole + 4).toString().toStdString();
+    string OldName = selectedItem->data(Qt::UserRole + 1).toString().toStdString();
+    string OldAddress = selectedItem->data(Qt::UserRole + 2).toString().toStdString();
+    string OldPhone = selectedItem->data(Qt::UserRole + 3).toString().toStdString();
+    string OldDesc = selectedItem->data(Qt::UserRole + 4).toString().toStdString();
 
-    std::string FinalName = NewName.isEmpty() ? OldName : NewName.toStdString();
-    std::string FinalAddress = NewAddress.isEmpty() ? OldAddress : NewAddress.toStdString();
-    std::string FinalPhone = NewPhone.isEmpty() ? OldPhone : NewPhone.toStdString();
-    std::string FinalDesc = NewDesc.isEmpty() ? OldDesc : NewDesc.toStdString();
+    string FinalName = NewName.isEmpty() ? OldName : NewName.toStdString();
+    string FinalAddress = NewAddress.isEmpty() ? OldAddress : NewAddress.toStdString();
+    string FinalPhone = NewPhone.isEmpty() ? OldPhone : NewPhone.toStdString();
+    string FinalDesc = NewDesc.isEmpty() ? OldDesc : NewDesc.toStdString();
+
+
 
     DataBase dbmain;
     RestaurantDAO rstdb(dbmain);
@@ -170,6 +179,7 @@ void RestaurantOwner::on_btnSaveRestaurant_clicked()
     rstdb.UpdateINFO(EditRestaurantId , 1 , FinalAddress);
     rstdb.UpdateINFO(EditRestaurantId , 3 , FinalPhone);
     rstdb.UpdateINFO(EditRestaurantId , 4 , FinalDesc);
+    rstdb.UpdateINFO(EditRestaurantId , 6 , to_string(NewShppingCost));
 
     QMessageBox::information(this, "Success", "Restaurant information updated successfully.");
 
@@ -219,12 +229,13 @@ void RestaurantOwner::on_listMenu_itemClicked(QListWidgetItem *item)
     QString name = item->data(Qt::UserRole + 1).toString();
     double price = item->data(Qt::UserRole + 2).toDouble();
     QString desc = item->data(Qt::UserRole + 3).toString();
-    QString avaible = item->data(Qt::UserRole + 4).toString();
+    QString Available = item->data(Qt::UserRole + 4).toString();
 
     ui->txtFoodName->setText(name);
     ui->spinFoodPrice->setValue(price);
     ui->txtFoodDesc->setPlainText(desc);
-    if(avaible == "1"){
+
+    if(Available == "1"){
         ui->comboBox->setCurrentText("Available");
     }
     else{
@@ -262,7 +273,7 @@ void RestaurantOwner::on_btnSaveMenuItem_clicked()
     MenuItemDAO menudb(dbmain);
 
     int Isavaible;
-    if(avaible == "Avaible")Isavaible = 1;
+    if(avaible == "Available")Isavaible = 1;
     else Isavaible = 0;
 
     if(EditMenuId == -1)

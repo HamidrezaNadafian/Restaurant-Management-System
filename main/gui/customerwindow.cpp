@@ -19,6 +19,7 @@ customerwindow::customerwindow(QString username , QWidget *parent)
 
     connect(ui->btnBack, &QPushButton::clicked, this, [=]() {
         ui->stackedWidget->setCurrentIndex(0);
+
     });
 
     connect(ui->btnBack_2, &QPushButton::clicked, this, [=]() {
@@ -27,6 +28,7 @@ customerwindow::customerwindow(QString username , QWidget *parent)
 
     connect(ui->btnBack_5, &QPushButton::clicked, this, [=]() {
         ui->stackedWidget->setCurrentIndex(0);
+
     });
 
     connect(ui->menuListWidget, &QListWidget::currentRowChanged,
@@ -45,6 +47,8 @@ customerwindow::customerwindow(QString username , QWidget *parent)
     ui->stackedWidget->setCurrentIndex(Pages::HOME);
 
     connect(ui->listWidgetOrders, &QListWidget::itemClicked, this, &customerwindow::onOrderClicked);
+
+    updateLevelInfo();
 }
 
 customerwindow::~customerwindow()
@@ -83,8 +87,10 @@ void customerwindow::on_restaurantListWidget_currentRowChanged(int currentRow)
 
     Restaurant selectedRest = displayedRestaurants[currentRow];
 
+    double shippingCost = selectedRest.getshippingCost();
+
     ui->Namelbl->setText(QString::fromStdString(selectedRest.getName()));
-    ui->desclbl->setText(QString::fromStdString(selectedRest.getDescription()));
+    ui->desclbl->setText(QString::fromStdString(selectedRest.getDescription()) + "\n\nShipping Cost: $ " + QString::number(shippingCost, 'f', 2));
     ui->Addresslbl->setText(QString::fromStdString(selectedRest.getAddress()));
     ui->Phnumberlbl->setText(QString::fromStdString(selectedRest.getPhone()));
 }
@@ -100,7 +106,7 @@ void customerwindow::on_btnEnterRestaurant_clicked()
     selectedRestaurantId = displayedRestaurants[currentRow].getID();
     RestaurantName = displayedRestaurants[currentRow].getName();
 
-
+    CurrentShippingCost = displayedRestaurants[currentRow].getshippingCost();
 
     loadMenu(selectedRestaurantId);
     ui->stackedWidget->setCurrentIndex(Pages::MENULIST);
@@ -189,7 +195,9 @@ void customerwindow::addToCart(QListWidgetItem *item)
 
 
     cartTotal += price;
-    ui->lblTotalPrice->setText("Total = $ " + QString::number(cartTotal));
+
+    ui->lblTotalPrice->setText("Shipping = $ " + QString::number(CurrentShippingCost, 'f', 2) + "\n\nTotal = $ " + QString::number(CurrentShippingCost + cartTotal, 'f', 2));
+
 
 }
 
@@ -199,7 +207,7 @@ void customerwindow::removeFromCart(QListWidgetItem *item)
     double itemPrice = item->data(Qt::UserRole).toDouble();
     cartTotal -= itemPrice;
 
-    ui->lblTotalPrice->setText("Total = $ " + QString::number(cartTotal));
+    ui->lblTotalPrice->setText("Total (Shipping) = $ " + QString::number(cartTotal + CurrentShippingCost, 'f', 2));
 
     delete item;
 }
@@ -221,7 +229,17 @@ void customerwindow::processCheckout()
     string Username = CurrentCustomerUsername.toStdString();
     int UserID = dbaslog.getUserIdByUsername(Username);
 
-    int ORDERID = ord.AddOrder(UserID , selectedRestaurantId ,RestaurantName, cartTotal , "Awaiting restaurant approval");
+    double ShippingCost = 0.0;
+    for (auto &res : displayedRestaurants) {
+        if (res.getID() == selectedRestaurantId) {
+            ShippingCost = res.getshippingCost();
+            break;
+        }
+    }
+
+    double finalOrderPrice = cartTotal + ShippingCost;
+
+    int ORDERID = ord.AddOrder(UserID , selectedRestaurantId ,RestaurantName, finalOrderPrice , "Awaiting restaurant approval");
 
     for (int i = 0; i < ui->cartListWidget->count() ; i++){
 
@@ -237,6 +255,7 @@ void customerwindow::processCheckout()
     cartTotal = 0;
     ui->lblTotalPrice->setText("Total = $ 0");
 
+    updateLevelInfo();
 }
 
 void customerwindow::loadOrdersList()
@@ -334,3 +353,63 @@ void customerwindow::onOrderClicked(QListWidgetItem *item)
     }
 
 }
+
+void customerwindow :: updateLevelInfo()
+{
+    ui->lblCurrentLevel->clear();
+    ui->lblArrow->clear();
+    ui->lblNextLevel->clear();
+
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+
+    string Username = CurrentCustomerUsername.toStdString();
+
+    Customer* CurrentUser = dbaslog.getCustomerByUsername(Username);
+
+
+    if(!CurrentUser) return;
+
+    int points = CurrentUser->getPoints();
+    MembershipLevel* UserMembership = CurrentUser->getMembership();
+
+    if (!UserMembership) {
+        qDebug() << "Error: User membership is null!";
+        delete CurrentUser;
+        return;
+    }
+
+    string UserLevel = UserMembership->getLevelName();
+
+    ui->lblCurrentLevel->setText(QString("👑 %1 (%2)").arg(QString::fromStdString(UserLevel)).arg(points));
+
+    ui->lblCurrentLevel->setStyleSheet(
+        QString("background-color: %1;")
+            .arg(QString::fromStdString(UserMembership->getColorCode()))
+        );
+
+
+    if(UserMembership->getLevelName() == "VIP"){
+        ui->lblArrow->hide();
+        ui->lblNextLevel->setText("🎉 You are at the Maximum Level!");
+        ui->lblNextLevel->setStyleSheet("background-color: transparent;");
+    }
+
+    else{
+        ui->lblArrow->show();
+        ui->lblArrow->setText(" ➔ ➔ ➔ ➔ ➔ ");
+
+        QString NextLevel = QString::fromStdString(UserMembership->getNextLevelName());
+        QString NextColor = QString::fromStdString(UserMembership->getNextLevelColorCode());
+
+        int pointsNeed = UserMembership->getTargetPoints() - points;
+
+        ui->lblNextLevel->setText(QString("%1 (Needs %2 points)").arg(NextLevel).arg(pointsNeed));
+        ui->lblNextLevel->setStyleSheet(
+            QString("background-color: %1;")
+                .arg(QString::fromStdString(UserMembership->getNextLevelColorCode()))
+            );
+    }
+    delete CurrentUser;
+}
+

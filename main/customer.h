@@ -25,7 +25,9 @@ class Customer
 
     public :
         Customer(int ID, string Username, int Points):
-            ID(ID) , Username(Username) , Points(Points){}
+            ID(ID) , Username(Username) , Points(Points){
+                CurrentLevel = LevelFactory::getLevel(Points);
+            }
 
 
         ~Customer() {
@@ -38,9 +40,8 @@ class Customer
         int getID() const {return ID; }
         string getUsername() const {return Username; }
         int getPoints() const {return Points; }
-        string getLevelName() const  {return CurrentLevel->getLevelName(); }
         double getFinalPrice(int Price) const {return Price - Price * CurrentLevel->getDiscount() ;}
-
+        MembershipLevel* getMembership() const {return CurrentLevel; }
         
            
 };

@@ -14,15 +14,15 @@ void RestaurantDAO:: CreateRestaurantTable()
 {
     string Table = "CREATE TABLE IF NOT EXISTS Restaurants ("
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT, ManagerID INTEGER, Name TEXT, address TEXT, "
-                    "active INTEGER, PrepTime INTEGER, PhoneNumber TEXT, Description TEXT);";
+                    "active INTEGER, PrepTime INTEGER, PhoneNumber TEXT, Description TEXT, shippingCost REAL);";
 
     exec(Table);    
 }
 
-void RestaurantDAO:: AddRestaurant(string Name , int ManagerID ,string address , int active , int PrepTime , string PhoneNumber , string Description)
+void RestaurantDAO:: AddRestaurant(string Name , int ManagerID ,string address , int active , int PrepTime , string PhoneNumber , string Description , double shippingCost)
 {
     string sql ="INSERT INTO Restaurants "
-    "(ManagerID, Name, address, active, PrepTime, PhoneNumber, Description) "
+    "(ManagerID, Name, address, active, PrepTime, PhoneNumber, Description, shippingCost) " 
     "VALUES (" +
     to_string(ManagerID) + ", '" +
     Name + "', '" +
@@ -30,7 +30,8 @@ void RestaurantDAO:: AddRestaurant(string Name , int ManagerID ,string address ,
     to_string(active) + ", " +
     to_string(PrepTime) + ", '" +
     PhoneNumber + "', '" +
-    Description + "');";
+    Description + "', " +
+    to_string(shippingCost) + ");";
 
     
     char* messageError;
@@ -55,7 +56,7 @@ void RestaurantDAO:: DeleateRestuarant(int ID)
 
 void RestaurantDAO :: UpdateINFO(int ID , int NumberType , string newUpdate)
 {
-    string arry[6] = {"Name" , "address" , "PrepTime" , "PhoneNumber" , "Description" , "active"};
+    string arry[7] = {"Name" , "address" , "PrepTime" , "PhoneNumber" , "Description" , "active" , "shippingCost"};
     
     sqlite3_stmt* stmt;
     string sql = "UPDATE Restaurants SET " + arry[NumberType] + " = ? WHERE ID = ?;";
@@ -95,7 +96,9 @@ vector<Restaurant> RestaurantDAO :: getRestaurants()
             string PhoneNumber = (const char*)(sqlite3_column_text(stmt, 6));
             string Description = (const char*)(sqlite3_column_text(stmt, 7)); // unsigned char*
 
-            Restaurant rest(ID , ManagerID , Name , address , active , PrepTime , PhoneNumber , Description);
+            double shippingCost = sqlite3_column_double(stmt, 8);
+
+            Restaurant rest(ID , ManagerID , Name , address , active , PrepTime , PhoneNumber , Description , shippingCost);
             ResturantLIST.push_back(rest);
         }
     }
