@@ -24,7 +24,7 @@ class Order {
         }
 
         int getID() const { return id; }
-
+        int getUserID() const { return UserID; }
         string getRestaurantName() const { return RestaurantName; }
         double getPrice() const { return Price; }
         string getStatus() const { return status; }

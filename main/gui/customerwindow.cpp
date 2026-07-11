@@ -10,6 +10,7 @@
 #include "Login_and_SignUp.h"
 #include "customer.h"
 
+
 customerwindow::customerwindow(QString username , QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::customerwindow)
@@ -251,9 +252,17 @@ void customerwindow::processCheckout()
         ordItm.AddOrderItem(ORDERID ,Name , 1 , Price);
     }
 
+    Customer* CustINFO = dbaslog.getCustomerByUsername(Username);
+    CustINFO->AddPoints(finalOrderPrice);
+
+    int FinalPoints = CustINFO->getPoints();
+
+    dbaslog.updateLoyalty(UserID , FinalPoints , "NULL");
+
     ui->cartListWidget->clear();
     cartTotal = 0;
     ui->lblTotalPrice->setText("Total = $ 0");
+
 
     updateLevelInfo();
 }

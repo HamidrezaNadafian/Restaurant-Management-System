@@ -1,6 +1,6 @@
 #include "customer.h"
 
-const int DOLLARS_PER_POINT = 5;
+const int DOLLARS_PER_POINT = 1;
 
 void Customer :: UpdateLevel()
 {

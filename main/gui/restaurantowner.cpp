@@ -9,6 +9,8 @@
 #include "Menudb.h"
 #include "Orderdb.h"
 
+const int DOLLARS_PER_POINT = 1;
+
 RestaurantOwner::RestaurantOwner(QString username , QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::RestaurantOwner)
@@ -324,10 +326,13 @@ void RestaurantOwner::loadRestaurantOrders()
 
     vector<Order> AllOrders = ord.AllOrders("restaurantId" , EditRestaurantId);
 
+
     for (auto &ord : AllOrders)
     {
         int OrderId = ord.getID();
-        QString CustomerID = QString::number(ord.getID());
+
+        QString CustomerID = QString::number(ord.getUserID());
+
         double TotalPrice = ord.getPrice();
         QString status = QString::fromStdString(ord.getStatus());
 
@@ -378,8 +383,46 @@ void RestaurantOwner::ChangeOrderStatus(const std::string& NewStatus)
         return;
     }
 
+    QListWidgetItem *selectedItem = ui->listOrders->currentItem();
+    if (!selectedItem) return;
+
+    QString CurrentStatus = selectedItem->data(Qt::UserRole + 3).toString();
+
+    if (CurrentStatus == "Cancel") {
+        QMessageBox::warning(this, "Error", "This order is already canceled and cannot be modified!");
+        return;
+    }
+
+    if (CurrentStatus.toStdString() == NewStatus) {
+        QMessageBox::information(this, "Info", "This order is already marked as " + QString::fromStdString(NewStatus));
+        return;
+    }
+
+
     DataBase dbmain;
     OrderDAO ord(dbmain);
+    LOGINDAO dbaslog(dbmain);
+
+    if (NewStatus == "Cancel") {
+        int CustomerId = selectedItem->data(Qt::UserRole + 1).toString().toInt();
+        double totalPrice = selectedItem->data(Qt::UserRole + 2).toDouble();
+        string Username = dbaslog.getUsernameById(CustomerId);
+
+        Customer* customer = dbaslog.getCustomerByUsername(Username);
+
+        if(!customer){
+            return;
+        }
+
+        int CurrentPoints = customer->getPoints();
+
+        int NewPoints = CurrentPoints - (totalPrice / DOLLARS_PER_POINT);
+
+        if (NewPoints < 0) NewPoints = 0;
+        qDebug() << NewPoints << "\n";
+        dbaslog.updateLoyalty(CustomerId , NewPoints , "NULL");
+        delete customer;
+    }
 
     ord.UpdateStatusOrder(NewStatus , SelectedOrderId);
 

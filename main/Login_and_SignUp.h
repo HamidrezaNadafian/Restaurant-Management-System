@@ -28,6 +28,8 @@ public:
     Customer* getCustomerByUsername(const string& username);
     bool updateLoyalty(int ID , int points , string level);
     
+    string getUsernameById(int id);
+    
 };
 
 #endif
