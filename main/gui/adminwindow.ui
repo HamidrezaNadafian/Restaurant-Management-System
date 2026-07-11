@@ -323,7 +323,7 @@ QLabel#lblValueRevenue {
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>TextLabel</string>
+         <string>Shipping Cost</string>
         </property>
        </widget>
       </item>

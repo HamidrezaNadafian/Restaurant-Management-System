@@ -199,7 +199,7 @@ void customerwindow::addToCart(QListWidgetItem *item)
 
     ui->lblTotalPrice->setText("Shipping = $ " + QString::number(CurrentShippingCost, 'f', 2) + "\n\nTotal = $ " + QString::number(CurrentShippingCost + cartTotal, 'f', 2));
 
-
+    RefreshCart();
 }
 
 
@@ -209,6 +209,8 @@ void customerwindow::removeFromCart(QListWidgetItem *item)
     cartTotal -= itemPrice;
 
     ui->lblTotalPrice->setText("Total (Shipping) = $ " + QString::number(cartTotal + CurrentShippingCost, 'f', 2));
+
+    RefreshCart();
 
     delete item;
 }
@@ -230,17 +232,26 @@ void customerwindow::processCheckout()
     string Username = CurrentCustomerUsername.toStdString();
     int UserID = dbaslog.getUserIdByUsername(Username);
 
-    double ShippingCost = 0.0;
-    for (auto &res : displayedRestaurants) {
-        if (res.getID() == selectedRestaurantId) {
-            ShippingCost = res.getshippingCost();
-            break;
+    Customer* CustINFO = dbaslog.getCustomerByUsername(Username);
+    double ItemsDisc = 0.0;
+    double shippingDisc = 1.0;
+
+
+    if (CustINFO) {
+        MembershipLevel* UserLevel = CustINFO->getMembership();
+        if (UserLevel) {
+            ItemsDisc = UserLevel->getDiscount();
+            shippingDisc = UserLevel->getShippingCostdisc();
         }
     }
 
-    double finalOrderPrice = cartTotal + ShippingCost;
+    double discountAmount = cartTotal * (ItemsDisc);
+    double FinalItemsPrice = cartTotal - discountAmount;
+    double finalShippingCost = CurrentShippingCost * (shippingDisc);
+    double FinalTotalCost = FinalItemsPrice + finalShippingCost;
 
-    int ORDERID = ord.AddOrder(UserID , selectedRestaurantId ,RestaurantName, finalOrderPrice , "Awaiting restaurant approval");
+
+    int ORDERID = ord.AddOrder(UserID , selectedRestaurantId ,RestaurantName, FinalTotalCost , "Awaiting restaurant approval");
 
     for (int i = 0; i < ui->cartListWidget->count() ; i++){
 
@@ -252,12 +263,15 @@ void customerwindow::processCheckout()
         ordItm.AddOrderItem(ORDERID ,Name , 1 , Price);
     }
 
-    Customer* CustINFO = dbaslog.getCustomerByUsername(Username);
-    CustINFO->AddPoints(finalOrderPrice);
 
-    int FinalPoints = CustINFO->getPoints();
 
-    dbaslog.updateLoyalty(UserID , FinalPoints , "NULL");
+
+    if(CustINFO){
+        CustINFO->AddPoints(FinalTotalCost);
+        int FinalPoints = CustINFO->getPoints();
+        dbaslog.updateLoyalty(UserID, FinalPoints, "NULL");
+        delete CustINFO;
+    }
 
     ui->cartListWidget->clear();
     cartTotal = 0;
@@ -273,10 +287,6 @@ void customerwindow::loadOrdersList()
 
     DataBase dbmain;
     OrderDAO ord(dbmain);
-
-
-
-
 
     LOGINDAO dbaslog(dbmain);
 
@@ -422,3 +432,57 @@ void customerwindow :: updateLevelInfo()
     delete CurrentUser;
 }
 
+
+void customerwindow::RefreshCart()
+{
+    if (cartTotal <= 0.01) {
+        ui->lblTotalPrice->setText("Total = $ 0");
+        return;
+    }
+
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+    Customer* CurrentUser = dbaslog.getCustomerByUsername(CurrentCustomerUsername.toStdString());
+
+    double ItemsDisc = 1.0;
+    double shippingDisc = 1.0;
+    QString levelName = "Normal";
+
+    if(CurrentUser){
+        MembershipLevel* level = CurrentUser->getMembership();
+        if (level) {
+            ItemsDisc = level->getDiscount();
+            shippingDisc = level->getShippingCostdisc();
+            levelName = QString::fromStdString(level->getLevelName());
+        }
+        delete CurrentUser;
+    }
+
+    double discountAmount = cartTotal * (ItemsDisc);
+    double FinalItemsPrice = cartTotal - discountAmount;
+    double finalShippingCost = CurrentShippingCost * (shippingDisc);
+    double FinalTotal = FinalItemsPrice + finalShippingCost;
+
+    QString receipt = QString("Subtotal: $ %1").arg(cartTotal, 0, 'f', 2);
+
+
+    if (ItemsDisc > 0) {
+        receipt += QString(" -> $ %1\n").arg(FinalItemsPrice, 0, 'f', 2);
+    }
+    else{
+        receipt += "\n";
+    }
+
+
+    if (shippingDisc < 1.0) {
+        receipt += QString("Shipping: $ %1 -> $ %2 \n") .arg(CurrentShippingCost, 0, 'f', 2) .arg(finalShippingCost, 0, 'f', 2);
+    }
+    else{
+        receipt += QString("Shipping: $ %1\n").arg(CurrentShippingCost, 0, 'f', 2);
+    }
+
+    receipt += QString("\nTotal: $ %1").arg(FinalTotal, 0, 'f', 2);
+
+    ui->lblTotalPrice->setText(receipt);
+
+}

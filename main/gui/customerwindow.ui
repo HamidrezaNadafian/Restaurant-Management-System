@@ -74,9 +74,16 @@ QWidget {
     border-radius: 6px;
     margin-bottom: 5px;
 }
-#lblTotalPrice { font-size: 17px; font-weight: bold; color: #ff4757; padding: 15px 0; }
 
-
+#lblTotalPrice {
+    background-color: #16213e;
+    color: #2ecc71;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 17px;
+    font-weight: bold;
+    border: 1px solid #2ecc71;
+}
 QPushButton#btnBack {
     background-color: #ff4757;
     color: white;
@@ -561,7 +568,7 @@ QPushButton:hover {
         <rect>
          <x>0</x>
          <y>60</y>
-         <width>651</width>
+         <width>461</width>
          <height>581</height>
         </rect>
        </property>
@@ -576,7 +583,7 @@ QPushButton:hover {
          <rect>
           <x>10</x>
           <y>0</y>
-          <width>631</width>
+          <width>451</width>
           <height>581</height>
          </rect>
         </property>
@@ -597,9 +604,9 @@ QPushButton:hover {
       <widget class="QFrame" name="frameMiddleDetails">
        <property name="geometry">
         <rect>
-         <x>650</x>
+         <x>470</x>
          <y>60</y>
-         <width>211</width>
+         <width>201</width>
          <height>581</height>
         </rect>
        </property>
@@ -614,7 +621,7 @@ QPushButton:hover {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>211</width>
+          <width>201</width>
           <height>571</height>
          </rect>
         </property>
@@ -656,9 +663,9 @@ QPushButton:hover {
       <widget class="QFrame" name="frameRightCart">
        <property name="geometry">
         <rect>
-         <x>870</x>
+         <x>680</x>
          <y>60</y>
-         <width>201</width>
+         <width>391</width>
          <height>581</height>
         </rect>
        </property>
@@ -673,15 +680,15 @@ QPushButton:hover {
          <rect>
           <x>0</x>
           <y>60</y>
-          <width>201</width>
-          <height>371</height>
+          <width>371</width>
+          <height>251</height>
          </rect>
         </property>
        </widget>
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>130</x>
           <y>10</y>
           <width>111</width>
           <height>41</height>
@@ -694,10 +701,10 @@ QPushButton:hover {
        <widget class="QLabel" name="lblTotalPrice">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>430</y>
-          <width>171</width>
-          <height>101</height>
+          <x>0</x>
+          <y>320</y>
+          <width>361</width>
+          <height>191</height>
          </rect>
         </property>
         <property name="text">
@@ -707,7 +714,7 @@ QPushButton:hover {
        <widget class="QPushButton" name="btnCheckout">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>130</x>
           <y>530</y>
           <width>101</width>
           <height>41</height>
@@ -735,7 +742,7 @@ QPushButton:hover {
       <widget class="QLabel" name="label_2">
        <property name="geometry">
         <rect>
-         <x>120</x>
+         <x>30</x>
          <y>10</y>
          <width>421</width>
          <height>41</height>
