@@ -364,10 +364,40 @@ QPushButton#btnCancelOrder {
 QPushButton#btnCancelOrder:hover {
     background-color: #991b1b;
     color: #ffffff;
+}
+
+QComboBox#cmbCategory {
+    background-color: #222731;
+    border: 1px solid #2d3545;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+QComboBox#cmbCategory:focus {
+    border: 1px solid #f59e0b;
+}
+
+QComboBox#cmbCategory::drop-down {
+    border-left: 1px solid #2d3545;
+    width: 35px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+QComboBox#cmbCategory QAbstractItemView {
+    background-color: #222731;
+    border: 1px solid #f59e0b;
+    border-radius: 5px;
+    color: #ffffff;
+    selection-background-color: #f59e0b;
+    selection-color: #1a1d24;
+    outline: none;
 }</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QListWidget" name="listWidgetOwnerRestaurants">
@@ -593,8 +623,8 @@ QPushButton#btnCancelOrder:hover {
     <widget class="QPushButton" name="btnBackFromMenu">
      <property name="geometry">
       <rect>
-       <x>900</x>
-       <y>20</y>
+       <x>920</x>
+       <y>0</y>
        <width>90</width>
        <height>29</height>
       </rect>
@@ -659,7 +689,7 @@ QPushButton:pressed {
      <property name="geometry">
       <rect>
        <x>700</x>
-       <y>127</y>
+       <y>80</y>
        <width>349</width>
        <height>41</height>
       </rect>
@@ -669,7 +699,7 @@ QPushButton:pressed {
      <property name="geometry">
       <rect>
        <x>700</x>
-       <y>180</y>
+       <y>130</y>
        <width>349</width>
        <height>41</height>
       </rect>
@@ -679,7 +709,7 @@ QPushButton:pressed {
      <property name="geometry">
       <rect>
        <x>700</x>
-       <y>230</y>
+       <y>180</y>
        <width>349</width>
        <height>251</height>
       </rect>
@@ -688,7 +718,7 @@ QPushButton:pressed {
     <widget class="QComboBox" name="comboBox">
      <property name="geometry">
       <rect>
-       <x>800</x>
+       <x>900</x>
        <y>490</y>
        <width>151</width>
        <height>41</height>
@@ -704,6 +734,36 @@ QPushButton:pressed {
        <string>NotAvailable</string>
       </property>
      </item>
+    </widget>
+    <widget class="QComboBox" name="cmbCategory">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>490</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Food</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Drink</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QSpinBox" name="spinCookOrVol">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>440</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_4">

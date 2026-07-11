@@ -157,7 +157,17 @@ void customerwindow::showItemDetails(int currentRow)
     ui->lblDetailName_2->setText(QString::fromStdString(selectedItem->getName()));
     ui->lblDetailPrice->setText("$ " + QString::number(selectedItem->getPrice()));
 
-    ui->lblDetailDesc->setText(QString::fromStdString(selectedItem->getDescription()));
+    QString ItemExtrainfo = "";
+
+    if (selectedItem->FoodOrDrink() == "Food"){
+        ItemExtrainfo = "⏱ Cook Time: " + QString::number(selectedItem->CookOrVol()) + " mins\n\n";
+    }
+    else{
+        ItemExtrainfo = "🧃 Volume: " + QString::number(selectedItem->CookOrVol()) + " ML\n\n";
+    }
+
+
+    ui->lblDetailDesc->setText(ItemExtrainfo + "\n" +QString::fromStdString(selectedItem->getDescription()));
 
     if (selectedItem->getAvailable() > 0) {
         ui->lblDetailStatus->setStyleSheet("color: #2ed573;");

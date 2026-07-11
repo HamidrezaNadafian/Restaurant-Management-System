@@ -4,6 +4,9 @@
 #include "lib.h"
 #include "sqlite3.h"
 
+#include <QMessageBox>
+#include <QApplication>
+
 class DataBase
 {
     private:
@@ -14,10 +17,12 @@ class DataBase
         {
             const char* path = "Maindb.db";
 
-            int exit = sqlite3_open(path, &db);
+            int rc = sqlite3_open(path, &db);
 
-            if (exit != SQLITE_OK){
-                cerr << sqlite3_errmsg(db) <<"\n";
+            if (rc != SQLITE_OK){
+                QString errorMSG = QString("Failed to open database!\nError: %1").arg(sqlite3_errmsg(db));
+                QMessageBox::critical(nullptr, "Database Error", errorMSG);
+                exit(1);
             }
 
 

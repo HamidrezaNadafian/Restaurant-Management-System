@@ -265,6 +265,8 @@ void RestaurantOwner::on_btnSaveMenuItem_clicked()
     double price = ui->spinFoodPrice->value();
     QString desc = ui->txtFoodDesc->toPlainText().trimmed();
     QString avaible = ui->comboBox->currentText();
+    QString category = ui->cmbCategory->currentText();
+    int cookOrVol = ui->spinCookOrVol->value();
 
     if(price <= 0){
         QMessageBox::warning(this, "Error" ,"Price must be positive.");
@@ -280,12 +282,12 @@ void RestaurantOwner::on_btnSaveMenuItem_clicked()
 
     if(EditMenuId == -1)
     {
-        menudb.AddMenuItem(EditRestaurantId , name.toStdString() , desc.toStdString() , price , Isavaible , "Food" , 0);
+        menudb.AddMenuItem(EditRestaurantId , name.toStdString() , desc.toStdString() , price , Isavaible , category.toStdString() , cookOrVol);
         QMessageBox::information(this, "Success" , "Menu item added successfully.");
     }
     else{
 
-        menudb.UpdateItem(EditMenuId, name.toStdString(), desc.toStdString(), price , Isavaible , 0);
+        menudb.UpdateItem(EditMenuId, name.toStdString(), desc.toStdString(), price , Isavaible , cookOrVol);
         QMessageBox::information(this, "Success" , "Changes saved successfully.");
     }
     loadRestaurantMenu();
