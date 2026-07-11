@@ -133,17 +133,43 @@ void customerwindow::loadMenu(int restaurantId)
 
     DataBase dbmain;
     MenuItemDAO menuitm(dbmain);
+    LOGINDAO dbaslog(dbmain);
+
+    string Username = CurrentCustomerUsername.toStdString();
+    Customer* CurrentCustomer = dbaslog.getCustomerByUsername(Username);
+    string UserLevel = "NULL";
+
+    if (CurrentCustomer && CurrentCustomer->getMembership()) {
+        UserLevel = CurrentCustomer->getMembership()->getLevelName();
+        delete CurrentCustomer;
+    }
+
 
     currentMenuItems = menuitm.MenuForRestaurant(restaurantId);
 
 
 
-    for(const auto& item : currentMenuItems) {
+    for(auto& item : currentMenuItems) {
+
+        if (item->getIsSpecial() == 1 && (UserLevel == "Normal" || UserLevel == "Silver")) {
+            continue;
+        }
 
         QString name = QString::fromStdString(item->getName());
         QString price = "$ " + QString::number(item->getPrice());
 
-        ui->menuListWidget->addItem(name + "\n" + price);
+        QString finalLine;
+
+        if(item->getIsSpecial() == 1)
+        {
+            finalLine = "🌟 " + name + "\n" + price;
+        }
+
+        else{
+            finalLine = name + "\n" + price;
+        }
+
+        ui->menuListWidget->addItem(finalLine);
 
     }
 }
@@ -193,17 +219,34 @@ void customerwindow::addToCart(QListWidgetItem *item)
         return ;
     }
 
+
     QString icon = (selectedItem->FoodOrDrink() == "Food") ? "🍔 " : "🥤 ";
     QString name = QString::fromStdString(selectedItem->getName());
     double price = selectedItem->getPrice();
 
-    QListWidgetItem *cartItem = new QListWidgetItem(icon + name);
+    bool found = 0;
 
-    cartItem->setData(Qt::UserRole, price);
-    cartItem->setData(Qt::UserRole + 1, name);
+    for (int i = 0; i < ui->cartListWidget->count(); i++){
+        QListWidgetItem *cartItem = ui->cartListWidget->item(i);
+        if (cartItem->data(Qt::UserRole + 1).toString() == name){
 
-    ui->cartListWidget->addItem(cartItem);
+            int quantity = cartItem->data(Qt::UserRole + 2).toInt();
+            quantity ++;
+            cartItem->setData(Qt::UserRole + 2, quantity);
+            cartItem->setText(icon + name + "       X" + QString::number(quantity) + "");
+            found = 1;
+            break;
+        }
+    }
 
+    if(found == 0){
+        QListWidgetItem *cartItem = new QListWidgetItem(icon + name);
+        cartItem->setData(Qt::UserRole, price);
+        cartItem->setData(Qt::UserRole + 1, name);
+        cartItem->setData(Qt::UserRole + 2, 1);
+        cartItem->setData(Qt::UserRole + 3, icon);
+        ui->cartListWidget->addItem(cartItem);
+    }
 
     cartTotal += price;
 
@@ -216,13 +259,24 @@ void customerwindow::addToCart(QListWidgetItem *item)
 void customerwindow::removeFromCart(QListWidgetItem *item)
 {
     double itemPrice = item->data(Qt::UserRole).toDouble();
+    QString name = item->data(Qt::UserRole + 1).toString();
+    int quantity = item->data(Qt::UserRole + 2).toInt();
+    QString icon = item->data(Qt::UserRole + 3).toString();
+
     cartTotal -= itemPrice;
 
-    ui->lblTotalPrice->setText("Total (Shipping) = $ " + QString::number(cartTotal + CurrentShippingCost, 'f', 2));
+    if(quantity > 1)
+    {
+        quantity --;
+        item->setData(Qt::UserRole + 2, quantity);
+
+        item->setText(icon + name + "       X" + QString::number(quantity) + "");
+    }
+    else{
+        delete item;
+    }
 
     RefreshCart();
-
-    delete item;
 }
 
 void customerwindow::processCheckout()
@@ -269,8 +323,11 @@ void customerwindow::processCheckout()
 
         double Price = item->data(Qt::UserRole).toDouble();
         string Name = item->data(Qt::UserRole + 1).toString().toStdString();
+        int quantity = item->data(Qt::UserRole + 2).toInt();
 
-        ordItm.AddOrderItem(ORDERID ,Name , 1 , Price);
+        int TotalPrice = Price * quantity;
+
+        ordItm.AddOrderItem(ORDERID ,Name , quantity , TotalPrice);
     }
 
 
@@ -378,7 +435,9 @@ void customerwindow::onOrderClicked(QListWidgetItem *item)
     for (auto &orderItem : items) {
 
         QString FoodName = QString::fromStdString(orderItem.getItemName());
-        ui->listWidgetItems->addItem(FoodName);
+        int quantity = orderItem.getQuantity();
+
+        ui->listWidgetItems->addItem(FoodName + "      X" + QString::number(quantity));
     }
 
 }

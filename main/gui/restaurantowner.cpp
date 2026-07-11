@@ -205,8 +205,11 @@ void RestaurantOwner::loadRestaurantMenu()
         QString name = QString::fromStdString(item->getName());
         QString price = QString::number(item->getPrice());
         QString desc = QString::fromStdString(item->getDescription());
-
         QString avaible = QString::number(item->getAvailable());
+
+        QString category = QString::fromStdString(item->FoodOrDrink());
+        int cookOrVol = item->CookOrVol();
+        int isSpecial = item->getIsSpecial();
 
         int itemId = item->getID();
 
@@ -218,6 +221,9 @@ void RestaurantOwner::loadRestaurantMenu()
         listItem->setData(Qt::UserRole + 2, price);
         listItem->setData(Qt::UserRole + 3, desc);
         listItem->setData(Qt::UserRole + 4, avaible);
+        listItem->setData(Qt::UserRole + 5, category);
+        listItem->setData(Qt::UserRole + 6, cookOrVol);
+        listItem->setData(Qt::UserRole + 7, isSpecial);
 
         ui->listMenu->addItem(listItem);
 
@@ -233,6 +239,10 @@ void RestaurantOwner::on_listMenu_itemClicked(QListWidgetItem *item)
     QString desc = item->data(Qt::UserRole + 3).toString();
     QString Available = item->data(Qt::UserRole + 4).toString();
 
+    QString category = item->data(Qt::UserRole + 5).toString();
+    int cookOrVol = item->data(Qt::UserRole + 6).toInt();
+    int isSpecial = item->data(Qt::UserRole + 7).toInt();
+
     ui->txtFoodName->setText(name);
     ui->spinFoodPrice->setValue(price);
     ui->txtFoodDesc->setPlainText(desc);
@@ -243,6 +253,10 @@ void RestaurantOwner::on_listMenu_itemClicked(QListWidgetItem *item)
     else{
         ui->comboBox->setCurrentText("NotAvailable");
     }
+
+    ui->cmbCategory->setCurrentText(category);
+    ui->spinCookOrVol->setValue(cookOrVol);
+    ui->chkIsSpecial->setChecked(isSpecial == 1);
 
 }
 
@@ -256,6 +270,10 @@ void RestaurantOwner::on_btnAddNewMenuItem_clicked()
     ui->spinFoodPrice->setValue(0.0);
     ui->txtFoodDesc->clear();
     ui->comboBox->setCurrentIndex(0);
+
+    ui->cmbCategory->setCurrentIndex(0);
+    ui->spinCookOrVol->setValue(0);
+    ui->chkIsSpecial->setChecked(false);
 }
 
 
@@ -267,6 +285,7 @@ void RestaurantOwner::on_btnSaveMenuItem_clicked()
     QString avaible = ui->comboBox->currentText();
     QString category = ui->cmbCategory->currentText();
     int cookOrVol = ui->spinCookOrVol->value();
+    int isSpecial = ui->chkIsSpecial->isChecked() ? 1 : 0;
 
     if(price <= 0){
         QMessageBox::warning(this, "Error" ,"Price must be positive.");
@@ -282,12 +301,12 @@ void RestaurantOwner::on_btnSaveMenuItem_clicked()
 
     if(EditMenuId == -1)
     {
-        menudb.AddMenuItem(EditRestaurantId , name.toStdString() , desc.toStdString() , price , Isavaible , category.toStdString() , cookOrVol);
+        menudb.AddMenuItem(EditRestaurantId , name.toStdString() , desc.toStdString() , price , Isavaible , category.toStdString() , cookOrVol , isSpecial);
         QMessageBox::information(this, "Success" , "Menu item added successfully.");
     }
     else{
 
-        menudb.UpdateItem(EditMenuId, name.toStdString(), desc.toStdString(), price , Isavaible , cookOrVol);
+        menudb.UpdateItem(EditMenuId, name.toStdString(), desc.toStdString(), price , Isavaible , cookOrVol , isSpecial);
         QMessageBox::information(this, "Success" , "Changes saved successfully.");
     }
     loadRestaurantMenu();

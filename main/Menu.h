@@ -12,30 +12,22 @@ class MenuItem
         string description;
         double price;
         int available;
+        int isSpecial;
     public:
-        MenuItem(int ID , int RestaurantID , string name , string description , double price , int available):
-            ID(ID) , RestaurantID(RestaurantID) , name(name) , description(description) , price(price) , available(available){}
+        MenuItem(int ID , int RestaurantID , string name , string description , double price , int available , int isSpecial):
+            ID(ID) , RestaurantID(RestaurantID) , name(name) , description(description) , price(price) , available(available) , isSpecial(isSpecial){}
 
-        int getAvailable(){
-            return available;
-        }
-        double getPrice()
-        {
-            return price;
-        }
-        int getID()
-        {
-            return ID;
-        }
+        int getAvailable(){return available; }
 
-        string getName()
-        {
-            return name;
-        }
+        double getPrice(){return price; }
+
+        int getID(){return ID; }
+
+        string getName(){return name; }
         
-        string getDescription() {
-            return description;
-        }
+        string getDescription() {return description; }
+
+        int getIsSpecial() const { return isSpecial; }
 
         virtual string FoodOrDrink() const = 0;
         virtual int CookOrVol() const = 0;
@@ -47,8 +39,8 @@ class Food : public MenuItem
     private:
         int CookTime;
     public:
-        Food(int ID, int RestaurantID, string name, string description, double price, int available, int CookTime)
-        : MenuItem(ID, RestaurantID, name, description, price, available), CookTime(CookTime) {}
+        Food(int ID, int RestaurantID, string name, string description, double price, int available, int CookTime , int isSpecial)
+        : MenuItem(ID, RestaurantID, name, description, price, available , isSpecial), CookTime(CookTime) {}
 
         string FoodOrDrink() const override;
         int CookOrVol() const override;
@@ -62,8 +54,8 @@ class Drink : public MenuItem
     private:
         int volume;
     public:
-        Drink(int ID, int RestaurantID, string name, string description, double price, int available, int volume)
-        : MenuItem(ID, RestaurantID, name, description, price, available), volume(volume) {}
+        Drink(int ID, int RestaurantID, string name, string description, double price, int available, int volume , int isSpecial)
+        : MenuItem(ID, RestaurantID, name, description, price, available , isSpecial), volume(volume) {}
         
         string FoodOrDrink() const override;
         int CookOrVol() const override;

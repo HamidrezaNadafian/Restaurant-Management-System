@@ -16,9 +16,9 @@ class MenuItemDAO
 
         void CreateTable();
 
-        void AddMenuItem(int RestaurantID , string Name , string Description , double Price , int available , string FoodOrDrink , int CookOrVol);
+        void AddMenuItem(int RestaurantID , string Name , string Description , double Price , int available , string FoodOrDrink , int CookOrVol , int isSpecial);
         void DeleateMenuItem(int ID);
-        void UpdateItem(int ID , string name , string disc , double price , int available , int CookOrVol);
+        void UpdateItem(int ID , string name , string disc , double price , int available , int CookOrVol, int isSpecial);
 
         vector<unique_ptr<MenuItem>> MenuForRestaurant(int RestaurantId);
 

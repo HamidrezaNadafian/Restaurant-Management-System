@@ -55,6 +55,22 @@ QWidget {
     color: white;
 }
 
+#menuListWidget::item[text^=&quot;🌟&quot;] {
+    background-color: #3d3a33; 
+    border-left: 4px solid #d4af37;
+    color: #f1c40f; 
+}
+
+#menuListWidget::item[text^=&quot;🌟&quot;]:hover {
+    background-color: #524731;
+    border-left: 4px solid #f1c40f; 
+    color: #fbc531; 
+}
+#menuListWidget::item[text^=&quot;🌟&quot;]:selected {
+    background-color: #f1c40f; 
+    color: #1e272e; 
+}
+
 
 #lblDetailName { font-size: 22px; font-weight: bold; color: #ffffff; margin-bottom: 5px; }
 #lblDetailPrice { font-size: 20px; font-weight: bold; color: rgb(208, 169, 255); margin-bottom: 15px; }
@@ -110,7 +126,7 @@ QListWidget#listWidgetOrders {
 
 
 QListWidget#listWidgetOrders::item {
-    background-color: #2b313e;
+	background-color: #2b313e;
     color: #ffffff;
     border-radius: 8px;
     padding: 12px 15px;
@@ -218,7 +234,7 @@ QLabel#lblArrow {
     padding: 0px 5px;
 }
 
-/* استایل لول بعدی - با خط دور نقطه‌چین یا خط‌چین مدرن */
+
 QLabel#lblNextLevel {
     color: #ffffff;
     font-size: 13px;

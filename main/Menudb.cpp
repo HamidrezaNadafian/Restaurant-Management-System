@@ -14,15 +14,15 @@ void MenuItemDAO :: CreateTable()
 {
     string Table = "CREATE TABLE IF NOT EXISTS MenuItems ("
                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, RestaurantID INTEGER, Name TEXT, "
-                   "Description TEXT, Price REAL, available INTEGER , FoodOrDrink TEXT , CookOrVol INTEGER);";
+                   "Description TEXT, Price REAL, available INTEGER , FoodOrDrink TEXT , CookOrVol INTEGER , IsSpecial INTEGER DEFAULT 0);";
 
     exec(Table); 
 }
 
-void MenuItemDAO :: AddMenuItem(int RestaurantID , string Name , string Description , double Price , int available , string FoodOrDrink , int CookOrVol)
+void MenuItemDAO :: AddMenuItem(int RestaurantID , string Name , string Description , double Price , int available , string FoodOrDrink , int CookOrVol , int isSpecial)
 {
-   string sql = "INSERT INTO MenuItems (RestaurantID, Name, Description, Price, available, FoodOrDrink, CookOrVol) VALUES ('"
-    + to_string(RestaurantID) + "', '" + Name + "', '" + Description + "', '" + to_string(Price) +  "', '" + to_string(available) + "', '" + FoodOrDrink + "', '" + to_string(CookOrVol) + "');";
+    string sql = "INSERT INTO MenuItems (RestaurantID, Name, Description, Price, available, FoodOrDrink, CookOrVol, IsSpecial) VALUES ("
+    + to_string(RestaurantID) + ", '" + Name + "', '" + Description + "', " + to_string(Price) +  ", " + to_string(available) + ", '" + FoodOrDrink + "', " + to_string(CookOrVol) + ", " + to_string(isSpecial) + ");";
     char* messageError;
     int exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messageError);
 
@@ -38,10 +38,10 @@ void MenuItemDAO:: DeleateMenuItem(int ID)
     sqlite3_exec(db, sql.c_str(), NULL, NULL, NULL);
 }
 
-void MenuItemDAO:: UpdateItem(int ID , string name , string disc , double price , int available , int CookOrVol)
+void MenuItemDAO:: UpdateItem(int ID , string name , string disc , double price , int available , int CookOrVol, int isSpecial)
 {
     sqlite3_stmt *stmt;
-    string sql = "UPDATE MenuItems SET Name = ?, Description = ?, Price = ?, available = ? , CookOrVol = ? WHERE ID = ?;";  
+    string sql = "UPDATE MenuItems SET Name = ?, Description = ?, Price = ?, available = ? , CookOrVol = ?, IsSpecial = ? WHERE ID = ?;";  
     
     sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
 
@@ -51,12 +51,10 @@ void MenuItemDAO:: UpdateItem(int ID , string name , string disc , double price 
     sqlite3_bind_double(stmt, 3, price);
     sqlite3_bind_int(stmt, 4, available);
     sqlite3_bind_int(stmt, 5, CookOrVol);
-    sqlite3_bind_int(stmt, 6, ID);
+    sqlite3_bind_int(stmt, 6, isSpecial);
+    sqlite3_bind_int(stmt, 7, ID);
 
-
-    if (sqlite3_step(stmt) != SQLITE_DONE) {
-        std::cerr << "Error executing statement: " << sqlite3_errmsg(db) << std::endl;
-    } 
+    sqlite3_step(stmt);
     sqlite3_finalize(stmt);
 }
 
@@ -81,13 +79,14 @@ vector<unique_ptr<MenuItem>> MenuItemDAO:: MenuForRestaurant(int RestaurantId)
             string FoodOrDrink = (const char*)(sqlite3_column_text(stmt, 6));
 
             int CookOrVol = sqlite3_column_int(stmt, 7);
+            int isSpecial = sqlite3_column_int(stmt, 8);
 
             if(FoodOrDrink == "Food"){
-                mnitems.push_back(make_unique<Food>(ID, RestaurantID, Name, Description, Price, available, CookOrVol));
+                mnitems.push_back(make_unique<Food>(ID, RestaurantID, Name, Description, Price, available, CookOrVol , isSpecial));
 
             }
             else{
-                mnitems.push_back(make_unique<Drink>(ID, RestaurantID, Name, Description, Price, available, CookOrVol));
+                mnitems.push_back(make_unique<Drink>(ID, RestaurantID, Name, Description, Price, available, CookOrVol , isSpecial));
             }
         }
     }
