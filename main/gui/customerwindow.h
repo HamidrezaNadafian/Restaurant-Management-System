@@ -46,6 +46,7 @@ private slots:
     void removeFromCart(QListWidgetItem *item);
 
     void processCheckout();
+    void on_btnUseCoupon_clicked();
 
 private:
 
@@ -73,6 +74,7 @@ private:
     vector<unique_ptr<MenuItem>> currentMenuItems;
     double cartTotal = 0.0;
 
+    bool isCouponApplied = false;
 };
 
 #endif // CUSTOMERWINDOW_H

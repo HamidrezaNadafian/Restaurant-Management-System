@@ -22,6 +22,7 @@ class Customer
         string Username;
         int Points;
         MembershipLevel* CurrentLevel;
+        int coupons = 0;
 
     public :
         Customer(int ID, string Username, int Points):
@@ -42,7 +43,8 @@ class Customer
         int getPoints() const {return Points; }
         double getFinalPrice(int Price) const {return Price - Price * CurrentLevel->getDiscount() ;}
         MembershipLevel* getMembership() const {return CurrentLevel; }
-        
+        int getCoupons() const {return coupons; }
+        void setCoupons(int c) {coupons = c; }
            
 };
 

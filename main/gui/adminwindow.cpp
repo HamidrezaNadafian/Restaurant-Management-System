@@ -167,3 +167,27 @@ void AdminWindow::loadStatistics()
     ui->lblValueOrders->setText(QString::number(TotalOrders));
     ui->lblValueRevenue->setText("$ " + QString::number(TotalRtevenue));
 }
+
+void AdminWindow::on_btnDistributeCoupons_clicked()
+{
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+    vector<Customer*> allCustomers = dbaslog.getAllCustomers();
+
+    for(auto* cust : allCustomers)
+    {
+
+
+        int AddCoupons = cust->getMembership()->getCoupons();
+
+
+        if(AddCoupons > 0){
+
+            int CurrentCoupons = cust->getCoupons();
+            dbaslog.updateCoupons(cust->getID(), CurrentCoupons + AddCoupons);
+        }
+    }
+
+    for(Customer* cust : allCustomers) delete cust;
+    QMessageBox::information(this, "Success", QString("Coupons distributed successfully") );
+}

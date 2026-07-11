@@ -23,6 +23,8 @@ private slots:
 
     void loadStatistics();
 
+    void on_btnDistributeCoupons_clicked();
+
 private:
     Ui::AdminWindow *ui;
 };

@@ -22,8 +22,9 @@ void LOGINDAO::CreateLOGINTable()
                 "Password TEXT NOT NULL,"
                 "Role TEXT NOT NULL, "
                 "loyalty_points INTEGER DEFAULT 0, "
-                "membership_level TEXT DEFAULT 'Normal'"
-                ");";
+                "membership_level TEXT DEFAULT 'Normal', "
+                "Coupons INTEGER DEFAULT 0);";
+                
 
     exec(sql);    
 }
@@ -121,16 +122,20 @@ int LOGINDAO::getTotalUsers()
 
 Customer* LOGINDAO::getCustomerByUsername(const string& username)
 {
-    string sql = "SELECT id, loyalty_points FROM users WHERE username = '" + username + "';";
+    string sql = "SELECT id, loyalty_points, Coupons FROM users WHERE username = '" + username + "';";
     sqlite3_stmt* stmt;
 
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK){
         if (sqlite3_step(stmt) == SQLITE_ROW){
             int ID = sqlite3_column_int(stmt, 0);
             int Points = sqlite3_column_int(stmt, 1);
+            int Coupons = sqlite3_column_int(stmt, 2);
             sqlite3_finalize(stmt);
 
-            return new Customer(ID, username, Points);
+            Customer* customer = new Customer(ID, username, Points);
+            customer->setCoupons(Coupons);
+            
+            return customer;
         }
     }
     sqlite3_finalize(stmt);
@@ -170,4 +175,39 @@ string LOGINDAO :: getUsernameById(int id)
 
     sqlite3_finalize(stmt);
     return username;
+}
+
+void LOGINDAO::updateCoupons(int userId, int newCouponCount)
+{
+    string sql = "UPDATE Users SET Coupons = " + to_string(newCouponCount) + 
+                 " WHERE ID = " + to_string(userId) + ";";
+                 
+    char* messageError;
+    int exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messageError);
+    if (exit != SQLITE_OK) {
+        cerr << "Error Updating Coupons: " << messageError << endl;
+        sqlite3_free(messageError);
+    }
+}
+vector<Customer*> LOGINDAO::getAllCustomers()
+{
+    vector<Customer*> CustomersList;
+    string sql = "SELECT * FROM Users WHERE Role = 'Customer';"; 
+    sqlite3_stmt* stmt;
+
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, NULL) == SQLITE_OK)
+    {
+        while (sqlite3_step(stmt) == SQLITE_ROW){
+            int ID = sqlite3_column_int(stmt, 0);
+            string username = (const char*)(sqlite3_column_text(stmt, 1));
+            int points = sqlite3_column_int(stmt, 4);
+            int coupons = sqlite3_column_int(stmt, 6);
+
+            Customer* customer = new Customer(ID , username , points);
+            customer->setCoupons(coupons);
+            CustomersList.push_back(customer);
+        }
+    }
+    sqlite3_finalize(stmt);
+    return CustomersList;
 }

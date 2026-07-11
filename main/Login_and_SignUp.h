@@ -30,6 +30,9 @@ public:
     
     string getUsernameById(int id);
     
+    void updateCoupons(int userId, int newCouponCount);
+    
+    vector<Customer*> getAllCustomers();
 };
 
 #endif

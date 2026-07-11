@@ -139,8 +139,10 @@ void customerwindow::loadMenu(int restaurantId)
     Customer* CurrentCustomer = dbaslog.getCustomerByUsername(Username);
     string UserLevel = "NULL";
 
-    if (CurrentCustomer && CurrentCustomer->getMembership()) {
-        UserLevel = CurrentCustomer->getMembership()->getLevelName();
+    if (CurrentCustomer) {
+        if (CurrentCustomer->getMembership()) {
+            UserLevel = CurrentCustomer->getMembership()->getLevelName();
+        }
         delete CurrentCustomer;
     }
 
@@ -314,6 +316,10 @@ void customerwindow::processCheckout()
     double finalShippingCost = CurrentShippingCost * (shippingDisc);
     double FinalTotalCost = FinalItemsPrice + finalShippingCost;
 
+    if(isCouponApplied){
+        FinalTotalCost -= 10;
+        if(FinalTotalCost < 0) FinalTotalCost = 0;
+    }
 
     int ORDERID = ord.AddOrder(UserID , selectedRestaurantId ,RestaurantName, FinalTotalCost , "Awaiting restaurant approval");
 
@@ -330,7 +336,15 @@ void customerwindow::processCheckout()
         ordItm.AddOrderItem(ORDERID ,Name , quantity , TotalPrice);
     }
 
-
+    if (isCouponApplied){
+        Customer* CurrentUser = dbaslog.getCustomerByUsername(CurrentCustomerUsername.toStdString());
+        if (CurrentUser)
+        {
+            int Coupons = CurrentUser->getCoupons();
+            dbaslog.updateCoupons(CurrentUser->getID(), Coupons - 1);
+            delete CurrentUser;
+        }
+    }
 
 
     if(CustINFO){
@@ -344,6 +358,7 @@ void customerwindow::processCheckout()
     cartTotal = 0;
     ui->lblTotalPrice->setText("Total = $ 0");
 
+    isCouponApplied = false;
 
     updateLevelInfo();
 }
@@ -513,11 +528,23 @@ void customerwindow::RefreshCart()
     LOGINDAO dbaslog(dbmain);
     Customer* CurrentUser = dbaslog.getCustomerByUsername(CurrentCustomerUsername.toStdString());
 
+
     double ItemsDisc = 1.0;
     double shippingDisc = 1.0;
     QString levelName = "Normal";
 
-    if(CurrentUser){
+
+    if (CurrentUser) {
+        int availableCoupons = CurrentUser->getCoupons();
+        if (availableCoupons >= 0 && !isCouponApplied) {
+            ui->btnUseCoupon->setText(QString("%1 Coupon").arg(availableCoupons));
+            ui->btnUseCoupon->setEnabled(true);
+        }
+        else if(availableCoupons < 0){
+            ui->btnUseCoupon->setText("0 Coupons");
+            ui->btnUseCoupon->setEnabled(false);
+        }
+
         MembershipLevel* level = CurrentUser->getMembership();
         if (level) {
             ItemsDisc = level->getDiscount();
@@ -527,10 +554,16 @@ void customerwindow::RefreshCart()
         delete CurrentUser;
     }
 
+
     double discountAmount = cartTotal * (ItemsDisc);
     double FinalItemsPrice = cartTotal - discountAmount;
     double finalShippingCost = CurrentShippingCost * (shippingDisc);
     double FinalTotal = FinalItemsPrice + finalShippingCost;
+
+    if (isCouponApplied) {
+        FinalTotal -= 10.0;
+        if (FinalTotal < 0) FinalTotal = 0;
+    }
 
     QString receipt = QString("Subtotal: $ %1").arg(cartTotal, 0, 'f', 2);
 
@@ -554,4 +587,43 @@ void customerwindow::RefreshCart()
 
     ui->lblTotalPrice->setText(receipt);
 
+}
+
+void customerwindow::on_btnUseCoupon_clicked()
+{
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+    Customer* CurrentUser = dbaslog.getCustomerByUsername(CurrentCustomerUsername.toStdString());
+
+    if (!CurrentUser) return;
+    int availableCoupons = CurrentUser->getCoupons();
+
+    if(!isCouponApplied) {
+
+        if (availableCoupons > 0){
+            isCouponApplied = true;
+
+            ui->btnUseCoupon->setText("Cancel Coupon");
+            ui->btnUseCoupon->setStyleSheet("background-color: #ff4757; color: white; border-radius: 8px; font-weight: bold;");
+
+            QMessageBox::information(this, "Success", "Coupon Applied! $10 Discount");
+
+            RefreshCart();
+        }
+        else{
+            QMessageBox::warning(this , "Error" , "You don't have any coupons left.");
+        }
+
+    }
+
+    else{
+        isCouponApplied = false;
+        ui->btnUseCoupon->setText(QString("%1 Coupon").arg(availableCoupons));
+        ui->btnUseCoupon->setStyleSheet("");
+
+        QMessageBox::information(this, "Cancelled", "Coupon removed from this order.");
+        RefreshCart();
+    }
+
+    if (CurrentUser) delete CurrentUser;
 }

@@ -234,17 +234,40 @@ QLabel#lblValueRestaurants, QLabel#lblValueUsers {
 
 QLabel#lblValueRevenue {
     color: #f59e0b; 
+}
+
+QPushButton#btnDistributeCoupons {
+    background-color: #b8860b;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QPushButton#btnDistributeCoupons:hover {
+    background-color: #d4a017;
+}
+
+QPushButton#btnDistributeCoupons:pressed {
+    background-color: #8b6508;
+}
+
+QPushButton#btnDistributeCoupons:disabled {
+    background-color: #555555;
+    color: #aaaaaa;
 }</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>220</x>
-       <y>50</y>
+       <x>250</x>
+       <y>60</y>
        <width>661</width>
        <height>511</height>
       </rect>
@@ -272,6 +295,19 @@ QLabel#lblValueRevenue {
        </widget>
       </item>
      </layout>
+    </widget>
+    <widget class="QPushButton" name="btnDistributeCoupons">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>161</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Distribute Coupons</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_2">
