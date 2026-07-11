@@ -18,15 +18,27 @@ public:
 private slots:
     void onSaveRestaurantClicked();
 
-    void loadRestaurantsTable();
+
     void onToggleStatusClicked();
 
-    void loadStatistics();
+
 
     void on_btnDistributeCoupons_clicked();
+    void on_btnSetNormal_clicked();
+    void on_btnSetSilver_clicked();
+    void on_btnSetGold_clicked();
+    void on_btnSetVIP_clicked();
+
+
 
 private:
     Ui::AdminWindow *ui;
+
+    void ChangeUserLevel(const QString& levelName, int newPoints);
+    void loadRestaurantsTable();
+    void loadStatistics();
+    void loadUsersList();
+
 };
 
 #endif // ADMINWINDOW_H

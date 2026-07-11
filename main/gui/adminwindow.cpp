@@ -7,6 +7,7 @@
 #include "Restaurantdb.h"
 #include "Login_and_SignUp.h"
 #include "Orderdb.h"
+#include "customer.h"
 
 AdminWindow::AdminWindow(QWidget *parent)
     : QDialog(parent)
@@ -27,6 +28,12 @@ AdminWindow::AdminWindow(QWidget *parent)
         ui->stackedWidget->setCurrentIndex(3);
         loadStatistics();
     });
+
+    connect(ui->btnManageUsers, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(4);
+        loadUsersList();
+    });
+
 
     connect(ui->btnAddRestaurant_2, &QPushButton::clicked, this, &AdminWindow::onSaveRestaurantClicked);
 
@@ -190,4 +197,70 @@ void AdminWindow::on_btnDistributeCoupons_clicked()
 
     for(Customer* cust : allCustomers) delete cust;
     QMessageBox::information(this, "Success", QString("Coupons distributed successfully") );
+}
+
+void AdminWindow::loadUsersList()
+{
+    ui->listWidgetUsers->clear();
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+    vector<Customer*> allCustomers = dbaslog.getAllCustomers();
+    for(auto* cust : allCustomers)
+    {
+        int ID = cust->getID();
+        QString name = QString::fromStdString(cust->getUsername());
+        int points = cust->getPoints();
+        QString level = QString::fromStdString(cust->getMembership()->getLevelName());
+
+        QString displayText = name + "   |   Level: " + level + "   |   Points: " + QString::number(points);
+
+        QListWidgetItem* item = new QListWidgetItem(displayText);
+
+        item->setData(Qt::UserRole, ID);
+        item->setData(Qt::UserRole + 1, name);
+        item->setData(Qt::UserRole + 2, points);
+        item->setData(Qt::UserRole + 3, level);
+
+        ui->listWidgetUsers->addItem(item);
+    }
+}
+
+void AdminWindow::ChangeUserLevel(const QString& levelName, int newPoints)
+{
+    QListWidgetItem *selectedItem = ui->listWidgetUsers->currentItem();
+    if (!selectedItem)
+    {
+        QMessageBox::warning(this, "Error" , "Please select a user first.");
+        return;
+    }
+    int UserId = selectedItem->data(Qt::UserRole).toInt();
+
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+
+    dbaslog.updateLoyalty(UserId, newPoints, levelName.toStdString());
+
+    QMessageBox::information(this, "success" , "User level updated successfully.");
+
+    loadUsersList();
+}
+
+void AdminWindow::on_btnSetNormal_clicked()
+{
+    ChangeUserLevel("Normal", 0);
+}
+
+void AdminWindow::on_btnSetSilver_clicked()
+{
+    ChangeUserLevel("Silver", 100);
+}
+
+void AdminWindow::on_btnSetGold_clicked()
+{
+    ChangeUserLevel("Gold", 300);
+}
+
+void AdminWindow::on_btnSetVIP_clicked()
+{
+    ChangeUserLevel("VIP", 700);
 }

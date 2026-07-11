@@ -28,6 +28,7 @@
 }
 
 QPushButton#btnAddRestaurant, 
+QPushButton#btnManageUsers,
 QPushButton#btnManageStatus, 
 QPushButton#btnViewStatistics {
 	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #1e222b, stop:1 #14171e);
@@ -44,6 +45,7 @@ QPushButton#btnViewStatistics {
 }
 QPushButton#btnAddRestaurant:hover, 
 QPushButton#btnManageStatus:hover, 
+QPushButton#btnManageUsers:hover,
 QPushButton#btnViewStatistics:hover {
     background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #252b37, stop:1 #1a1e27);
     color: #ffffff;          
@@ -54,6 +56,7 @@ QPushButton#btnViewStatistics:hover {
 
 QPushButton#btnAddRestaurant:pressed, 
 QPushButton#btnManageStatus:pressed, 
+QPushButton#btnManageUsers:pressed,
 QPushButton#btnViewStatistics:pressed {
     background-color: #11141a;
     border: 1px solid #d97706; 
@@ -257,10 +260,97 @@ QPushButton#btnDistributeCoupons:pressed {
 QPushButton#btnDistributeCoupons:disabled {
     background-color: #555555;
     color: #aaaaaa;
+}
+
+
+QListWidget#listWidgetUsers {
+    background-color: #2a2a35;
+    border: 2px solid #3c3c4a;
+    border-radius: 12px;
+    padding: 8px;
+    color: #f1f2f6;
+    font-family: &quot;Segoe UI&quot;, Tahoma, sans-serif;
+    font-size: 14px;
+}
+
+QListWidget#listWidgetUsers::item {
+    background-color: #323242;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    color: #e4e7eb;
+}
+
+QListWidget#listWidgetUsers::item:hover {
+    background-color: #3d3d52;
+    border: 1px solid #5a5a75;
+}
+
+QListWidget#listWidgetUsers::item:selected {
+    background-color: #4b4b68;
+    color: #ffffff;
+    border: 2px solid #706fd3;
+}
+
+
+QPushButton#btnSetNormal, 
+QPushButton#btnSetSilver, 
+QPushButton#btnSetGold, 
+QPushButton#btnSetVIP {
+    font-family: &quot;Segoe UI&quot;, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 8px;
+    padding: 10px 16px;
+}
+
+
+QPushButton#btnSetNormal {
+    background-color: #7f8c8d;
+    border: 1px solid #95a5a6;
+    color: white;
+}
+QPushButton#btnSetNormal:hover { background-color: #95a5a6; }
+QPushButton#btnSetNormal:pressed { background-color: #636e72; }
+
+
+QPushButton#btnSetSilver {
+    background-color: #95afc0;
+    border: 1px solid #dff9fb;
+    color: #2c3e50;
+}
+QPushButton#btnSetSilver:hover { background-color: #c7ecee; }
+QPushButton#btnSetSilver:pressed { background-color: #57606f; color: white; }
+
+
+QPushButton#btnSetGold {
+    background-color: #f1c40f;
+    border: 1px solid #f39c12;
+    color: #2c3e50;
+}
+QPushButton#btnSetGold:hover { background-color: #f39c12; }
+QPushButton#btnSetGold:pressed { background-color: #e67e22; }
+
+
+QPushButton#btnSetVIP {
+    background-color: #8e44ad;
+    border: 1px solid #9b59b6;
+    color: white;
+}
+QPushButton#btnSetVIP:hover { background-color: #9b59b6; }
+QPushButton#btnSetVIP:pressed { background-color: #6c5ce7; }
+
+
+QPushButton#btnSetNormal:hover, 
+QPushButton#btnSetSilver:hover, 
+QPushButton#btnSetGold:hover, 
+QPushButton#btnSetVIP:hover {
+    margin-top: -2px;
+    margin-bottom: 2px;
 }</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="verticalLayoutWidget">
@@ -291,6 +381,13 @@ QPushButton#btnDistributeCoupons:disabled {
        <widget class="QPushButton" name="btnViewStatistics">
         <property name="text">
          <string>View System Statistics</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnManageUsers">
+        <property name="text">
+         <string>Manage Users</string>
         </property>
        </widget>
       </item>
@@ -756,6 +853,58 @@ QPushButton#btnDistributeCoupons:disabled {
      <property name="text">
       <string>Back</string>
      </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_5">
+    <widget class="QListWidget" name="listWidgetUsers">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>30</y>
+       <width>731</width>
+       <height>461</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>510</y>
+       <width>761</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="btnSetNormal">
+        <property name="text">
+         <string>Normal</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSetSilver">
+        <property name="text">
+         <string>Silver</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSetGold">
+        <property name="text">
+         <string>Gold</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSetVIP">
+        <property name="text">
+         <string>VIP</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
