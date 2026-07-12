@@ -23,6 +23,7 @@ class Customer
         int Points;
         MembershipLevel* CurrentLevel;
         int coupons = 0;
+        string badges = "";
 
     public :
         Customer(int ID, string Username, int Points):
@@ -45,6 +46,8 @@ class Customer
         MembershipLevel* getMembership() const {return CurrentLevel; }
         int getCoupons() const {return coupons; }
         void setCoupons(int c) {coupons = c; }
+        string getBadges() const { return badges; }
+        void setBadges(string b) { badges = b; }
            
 };
 

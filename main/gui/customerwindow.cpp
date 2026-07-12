@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QDebug>
+#include <QTime>
 
 #include "../Restaurantdb.h"
 #include "../Menudb.h"
@@ -20,6 +21,7 @@ customerwindow::customerwindow(QString username , QWidget *parent)
 
     connect(ui->btnBack, &QPushButton::clicked, this, [=]() {
         ui->stackedWidget->setCurrentIndex(0);
+        updateLevelInfo();
 
     });
 
@@ -29,6 +31,7 @@ customerwindow::customerwindow(QString username , QWidget *parent)
 
     connect(ui->btnBack_5, &QPushButton::clicked, this, [=]() {
         ui->stackedWidget->setCurrentIndex(0);
+        updateLevelInfo();
 
     });
 
@@ -50,6 +53,7 @@ customerwindow::customerwindow(QString username , QWidget *parent)
     connect(ui->listWidgetOrders, &QListWidget::itemClicked, this, &customerwindow::onOrderClicked);
 
     updateLevelInfo();
+
 }
 
 customerwindow::~customerwindow()
@@ -361,6 +365,7 @@ void customerwindow::processCheckout()
     isCouponApplied = false;
 
     updateLevelInfo();
+    AwardBadges();
 }
 
 void customerwindow::loadOrdersList()
@@ -513,6 +518,30 @@ void customerwindow :: updateLevelInfo()
                 .arg(QString::fromStdString(UserMembership->getNextLevelColorCode()))
             );
     }
+
+    string UserBadges = CurrentUser->getBadges();
+    qDebug() << UserBadges <<"\n";
+    int flag = 0;
+
+    QString badgeText = "";
+
+    if (UserBadges.find("Night") != string::npos) {
+        badgeText += "Night Customer  | ";
+        flag = 1;
+    }
+    if (UserBadges.find("Frequent") != string::npos) {
+        badgeText += "Frequent Buyer | ";
+        flag = 1;
+    }
+
+
+    if (flag == 0) {
+        ui->lblBadges->setText("Badges: None");
+    }
+    else{
+        ui->lblBadges->setText("Badges: " + badgeText);
+    }
+
     delete CurrentUser;
 }
 
@@ -626,4 +655,47 @@ void customerwindow::on_btnUseCoupon_clicked()
     }
 
     if (CurrentUser) delete CurrentUser;
+}
+
+void customerwindow :: AwardBadges(){
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+    OrderDAO ord(dbmain);
+
+    string Username = CurrentCustomerUsername.toStdString();
+    int UserID = dbaslog.getUserIdByUsername(Username);
+    Customer* CurrentUser = dbaslog.getCustomerByUsername(Username);
+
+    if(!CurrentUser) return;
+
+    string CurrentBadges = CurrentUser->getBadges();
+    bool getNewBadges = false;
+
+    if (CurrentBadges.find("Night") == string::npos){
+        QTime now = QTime::currentTime();
+        if(now.hour() >= 10 && now.hour() <= 12){
+            if (!CurrentBadges.empty())CurrentBadges += ",";
+            CurrentBadges += "Night";
+            getNewBadges = true;
+
+        }
+    }
+
+    if (CurrentBadges.find("Frequent") == string::npos){
+        vector<Order> UserOrders = ord.AllOrders("UserID", UserID);
+        if (UserOrders.size() >= 5) {
+
+            if (!CurrentBadges.empty()) CurrentBadges += ",";
+            CurrentBadges += "Frequent";
+            getNewBadges = true;
+        }
+    }
+
+    if (getNewBadges) {
+        dbaslog.updateBadges(UserID, CurrentBadges);
+        QMessageBox::information(this, "Achievement" , "Congratulations! You earned new badges" );
+    }
+
+    delete CurrentUser;
+
 }

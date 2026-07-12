@@ -248,7 +248,7 @@ QLabel#lblNextLevel {
 </string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <widget class="QPushButton" name="btnBrowseRestaurants">
@@ -316,8 +316,8 @@ QPushButton:pressed {
       <widget class="QWidget" name="horizontalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>530</x>
-         <y>20</y>
+         <x>550</x>
+         <y>30</y>
          <width>471</width>
          <height>37</height>
         </rect>
@@ -345,6 +345,30 @@ QPushButton:pressed {
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QLabel" name="lblBadges">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>20</y>
+         <width>451</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel#lblBadges {
+    background-color: #1a1d24;
+    color: #ffd700;
+    border: 1px solid #d4a017;
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
       </widget>
      </widget>
      <widget class="QWidget" name="page_3">

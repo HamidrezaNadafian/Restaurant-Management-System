@@ -33,6 +33,8 @@ public:
     void updateCoupons(int userId, int newCouponCount);
     
     vector<Customer*> getAllCustomers();
+
+    void updateBadges(int ID, string NewBadges);
 };
 
 #endif

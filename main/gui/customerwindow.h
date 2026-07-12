@@ -50,6 +50,8 @@ private slots:
 
 private:
 
+    void AwardBadges();
+
     void RefreshCart();
 
     double CurrentShippingCost = 0.0;
