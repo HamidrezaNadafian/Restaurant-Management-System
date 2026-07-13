@@ -49,6 +49,15 @@ AdminWindow::AdminWindow(QWidget *parent)
         ui->stackedWidget->setCurrentIndex(0);
     });
 
+    connect(ui->btnViewUserLevels, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(5);
+        loadUserStatistics();
+    });
+
+
+    connect(ui->btnBack_7, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(3);
+    });
 
     connect(ui->btnToggleStatus, &QPushButton::clicked, this, &AdminWindow::onToggleStatusClicked);
 
@@ -263,4 +272,37 @@ void AdminWindow::on_btnSetGold_clicked()
 void AdminWindow::on_btnSetVIP_clicked()
 {
     ChangeUserLevel("VIP", 700);
+}
+
+void AdminWindow::loadUserStatistics()
+{
+
+
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+
+    int NormalCount = 0 , SilverCount = 0 , GoldCount = 0 , VIPCount = 0;
+
+    vector<Customer*> AllCustomers = dbaslog.getAllCustomers();
+
+    for (auto* cust : AllCustomers)
+    {
+
+        if (cust && cust->getMembership())
+        {
+
+            if(cust->getMembership()->getLevelName() == "Normal")NormalCount++;
+            if(cust->getMembership()->getLevelName() == "Silver")SilverCount++;
+            if(cust->getMembership()->getLevelName() == "Gold")GoldCount++;
+            if(cust->getMembership()->getLevelName() == "VIP")VIPCount++;
+
+        }
+        delete cust;
+    }
+
+    ui->lblNormalCount->setText(QString::number(NormalCount));
+    ui->lblSilverCount->setText(QString::number(SilverCount));
+    ui->lblGoldCount->setText(QString::number(GoldCount));
+    ui->lblVIPCount->setText(QString::number(VIPCount));
+
 }

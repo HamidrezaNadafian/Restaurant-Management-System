@@ -196,7 +196,7 @@ void LOGINDAO::updateCoupons(int UserId, int newCouponCount)
 vector<Customer*> LOGINDAO::getAllCustomers()
 {
     vector<Customer*> CustomersList;
-    string sql = "SELECT * FROM Users WHERE Role = 'Customer';"; 
+    string sql = "SELECT * FROM users;";
     sqlite3_stmt* stmt;
 
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, NULL) == SQLITE_OK)
@@ -204,10 +204,9 @@ vector<Customer*> LOGINDAO::getAllCustomers()
         while (sqlite3_step(stmt) == SQLITE_ROW){
             int ID = sqlite3_column_int(stmt, 0);
             string username = (const char*)(sqlite3_column_text(stmt, 1));
-            int points = sqlite3_column_int(stmt, 
-            4);
+            int points = sqlite3_column_int(stmt, 4);
             int coupons = sqlite3_column_int(stmt, 6);
-            string badgeText = (const char*)(sqlite3_column_text(stmt, 6));
+            string badgeText = (const char*)(sqlite3_column_text(stmt, 7));
 
             Customer* customer = new Customer(ID , username , points);
             customer->setCoupons(coupons);

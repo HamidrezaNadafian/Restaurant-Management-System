@@ -38,6 +38,7 @@ private:
     void loadRestaurantsTable();
     void loadStatistics();
     void loadUsersList();
+    void loadUserStatistics();
 
 };
 

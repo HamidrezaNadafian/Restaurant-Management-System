@@ -347,10 +347,90 @@ QPushButton#btnSetGold:hover,
 QPushButton#btnSetVIP:hover {
     margin-top: -2px;
     margin-bottom: 2px;
+}
+
+QFrame#frameNormal {
+    background-color: #2D3436;
+    border: 2px solid #4B5563;
+    border-radius: 12px;
+}
+QFrame#frameSilver {
+    background-color: #7B8794;
+    border: 2px solid #5F6B76;
+    border-radius: 12px;
+}
+QFrame#frameGold {
+    background-color: #B8860B;
+    border: 2px solid #8C6A05;
+    border-radius: 12px;
+}
+QFrame#frameVIP {
+    background-color: #5B21B6;
+    border: 2px solid #4C1D95;
+    border-radius: 12px;
+}
+
+QLabel#lblTitleNormal {
+    color: #E5E7EB;
+    font-size: 15px;
+    font-weight: bold;
+    background: transparent;
+}
+
+QLabel#lblNormalCount {
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    background: transparent;
+}
+
+
+QLabel#lblTitleSilver {
+    color: #F3F4F6;
+    font-size: 15px;
+    font-weight: bold;
+    background: transparent;
+}
+
+QLabel#lblSilverCount {
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    background: transparent;
+}
+
+
+QLabel#lblTitleGold {
+    color: #FFF4C2;
+    font-size: 15px;
+    font-weight: bold;
+    background: transparent;
+}
+
+QLabel#lblGoldCount {
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    background: transparent;
+}
+
+
+QLabel#lblTitleVIP {
+    color: #E9D5FF;
+    font-size: 15px;
+    font-weight: bold;
+    background: transparent;
+}
+
+QLabel#lblVIPCount {
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    background: transparent;
 }</string>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="verticalLayoutWidget">
@@ -654,9 +734,9 @@ QPushButton#btnSetVIP:hover {
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>20</y>
-       <width>911</width>
+       <width>891</width>
        <height>571</height>
       </rect>
      </property>
@@ -841,18 +921,83 @@ QPushButton#btnSetVIP:hover {
       </item>
      </layout>
     </widget>
-    <widget class="QPushButton" name="btnBack">
+    <widget class="QWidget" name="verticalLayoutWidget_7">
      <property name="geometry">
       <rect>
-       <x>959</x>
-       <y>28</y>
-       <width>101</width>
-       <height>31</height>
+       <x>910</x>
+       <y>20</y>
+       <width>160</width>
+       <height>571</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Back</string>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_7">
+      <item>
+       <widget class="QPushButton" name="btnViewUserLevels">
+        <property name="styleSheet">
+         <string notr="true">QPushButton#btnViewUserLevels {
+    background-color: #2C3E50;
+    color: white;
+    border: 1px solid #3B82F6;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QPushButton#btnViewUserLevels:hover {
+    background-color: #34495E;
+    border: 1px solid #60A5FA;
+}
+
+QPushButton#btnViewUserLevels:pressed {
+    background-color: #22313F;
+}
+
+QPushButton#btnViewUserLevels:disabled {
+    background-color: #3A3A3A;
+    color: #7F8C8D;
+    border: 1px solid #555555;
+}</string>
+        </property>
+        <property name="text">
+         <string>View User Levels</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnBack">
+        <property name="styleSheet">
+         <string notr="true">QPushButton#btnBack{
+    background-color: #rgb(170, 0, 0);
+    color: white;
+    border: 1px solid #3B82F6;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QPushButton#btnBack:hover {
+    background-color: #34495E;
+    border: 1px solid #60A5FA;
+}
+
+QPushButton#btnBack:pressed {
+    background-color: #22313F;
+}
+
+QPushButton#btnBack:disabled {
+    background-color: #3A3A3A;
+    color: #7F8C8D;
+    border: 1px solid #555555;
+}</string>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QWidget" name="page_5">
@@ -905,6 +1050,205 @@ QPushButton#btnSetVIP:hover {
        </widget>
       </item>
      </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_6">
+    <widget class="QFrame" name="frame_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>10</y>
+       <width>889</width>
+       <height>569</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QFrame" name="frameNormal">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>461</width>
+        <height>281</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_8">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>301</width>
+         <height>211</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="QLabel" name="lblTitleNormal">
+          <property name="text">
+           <string>Normal</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblNormalCount">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frameGold">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>280</y>
+        <width>461</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_9">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>301</width>
+         <height>221</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QLabel" name="lblTitleGold">
+          <property name="text">
+           <string>Gold</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblGoldCount">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frameVIP">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>280</y>
+        <width>451</width>
+        <height>291</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_10">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>30</y>
+         <width>291</width>
+         <height>211</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_10">
+        <item>
+         <widget class="QLabel" name="lblTitleVIP">
+          <property name="text">
+           <string>VIP</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblVIPCount">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frameSilver">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>0</y>
+        <width>451</width>
+        <height>281</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_11">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>30</y>
+         <width>291</width>
+         <height>211</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <widget class="QLabel" name="lblTitleSilver">
+          <property name="text">
+           <string>Silver</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblSilverCount">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="btnBack_7">
+     <property name="geometry">
+      <rect>
+       <x>950</x>
+       <y>30</y>
+       <width>90</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
     </widget>
    </widget>
   </widget>
