@@ -11,9 +11,11 @@ class Order {
         string RestaurantName;
         double Price;
         string status;
+        string UserLevel;
+
     public:
-        Order(int id, int UserID , int restaurantId, string RestaurantName , double Price, string status)
-            : id(id), UserID(UserID),restaurantId(restaurantId), RestaurantName(RestaurantName) , Price(Price), status(status) {}
+        Order(int id, int UserID , int restaurantId, string RestaurantName , double Price, string status , string UserLevel)
+            : id(id), UserID(UserID),restaurantId(restaurantId), RestaurantName(RestaurantName) , Price(Price), status(status), UserLevel(UserLevel) {}
 
         void displayInfo()
         {
@@ -28,6 +30,8 @@ class Order {
         string getRestaurantName() const { return RestaurantName; }
         double getPrice() const { return Price; }
         string getStatus() const { return status; }
+        string getUserLevel() const { return UserLevel; }
+        
 };
 
 class OrderItem {

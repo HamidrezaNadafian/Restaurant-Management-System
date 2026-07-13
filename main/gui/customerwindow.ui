@@ -72,7 +72,14 @@ QWidget {
 }
 
 
-#lblDetailName { font-size: 22px; font-weight: bold; color: #ffffff; margin-bottom: 5px; }
+#lblDetailName {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    padding: 5px;
+}
+
 #lblDetailPrice { font-size: 20px; font-weight: bold; color: rgb(208, 169, 255); margin-bottom: 15px; }
 #lblDetailDesc { font-size: 13px; color: #b2b2b2; background-color: #2b2b36; padding: 15px; border-radius: 8px; }
 #lblDetailStatus { font-size: 14px; font-weight: bold; color: #2ed573; margin-top: 10px; }
@@ -245,10 +252,31 @@ QLabel#lblNextLevel {
     padding: 5px 12px;
 }
 
-</string>
+#lblDetailPrice_2 {
+    color: #2ed573;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+}
+#lblOrderLevel {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(243, 156, 18, 20), stop:1 rgba(241, 196, 15, 0));
+    color: #f1c40f;
+    font-size: 14px;
+    font-weight: bold;
+    border-left: 4px solid #f39c12;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+#lblDetailStatus_2 {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="page">
       <widget class="QPushButton" name="btnBrowseRestaurants">
@@ -935,6 +963,13 @@ QPushButton:hover {
          </item>
          <item>
           <widget class="QListWidget" name="listWidgetItems"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblOrderLevel">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

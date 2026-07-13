@@ -15,7 +15,7 @@ class OrderDAO
         OrderDAO(DataBase& DB): db(DB.getdb()){}
         void exec(const string& s);
         void CreateOrderTable();
-        int AddOrder(int UserID , int restaurantId, string ResturantName ,double Price, string status);
+        int AddOrder(int UserID , int restaurantId, string ResturantName ,double Price, string status , string UserLevel);
 
         void UpdateStatusOrder(string status , int ID);
 

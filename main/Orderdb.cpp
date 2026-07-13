@@ -16,15 +16,16 @@ void OrderDAO :: CreateOrderTable()
 {
     string Table = "CREATE TABLE IF NOT EXISTS Orders ("
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT, UserID INTEGER ,restaurantId INTEGER, ResturantName TEXT ,Price REAL, "
-                    "status Text);";
+                    "status Text ,UserLevel TEXT);";
 
     exec(Table);    
 }
 
-int OrderDAO :: AddOrder(int UserID , int restaurantId, string ResturantName ,double Price, string status)
+int OrderDAO :: AddOrder(int UserID , int restaurantId, string ResturantName ,double Price, string status , string UserLevel)
 {
-    string sql = "INSERT INTO Orders (UserID , restaurantId, ResturantName ,Price , status) VALUES ('"
-    + to_string(UserID) + "', '" + to_string(restaurantId) + "', '" + ResturantName + "', '" + to_string(Price) + "', '" + status + "');";
+    string sql = "INSERT INTO Orders (UserID , restaurantId, ResturantName ,Price , status , UserLevel) VALUES ('"
+    + to_string(UserID) + "', '" + to_string(restaurantId) + "', '" + ResturantName + "', '" + to_string(Price) + "', '" + status + "', '" + UserLevel + "');";
+    
     char* messageError;
     int exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messageError);
     
@@ -65,8 +66,9 @@ vector<Order> OrderDAO :: AllOrders(string RestaurantOrUser ,  int ID)
 
             string status = (const char*)(sqlite3_column_text(stmt, 5));
 
+            string UserLevel = (const char*)(sqlite3_column_text(stmt, 6));
             
-            Order ord(ID , UserID , RestaurantId , ResturantName , Price , status);
+            Order ord(ID , UserID , RestaurantId , ResturantName , Price , status , UserLevel);
             Orders.push_back(ord);
         }
     }

@@ -325,7 +325,23 @@ void customerwindow::processCheckout()
         if(FinalTotalCost < 0) FinalTotalCost = 0;
     }
 
-    int ORDERID = ord.AddOrder(UserID , selectedRestaurantId ,RestaurantName, FinalTotalCost , "Awaiting restaurant approval");
+    string levelAfterOrder = "Normal";
+
+    if(CustINFO){
+        CustINFO->AddPoints(FinalTotalCost);
+        int FinalPoints = CustINFO->getPoints();
+        if(CustINFO->getMembership()){
+            levelAfterOrder = CustINFO->getMembership()->getLevelName();
+        }
+        dbaslog.updateLoyalty(UserID, FinalPoints, "NULL");
+        delete CustINFO;
+    }
+
+
+
+
+
+    int ORDERID = ord.AddOrder(UserID , selectedRestaurantId ,RestaurantName, FinalTotalCost , "Awaiting restaurant approval" , levelAfterOrder);
 
     for (int i = 0; i < ui->cartListWidget->count() ; i++){
 
@@ -350,13 +366,6 @@ void customerwindow::processCheckout()
         }
     }
 
-
-    if(CustINFO){
-        CustINFO->AddPoints(FinalTotalCost);
-        int FinalPoints = CustINFO->getPoints();
-        dbaslog.updateLoyalty(UserID, FinalPoints, "NULL");
-        delete CustINFO;
-    }
 
     ui->cartListWidget->clear();
     cartTotal = 0;
@@ -422,11 +431,17 @@ void customerwindow::onOrderClicked(QListWidgetItem *item)
     }
 
     QString status;
+    QString orderLevel;
+
     if (FoundOrder){
         ui->lblDetailName->setText(QString::fromStdString(FoundOrder->getRestaurantName()));
         ui->lblDetailPrice_2->setText(QString::number(FoundOrder->getPrice(), 'f', 2) + " $");
         status = QString::fromStdString(FoundOrder->getStatus());
         ui->lblDetailStatus_2->setText(status);
+
+        orderLevel = QString::fromStdString(FoundOrder->getUserLevel());
+        ui->lblOrderLevel->setText("Level After Order: " + orderLevel);
+
     }
 
 
@@ -673,7 +688,7 @@ void customerwindow :: AwardBadges(){
 
     if (CurrentBadges.find("Night") == string::npos){
         QTime now = QTime::currentTime();
-        if(now.hour() >= 10 && now.hour() <= 12){
+        if(now.hour() >= 23 && now.hour() <= 5){
             if (!CurrentBadges.empty())CurrentBadges += ",";
             CurrentBadges += "Night";
             getNewBadges = true;
