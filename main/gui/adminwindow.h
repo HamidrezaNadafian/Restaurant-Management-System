@@ -39,6 +39,7 @@ private:
     void loadStatistics();
     void loadUsersList();
     void loadUserStatistics();
+    void loadLevelChangesHistory();
 
 };
 

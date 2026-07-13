@@ -29,6 +29,7 @@
 
 QPushButton#btnAddRestaurant, 
 QPushButton#btnManageUsers,
+QPushButton#btnViewLevelChange,
 QPushButton#btnManageStatus, 
 QPushButton#btnViewStatistics {
 	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #1e222b, stop:1 #14171e);
@@ -44,6 +45,7 @@ QPushButton#btnViewStatistics {
 	padding-left: 0px;
 }
 QPushButton#btnAddRestaurant:hover, 
+QPushButton#btnViewLevelChange:hover,
 QPushButton#btnManageStatus:hover, 
 QPushButton#btnManageUsers:hover,
 QPushButton#btnViewStatistics:hover {
@@ -56,6 +58,7 @@ QPushButton#btnViewStatistics:hover {
 
 QPushButton#btnAddRestaurant:pressed, 
 QPushButton#btnManageStatus:pressed, 
+QPushButton#btnViewLevelChange:pressed,
 QPushButton#btnManageUsers:pressed,
 QPushButton#btnViewStatistics:pressed {
     background-color: #11141a;
@@ -427,19 +430,78 @@ QLabel#lblVIPCount {
     font-size: 30px;
     font-weight: 700;
     background: transparent;
+}
+
+
+QTableWidget#tableWidgetHistory {
+    background-color: #2a2a35;       
+    color: #f1f2f6;                 
+    border: 2px solid #3c3c4a;       
+    border-radius: 12px;             
+    gridline-color: #3c3c4a;        
+    font-family: &quot;Segoe UI&quot;, Tahoma, sans-serif;
+    font-size: 14px;
+    selection-background-color: #706fd3;
+    selection-color: #ffffff;
+    outline: none;                   
+}
+
+
+QTableWidget#tableWidgetHistory::item {
+    padding: 8px;
+    border-bottom: 1px solid #323242;
+}
+
+QTableWidget#tableWidgetHistory::item:hover {
+    background-color: #3d3d52;       
+}
+
+
+QTableWidget#tableWidgetHistory QHeaderView::section {
+    background-color: #1e1e24;       
+    color: #a4b0be;                  
+    font-weight: bold;
+    font-size: 14px;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #706fd3;
+}
+
+QTableWidget#tableWidgetHistory QScrollBar:vertical {
+    border: none;
+    background-color: #1e1e24;
+    width: 12px;
+    border-radius: 6px;
+    margin: 0px;
+}
+
+QTableWidget#tableWidgetHistory QScrollBar::handle:vertical {
+    background-color: #5a5a75;
+    min-height: 30px;
+    border-radius: 6px;
+}
+
+QTableWidget#tableWidgetHistory QScrollBar::handle:vertical:hover {
+    background-color: #706fd3;
+}
+
+QTableWidget#tableWidgetHistory QScrollBar::add-line:vertical, 
+QTableWidget#tableWidgetHistory QScrollBar::sub-line:vertical {
+    border: none;
+    background: none;
 }</string>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>6</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
        <x>250</x>
-       <y>60</y>
+       <y>50</y>
        <width>661</width>
-       <height>511</height>
+       <height>521</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -468,6 +530,13 @@ QLabel#lblVIPCount {
        <widget class="QPushButton" name="btnManageUsers">
         <property name="text">
          <string>Manage Users</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnViewLevelChange">
+        <property name="text">
+         <string>View Level Change History</string>
         </property>
        </widget>
       </item>
@@ -1051,6 +1120,19 @@ QPushButton#btnBack:disabled {
       </item>
      </layout>
     </widget>
+    <widget class="QPushButton" name="PushBack">
+     <property name="geometry">
+      <rect>
+       <x>940</x>
+       <y>40</y>
+       <width>90</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_6">
     <widget class="QFrame" name="frame_2">
@@ -1246,8 +1328,123 @@ QPushButton#btnBack:disabled {
        <height>29</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#btnBack_7{
+    background-color: #rgb(170, 0, 0);
+    color: white;
+    border: 1px solid #3B82F6;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QPushButton#btnBack_7:hover {
+    background-color: #34495E;
+    border: 1px solid #60A5FA;
+}
+
+QPushButton#btnBack_7:pressed {
+    background-color: #22313F;
+}
+
+QPushButton#btnBack_7:disabled {
+    background-color: #3A3A3A;
+    color: #7F8C8D;
+    border: 1px solid #555555;
+}</string>
+     </property>
      <property name="text">
       <string>Back</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_7">
+    <widget class="QTableWidget" name="tableWidgetHistory">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>20</y>
+       <width>851</width>
+       <height>561</height>
+      </rect>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="autoScrollMargin">
+      <number>16</number>
+     </property>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>36</number>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>211</number>
+     </attribute>
+     <attribute name="verticalHeaderMinimumSectionSize">
+      <number>30</number>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>40</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Username</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Old Level</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>New Level</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Date</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QPushButton" name="btnBack_2">
+     <property name="geometry">
+      <rect>
+       <x>960</x>
+       <y>30</y>
+       <width>90</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#btnBack_2{
+    background-color: #rgb(170, 0, 0);
+    color: white;
+    border: 1px solid #3B82F6;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QPushButton#btnBack_2:hover {
+    background-color: #34495E;
+    border: 1px solid #60A5FA;
+}
+
+QPushButton#btnBack_2:pressed {
+    background-color: #22313F;
+}
+
+QPushButton#btnBack_2:disabled {
+    background-color: #3A3A3A;
+    color: #7F8C8D;
+    border: 1px solid #555555;
+}</string>
+     </property>
+     <property name="text">
+      <string>back</string>
      </property>
     </widget>
    </widget>

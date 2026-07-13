@@ -7,6 +7,14 @@
 #include "SecretUserForAdmin.h"
 #include "customer.h"
 
+struct LevelLog {
+    string Username;
+    string OldLevel;
+    string NewLevel;
+    string Date;
+};
+
+
 class LOGINDAO
 {
 private:
@@ -35,6 +43,10 @@ public:
     vector<Customer*> getAllCustomers();
 
     void updateBadges(int ID, string NewBadges);
+
+    void AddLevelChange(string Username, string OldLevel, string NewLevel);
+    std::vector<LevelLog> getLevelHistory();
 };
+
 
 #endif

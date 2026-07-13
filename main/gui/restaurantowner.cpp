@@ -455,20 +455,26 @@ void RestaurantOwner::ChangeOrderStatus(const std::string& NewStatus)
         }
 
 
+        string OldLevel = "Normal";
+        if (customer->getMembership()) {
+            OldLevel = customer->getMembership()->getLevelName();
+        }
+
         customer->AddPoints(totalPrice);
 
         int NewPoints = customer->getPoints();
 
-        string Level = customer->getMembership()->getLevelName();
+        string NewLevel = customer->getMembership()->getLevelName();
+
+        if (OldLevel != NewLevel) {
+            dbaslog.AddLevelChange(Username, OldLevel, NewLevel);
+        }
 
         if (NewPoints < 0) NewPoints = 0;
 
-        dbaslog.updateLoyalty(CustomerId , NewPoints , Level);
+        dbaslog.updateLoyalty(CustomerId , NewPoints , NewLevel);
         delete customer;
 
-        MembershipLevel *mmbershiplevel = LevelFactory ::getLevel(NewPoints);
-        string NewLevel = mmbershiplevel ->getLevelName();
-        delete mmbershiplevel;
 
         ord.UpdateOrderLevel(SelectedOrderId , NewLevel);
     }

@@ -26,8 +26,15 @@ void LOGINDAO::CreateLOGINTable()
                 "Coupons INTEGER DEFAULT 0, "
                 "Badges TEXT DEFAULT '');";
                 
+    string sqlp = "CREATE TABLE IF NOT EXISTS LevelHistory ("
+                    "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    "Username TEXT,"
+                    "OldLevel TEXT,"
+                    "NewLevel TEXT,"
+                    "ChangeDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP);" ;
 
     exec(sql);    
+    exec(sqlp);    
 }
 
 bool LOGINDAO:: RegisterUser(const string username, const string password, string UserRoles, string& message)   
@@ -230,4 +237,43 @@ void LOGINDAO::updateBadges(int ID, string NewBadges)
         sqlite3_free(MessageError);
     }
 
+}
+
+void LOGINDAO :: AddLevelChange(string Username, string OldLevel, string NewLevel)
+{
+    sqlite3_stmt* stmt;
+    const char* sql = "INSERT INTO LevelHistory (Username, OldLevel , NewLevel) VALUES (?, ? , ?);";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_text(stmt, 1, Username.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 2, OldLevel.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 3, NewLevel.c_str(), -1, SQLITE_TRANSIENT);
+
+        sqlite3_step(stmt);
+        
+    }
+    sqlite3_finalize(stmt);
+}
+
+vector<LevelLog> LOGINDAO::getLevelHistory()
+{
+    vector<LevelLog> AllLevelChanges;
+    sqlite3_stmt* stmt;
+
+    const char* sql = "SELECT Username, OldLevel, NewLevel, ChangeDate FROM LevelHistory ORDER BY ID DESC"; //
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            LevelLog UserChangeLevel;
+            UserChangeLevel.Username = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+            UserChangeLevel.OldLevel = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+            UserChangeLevel.NewLevel =reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+            UserChangeLevel.Date = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
+
+            AllLevelChanges.push_back(UserChangeLevel);
+        }
+    }
+    sqlite3_finalize(stmt);
+    return AllLevelChanges;
 }

@@ -44,6 +44,10 @@ AdminWindow::AdminWindow(QWidget *parent)
     connect(ui->btnBackToMenu_2, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentIndex(0);
     });
+    connect(ui->btnViewLevelChange, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(6);
+        loadLevelChangesHistory();
+    });
 
     connect(ui->btnBack, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentIndex(0);
@@ -54,10 +58,19 @@ AdminWindow::AdminWindow(QWidget *parent)
         loadUserStatistics();
     });
 
+    connect(ui->btnBack_2, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(0);
+    });
+
 
     connect(ui->btnBack_7, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentIndex(3);
     });
+
+    connect(ui->PushBack, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(0);
+    });
+
 
     connect(ui->btnToggleStatus, &QPushButton::clicked, this, &AdminWindow::onToggleStatusClicked);
 
@@ -247,6 +260,14 @@ void AdminWindow::ChangeUserLevel(const QString& levelName, int newPoints)
     DataBase dbmain;
     LOGINDAO dbaslog(dbmain);
 
+    QString OldLevel = selectedItem->data(Qt::UserRole + 3).toString();
+
+    if(OldLevel != levelName){
+        string Username = dbaslog.getUsernameById(UserId);
+
+        dbaslog.AddLevelChange(Username, OldLevel.toStdString(), levelName.toStdString());
+    }
+
     dbaslog.updateLoyalty(UserId, newPoints, levelName.toStdString());
 
     QMessageBox::information(this, "success" , "User level updated successfully.");
@@ -304,5 +325,25 @@ void AdminWindow::loadUserStatistics()
     ui->lblSilverCount->setText(QString::number(SilverCount));
     ui->lblGoldCount->setText(QString::number(GoldCount));
     ui->lblVIPCount->setText(QString::number(VIPCount));
+}
+
+void AdminWindow::loadLevelChangesHistory()
+{
+    ui->tableWidgetHistory->clearContents();
+
+    DataBase dbmain;
+    LOGINDAO dbaslog(dbmain);
+
+    vector<LevelLog> history = dbaslog.getLevelHistory();
+
+    ui->tableWidgetHistory->setRowCount(history.size());
+
+    for (int i = 0; i < history.size(); ++i) {
+        ui->tableWidgetHistory->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(history[i].Username)));
+        ui->tableWidgetHistory->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(history[i].OldLevel)));
+        ui->tableWidgetHistory->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(history[i].NewLevel)));
+        ui->tableWidgetHistory->setItem(i, 3, new QTableWidgetItem(QString::fromStdString(history[i].Date)));
+    }
+
 
 }
