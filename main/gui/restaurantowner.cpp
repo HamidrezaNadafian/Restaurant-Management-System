@@ -347,25 +347,33 @@ void RestaurantOwner::loadRestaurantOrders()
 
     vector<Order> AllOrders = ord.AllOrders("restaurantId" , EditRestaurantId);
 
+    for(int i = 0 ; i <= 1 ; i++){
 
-    for (auto &ord : AllOrders)
-    {
-        int OrderId = ord.getID();
+        for (auto &ord : AllOrders)
+        {
+            if(i == 0 && ord.getUserLevel() != "VIP")continue;
+            if(i == 1 && ord.getUserLevel() == "VIP")continue;
 
-        QString CustomerID = QString::number(ord.getUserID());
+            int OrderId = ord.getID();
 
-        double TotalPrice = ord.getPrice();
-        QString status = QString::fromStdString(ord.getStatus());
+            QString CustomerID = QString::number(ord.getUserID());
 
-        QString cardText = "Order ID : " + QString::number(OrderId) + "\n" + status;
-        QListWidgetItem *item = new QListWidgetItem(cardText);
+            double TotalPrice = ord.getPrice();
+            QString status = QString::fromStdString(ord.getStatus());
 
-        item->setData(Qt::UserRole, OrderId);
-        item->setData(Qt::UserRole + 1, CustomerID);
-        item->setData(Qt::UserRole + 2, TotalPrice);
-        item->setData(Qt::UserRole + 3, status);
+            QString cardText = "Order ID : " + QString::number(OrderId) + "\n" + status;
+            QListWidgetItem *item = new QListWidgetItem(cardText);
 
-        ui->listOrders->addItem(item);
+            int isVIP = 1 - i;
+
+            item->setData(Qt::UserRole, OrderId);
+            item->setData(Qt::UserRole + 1, CustomerID);
+            item->setData(Qt::UserRole + 2, TotalPrice);
+            item->setData(Qt::UserRole + 3, status);
+            item->setData(Qt::UserRole + 4, isVIP);
+
+            ui->listOrders->addItem(item);
+        }
     }
 }
 
@@ -376,8 +384,14 @@ void RestaurantOwner::on_listOrders_itemClicked(QListWidgetItem *item)
     SelectedOrderId = item->data(Qt::UserRole).toInt();
     int CustomerID = item->data(Qt::UserRole + 1).toInt();
     double totalPrice = item->data(Qt::UserRole + 2).toDouble();
+    int isVIP = item->data(Qt::UserRole + 4).toInt();
 
-    ui->lblCustomerID->setText("Customer ID : " + QString::number(CustomerID));
+    QString VIPICON;
+
+    if(isVIP == 1)VIPICON = "💎 ";
+    else VIPICON = "";
+
+    ui->lblCustomerID->setText(VIPICON + "Customer ID :"  + QString::number(CustomerID));
     ui->lblTotalPrice->setText("Total Cost : $ " + QString::number(totalPrice));
 
 
