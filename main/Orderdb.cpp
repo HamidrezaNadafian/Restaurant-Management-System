@@ -179,3 +179,16 @@ vector<OrderItem> OrderItemsDAO :: GetItemsForOrder(int OrderID)
     sqlite3_finalize(stmt);
     return items;
 }
+
+void OrderDAO::UpdateOrderLevel (int OrderID, string& NewLevel)
+{
+    sqlite3_stmt* stmt;
+    std::string sql = "UPDATE Orders SET UserLevel = ? WHERE ID = ?";
+
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_text(stmt, 1, NewLevel.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(stmt, 2, OrderID);
+        sqlite3_step(stmt);
+    }
+    sqlite3_finalize(stmt);
+}

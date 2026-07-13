@@ -414,6 +414,11 @@ void RestaurantOwner::ChangeOrderStatus(const std::string& NewStatus)
         return;
     }
 
+    if (CurrentStatus == "Delivered") {
+        QMessageBox::warning(this, "Error", "This order is already delivered and cannot be modified!");
+        return;
+    }
+
     if (CurrentStatus.toStdString() == NewStatus) {
         QMessageBox::information(this, "Info", "This order is already marked as " + QString::fromStdString(NewStatus));
         return;
@@ -424,7 +429,7 @@ void RestaurantOwner::ChangeOrderStatus(const std::string& NewStatus)
     OrderDAO ord(dbmain);
     LOGINDAO dbaslog(dbmain);
 
-    if (NewStatus == "Cancel") {
+    if (NewStatus == "Delivered") {
         int CustomerId = selectedItem->data(Qt::UserRole + 1).toString().toInt();
         double totalPrice = selectedItem->data(Qt::UserRole + 2).toDouble();
         string Username = dbaslog.getUsernameById(CustomerId);
@@ -435,14 +440,23 @@ void RestaurantOwner::ChangeOrderStatus(const std::string& NewStatus)
             return;
         }
 
-        int CurrentPoints = customer->getPoints();
 
-        int NewPoints = CurrentPoints - (totalPrice / DOLLARS_PER_POINT);
+        customer->AddPoints(totalPrice);
+
+        int NewPoints = customer->getPoints();
+
+        string Level = customer->getMembership()->getLevelName();
 
         if (NewPoints < 0) NewPoints = 0;
-        qDebug() << NewPoints << "\n";
-        dbaslog.updateLoyalty(CustomerId , NewPoints , "NULL");
+
+        dbaslog.updateLoyalty(CustomerId , NewPoints , Level);
         delete customer;
+
+        MembershipLevel *mmbershiplevel = LevelFactory ::getLevel(NewPoints);
+        string NewLevel = mmbershiplevel ->getLevelName();
+        delete mmbershiplevel;
+
+        ord.UpdateOrderLevel(SelectedOrderId , NewLevel);
     }
 
     ord.UpdateStatusOrder(NewStatus , SelectedOrderId);

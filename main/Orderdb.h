@@ -23,6 +23,8 @@ class OrderDAO
 
         int getTotalOrders();
         double getTotalPrice();
+
+        void UpdateOrderLevel(int OrderID, string& NewLevel);
 };
 
 class OrderItemsDAO

@@ -313,6 +313,7 @@ void customerwindow::processCheckout()
             ItemsDisc = UserLevel->getDiscount();
             shippingDisc = UserLevel->getShippingCostdisc();
         }
+        delete CustINFO;
     }
 
     double discountAmount = cartTotal * (ItemsDisc);
@@ -326,20 +327,6 @@ void customerwindow::processCheckout()
     }
 
     string levelAfterOrder = "Normal";
-
-    if(CustINFO){
-        CustINFO->AddPoints(FinalTotalCost);
-        int FinalPoints = CustINFO->getPoints();
-        if(CustINFO->getMembership()){
-            levelAfterOrder = CustINFO->getMembership()->getLevelName();
-        }
-        dbaslog.updateLoyalty(UserID, FinalPoints, "NULL");
-        delete CustINFO;
-    }
-
-
-
-
 
     int ORDERID = ord.AddOrder(UserID , selectedRestaurantId ,RestaurantName, FinalTotalCost , "Awaiting restaurant approval" , levelAfterOrder);
 
@@ -535,7 +522,6 @@ void customerwindow :: updateLevelInfo()
     }
 
     string UserBadges = CurrentUser->getBadges();
-    qDebug() << UserBadges <<"\n";
     int flag = 0;
 
     QString badgeText = "";
