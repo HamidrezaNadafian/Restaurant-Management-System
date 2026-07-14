@@ -563,6 +563,7 @@ void customerwindow::RefreshCart()
     double shippingDisc = 1.0;
     QString levelName = "Normal";
 
+    double getPointsMulti = 1;
 
     if (CurrentUser) {
         int availableCoupons = CurrentUser->getCoupons();
@@ -580,7 +581,9 @@ void customerwindow::RefreshCart()
             ItemsDisc = level->getDiscount();
             shippingDisc = level->getShippingCostdisc();
             levelName = QString::fromStdString(level->getLevelName());
+            getPointsMulti = level->getPoints();
         }
+
         delete CurrentUser;
     }
 
@@ -614,6 +617,13 @@ void customerwindow::RefreshCart()
     }
 
     receipt += QString("\nTotal: $ %1").arg(FinalTotal, 0, 'f', 2);
+
+
+    int EarnedPoint = FinalTotal * getPointsMulti;
+
+    if (EarnedPoint > 0) {
+        receipt += QString("\n Points you'll earn: +%1").arg(EarnedPoint);
+    }
 
     ui->lblTotalPrice->setText(receipt);
 

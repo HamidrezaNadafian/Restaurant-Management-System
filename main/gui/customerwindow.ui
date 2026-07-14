@@ -276,7 +276,7 @@ QLabel#lblNextLevel {
 }</string>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page">
       <widget class="QPushButton" name="btnBrowseRestaurants">
@@ -749,7 +749,7 @@ QPushButton:hover {
           <x>0</x>
           <y>60</y>
           <width>371</width>
-          <height>251</height>
+          <height>231</height>
          </rect>
         </property>
        </widget>
@@ -770,9 +770,9 @@ QPushButton:hover {
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>320</y>
+          <y>300</y>
           <width>361</width>
-          <height>191</height>
+          <height>221</height>
          </rect>
         </property>
         <property name="text">
