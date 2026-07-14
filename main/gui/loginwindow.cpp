@@ -140,7 +140,7 @@ void LoginWindow::on_loginButton_clicked()
             bool registered = dbaslog.RegisterUser(username, password, Role , responseMessage);
 
             if (registered) {
-                QMessageBox::information(this, "Success", QString::fromStdString(responseMessage));
+                QMessageBox::information(this, "Success", QString::fromStdString("Welcome! Your account has been created successfully. Enjoy your experience!"));
                 isLoginMode = true;
                 updateUI();
             }

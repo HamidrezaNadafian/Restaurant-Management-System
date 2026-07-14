@@ -11,6 +11,8 @@
 #include "Login_and_SignUp.h"
 #include "customer.h"
 
+const double COUPON_VALUE = 10.0;
+
 
 customerwindow::customerwindow(QString username , QWidget *parent)
     : QDialog(parent)
@@ -127,6 +129,8 @@ void customerwindow::loadMenu(int restaurantId)
 {
     ui->menuListWidget->clear();
     ui->cartListWidget->clear();
+    isCouponApplied = false;
+    ui->btnUseCoupon->setStyleSheet("");
     cartTotal = 0;
     ui->lblDetailPrice->setText("Total = $ 0");
 
@@ -322,7 +326,7 @@ void customerwindow::processCheckout()
     double FinalTotalCost = FinalItemsPrice + finalShippingCost;
 
     if(isCouponApplied){
-        FinalTotalCost -= 10;
+        FinalTotalCost -= COUPON_VALUE;
         if(FinalTotalCost < 0) FinalTotalCost = 0;
     }
 
@@ -352,6 +356,8 @@ void customerwindow::processCheckout()
             delete CurrentUser;
         }
     }
+    QMessageBox::information(this, "Success", QString::fromStdString("Your order has been placed successfully."));
+
 
 
     ui->cartListWidget->clear();
@@ -359,6 +365,7 @@ void customerwindow::processCheckout()
     ui->lblTotalPrice->setText("Total = $ 0");
 
     isCouponApplied = false;
+    ui->btnUseCoupon->setStyleSheet("");
 
     updateLevelInfo();
     AwardBadges();
@@ -407,10 +414,10 @@ void customerwindow::onOrderClicked(QListWidgetItem *item)
     string Username = CurrentCustomerUsername.toStdString();
     int UserID = dbaslog.getUserIdByUsername(Username);
 
-    vector<Order> userOrders = orderDao.AllOrders("UserID", UserID);
+    vector<Order> UserOrders = orderDao.AllOrders("UserID", UserID);
 
     Order* FoundOrder = nullptr;
-    for (Order &order : userOrders) {
+    for (Order &order : UserOrders) {
         if (order.getID() == OrderId) {
             FoundOrder = &order;
             break;
@@ -418,7 +425,7 @@ void customerwindow::onOrderClicked(QListWidgetItem *item)
     }
 
     QString status;
-    QString orderLevel;
+    QString OrderLevel;
 
     if (FoundOrder){
         ui->lblDetailName->setText(QString::fromStdString(FoundOrder->getRestaurantName()));
@@ -426,8 +433,11 @@ void customerwindow::onOrderClicked(QListWidgetItem *item)
         status = QString::fromStdString(FoundOrder->getStatus());
         ui->lblDetailStatus_2->setText(status);
 
-        orderLevel = QString::fromStdString(FoundOrder->getUserLevel());
-        ui->lblOrderLevel->setText("Level After Order: " + orderLevel);
+        OrderLevel = QString::fromStdString(FoundOrder->getUserLevel());
+
+        if(status == "Cancel")OrderLevel = " ? ";
+
+        ui->lblOrderLevel->setText("Level After Order: " + OrderLevel);
 
     }
 
@@ -551,6 +561,8 @@ void customerwindow::RefreshCart()
 {
     if (cartTotal <= 0.01) {
         ui->lblTotalPrice->setText("Total = $ 0");
+        isCouponApplied = false;
+        ui->btnUseCoupon->setStyleSheet("");
         return;
     }
 
@@ -594,7 +606,7 @@ void customerwindow::RefreshCart()
     double FinalTotal = FinalItemsPrice + finalShippingCost;
 
     if (isCouponApplied) {
-        FinalTotal -= 10.0;
+        FinalTotal -= COUPON_VALUE;
         if (FinalTotal < 0) FinalTotal = 0;
     }
 

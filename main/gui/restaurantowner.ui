@@ -613,9 +613,9 @@ QComboBox#cmbCategory QAbstractItemView {
     <widget class="QListWidget" name="listMenu">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>70</y>
-       <width>601</width>
+       <x>20</x>
+       <y>60</y>
+       <width>581</width>
        <height>481</height>
       </rect>
      </property>
@@ -624,7 +624,7 @@ QComboBox#cmbCategory QAbstractItemView {
      <property name="geometry">
       <rect>
        <x>920</x>
-       <y>0</y>
+       <y>10</y>
        <width>90</width>
        <height>29</height>
       </rect>
@@ -776,6 +776,71 @@ QPushButton:pressed {
      </property>
      <property name="text">
       <string>Special</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>90</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Name : </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>140</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cost : </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>610</x>
+       <y>260</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Description : </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>612</x>
+       <y>450</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CookTime/</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>470</y>
+       <width>63</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Volume</string>
      </property>
     </widget>
    </widget>
