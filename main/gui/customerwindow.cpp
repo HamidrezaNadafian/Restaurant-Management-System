@@ -21,6 +21,10 @@ customerwindow::customerwindow(QString username , QWidget *parent)
 
     ui->setupUi(this);
 
+    ui->desclbl->setWordWrap(true);
+    ui->lblDetailDesc->setWordWrap(true);
+    ui->lblTotalPrice->setWordWrap(true);
+
     connect(ui->btnBack, &QPushButton::clicked, this, [=]() {
         ui->stackedWidget->setCurrentIndex(0);
         updateLevelInfo();
@@ -77,11 +81,18 @@ void customerwindow::on_btnBrowseRestaurants_clicked()
 
 
 
-    displayedRestaurants = rstdb.getRestaurants();
+    vector<Restaurant> allRestaurants = rstdb.getRestaurants();
 
 
-    for(auto & res : displayedRestaurants){
-        if(res.getActive()!= 0) ui->restaurantListWidget->addItem(QString::fromStdString(res.getName()));
+    for(auto & res : allRestaurants){
+        if(res.getActive() != 0) {
+            displayedRestaurants.push_back(res);
+            ui->restaurantListWidget->addItem(QString::fromStdString(res.getName()));
+        }
+    }
+
+    if (ui->restaurantListWidget->count() > 0){
+        ui->restaurantListWidget->setCurrentRow(0);
     }
 
 }
@@ -132,7 +143,8 @@ void customerwindow::loadMenu(int restaurantId)
     isCouponApplied = false;
     ui->btnUseCoupon->setStyleSheet("");
     cartTotal = 0;
-    ui->lblDetailPrice->setText("Total = $ 0");
+
+    ui->lblTotalPrice->setText("Total = $ 0");
 
     ui->lblDetailName_2->clear();
     ui->lblDetailPrice->clear();
@@ -154,13 +166,13 @@ void customerwindow::loadMenu(int restaurantId)
         delete CurrentCustomer;
     }
 
-
+    currentMenuItems.clear();
     currentMenuItems = menuitm.MenuForRestaurant(restaurantId);
 
 
 
     for(auto& item : currentMenuItems) {
-
+        qDebug() << "S" ;
         if (item->getIsSpecial() == 1 && (UserLevel == "Normal" || UserLevel == "Silver")) {
             continue;
         }
@@ -201,7 +213,6 @@ void customerwindow::showItemDetails(int currentRow)
     else{
         ItemExtrainfo = "🧃 Volume: " + QString::number(selectedItem->CookOrVol()) + " ML\n\n";
     }
-
 
     ui->lblDetailDesc->setText(ItemExtrainfo + "\n" +QString::fromStdString(selectedItem->getDescription()));
 
@@ -696,7 +707,7 @@ void customerwindow :: AwardBadges(){
 
     if (CurrentBadges.find("Night") == string::npos){
         QTime now = QTime::currentTime();
-        if(now.hour() >= 23 && now.hour() <= 5){
+        if(now.hour() >= 23 || now.hour() <= 5){
             if (!CurrentBadges.empty())CurrentBadges += ",";
             CurrentBadges += "Night";
             getNewBadges = true;

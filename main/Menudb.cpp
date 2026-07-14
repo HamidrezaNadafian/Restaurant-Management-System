@@ -21,15 +21,23 @@ void MenuItemDAO :: CreateTable()
 
 void MenuItemDAO :: AddMenuItem(int RestaurantID , string Name , string Description , double Price , int available , string FoodOrDrink , int CookOrVol , int isSpecial)
 {
-    string sql = "INSERT INTO MenuItems (RestaurantID, Name, Description, Price, available, FoodOrDrink, CookOrVol, IsSpecial) VALUES ("
-    + to_string(RestaurantID) + ", '" + Name + "', '" + Description + "', " + to_string(Price) +  ", " + to_string(available) + ", '" + FoodOrDrink + "', " + to_string(CookOrVol) + ", " + to_string(isSpecial) + ");";
-    char* messageError;
-    int exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messageError);
+    string sql = "INSERT INTO MenuItems (RestaurantID, Name, Description, Price, available, FoodOrDrink, CookOrVol, IsSpecial) "
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    sqlite3_stmt* stmt;
 
-    if (exit != SQLITE_OK) {
-        
-        sqlite3_free(messageError);
-    } 
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, RestaurantID);
+        sqlite3_bind_text(stmt, 2, Name.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 3, Description.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_double(stmt, 4, Price);
+        sqlite3_bind_int(stmt, 5, available);
+        sqlite3_bind_text(stmt, 6, FoodOrDrink.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(stmt, 7, CookOrVol);
+        sqlite3_bind_int(stmt, 8, isSpecial);
+
+        sqlite3_step(stmt);
+    }
+    sqlite3_finalize(stmt);
 }
 
 void MenuItemDAO:: DeleateMenuItem(int ID)

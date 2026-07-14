@@ -151,10 +151,17 @@ void OrderItemsDAO :: exec(const string& s)
 
 void OrderItemsDAO :: AddOrderItem(int OrderID, string ItemName, int Quantity, double Price)
 {
-    string sql = "INSERT INTO OrderItems (OrderID, ItemName, Quantity, Price) VALUES ("
-    + to_string(OrderID) + ", '" + ItemName + "', " + to_string(Quantity) + ", " + to_string(Price) + ");";
-    
-    exec(sql);
+    string sql = "INSERT INTO OrderItems (OrderID, ItemName, Quantity, Price) VALUES (?, ?, ?, ?);";
+    sqlite3_stmt* stmt;
+
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, OrderID);
+        sqlite3_bind_text(stmt, 2, ItemName.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(stmt, 3, Quantity);
+        sqlite3_bind_double(stmt, 4, Price);
+        sqlite3_step(stmt);
+    }
+    sqlite3_finalize(stmt);
 }
 
 vector<OrderItem> OrderItemsDAO :: GetItemsForOrder(int OrderID)

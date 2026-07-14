@@ -130,39 +130,54 @@ int LOGINDAO::getTotalUsers()
 
 Customer* LOGINDAO::getCustomerByUsername(const string& username)
 {
-    string sql = "SELECT id, loyalty_points, Coupons, Badges FROM users WHERE username = '" + username + "';";
+    string sql = "SELECT id, loyalty_points, Coupons, Badges FROM users WHERE username = ?;";
+
     sqlite3_stmt* stmt;
+    Customer* customer = nullptr;
 
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK){
+        sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+
         if (sqlite3_step(stmt) == SQLITE_ROW){
             int ID = sqlite3_column_int(stmt, 0);
             int Points = sqlite3_column_int(stmt, 1);
             int Coupons = sqlite3_column_int(stmt, 2);
-            string Badges = (const char*)(sqlite3_column_text(stmt, 3));
 
-            sqlite3_finalize(stmt);
+            const char* badgesText = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
+            string Badges = badgesText ? badgesText : "";
 
-            Customer* customer = new Customer(ID, username, Points);
+            customer = new Customer(ID, username, Points);
             customer->setCoupons(Coupons);
             customer->setBadges(Badges);
-            
-            return customer;
+        }
+    }
+
+    else{
+        qDebug() << "Error in getCustomerByUsername:" << sqlite3_errmsg(db);
+    }
+
+    sqlite3_finalize(stmt);
+    return customer;
+}
+
+
+bool LOGINDAO::updateLoyalty(int ID , int points , string level)
+{
+    string query = "UPDATE users SET loyalty_points = ?, membership_level = ? WHERE id = ?;";
+    sqlite3_stmt* stmt;
+
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, points);
+        sqlite3_bind_text(stmt, 2, level.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(stmt, 3, ID);
+
+        if (sqlite3_step(stmt) == SQLITE_DONE) {
+            sqlite3_finalize(stmt);
+            return true;
         }
     }
     sqlite3_finalize(stmt);
-    return nullptr;
-}
-bool LOGINDAO::updateLoyalty (int ID , int points , string level)
-{
-    string query = "UPDATE users SET loyalty_points = " + std::to_string(points) + ", membership_level = '" + level + "' WHERE id = " + to_string(ID) + ";";
-
-    char* message = nullptr;
-    int rc = sqlite3_exec(db, query.c_str(), nullptr, nullptr, &message);
-    if (rc != SQLITE_OK) {
-        sqlite3_free(message);
-        return false;
-    }   
-    return true;
+    return false;
 }
 
 string LOGINDAO :: getUsernameById(int id)
@@ -188,17 +203,17 @@ string LOGINDAO :: getUsernameById(int id)
     return username;
 }
 
-void LOGINDAO::updateCoupons(int UserId, int newCouponCount)
+void LOGINDAO::updateCoupons(int UserId, int NewCouponCount)
 {
-    string sql = "UPDATE users SET Coupons = " + to_string(newCouponCount) + 
-                 " WHERE ID = " + to_string(UserId) + ";";
-                 
-    char* messageError;
-    int exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messageError);
-    if (exit != SQLITE_OK) {
-        cerr << "Error Updating Coupons: " << messageError << endl;
-        sqlite3_free(messageError);
+    string sql = "UPDATE users SET Coupons = ? WHERE ID = ?;";
+    sqlite3_stmt* stmt;
+
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, NewCouponCount);
+        sqlite3_bind_int(stmt, 2, UserId);
+        sqlite3_step(stmt);
     }
+    sqlite3_finalize(stmt);
 }
 vector<Customer*> LOGINDAO::getAllCustomers()
 {

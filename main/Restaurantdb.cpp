@@ -21,36 +21,45 @@ void RestaurantDAO:: CreateRestaurantTable()
 
 void RestaurantDAO:: AddRestaurant(string Name , int ManagerID ,string address , int active , int PrepTime , string PhoneNumber , string Description , double shippingCost)
 {
-    string sql ="INSERT INTO Restaurants "
-    "(ManagerID, Name, address, active, PrepTime, PhoneNumber, Description, shippingCost) " 
-    "VALUES (" +
-    to_string(ManagerID) + ", '" +
-    Name + "', '" +
-    address + "', " +
-    to_string(active) + ", " +
-    to_string(PrepTime) + ", '" +
-    PhoneNumber + "', '" +
-    Description + "', " +
-    to_string(shippingCost) + ");";
+    sqlite3_stmt* stmt;
+    string sql = "INSERT INTO Restaurants (ManagerID, Name, address, active, PrepTime, PhoneNumber, Description, shippingCost) "
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
-    
-    char* messageError;
-    int exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messageError);
-    if (exit != SQLITE_OK) {
-        std::cerr << "Error Insert: " << messageError << std::endl;
-        sqlite3_free(messageError);
-    } 
-    else {
-        std::cout << "Records created successfully!" << std::endl;
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK)
+    {
+        sqlite3_bind_int(stmt, 1, ManagerID);
+        sqlite3_bind_text(stmt, 2, Name.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 3, address.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(stmt, 4, active);
+        sqlite3_bind_int(stmt, 5, PrepTime);
+        sqlite3_bind_text(stmt, 6, PhoneNumber.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 7, Description.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_double(stmt, 8, shippingCost);
+
+        if (sqlite3_step(stmt) != SQLITE_DONE) {
+            qDebug() << "Error Insert Restaurant:" << sqlite3_errmsg(db);
+        }
     }
+
+    else
+    {
+        qDebug() << "Prepare failed:" << sqlite3_errmsg(db);
+    }
+
+    sqlite3_finalize(stmt);
 }
 
 
 
 void RestaurantDAO:: DeleateRestuarant(int ID)
 {
-    string sql = "DELETE FROM Restaurants WHERE ID = " + to_string(ID) + ";";
-    sqlite3_exec(db, sql.c_str(), NULL, NULL, NULL);
+    sqlite3_stmt* stmt;
+    string sql = "DELETE FROM Restaurants WHERE ID = ?;";
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, ID);
+        sqlite3_step(stmt);
+    }
+    sqlite3_finalize(stmt);
 }
 
 

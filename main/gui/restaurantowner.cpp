@@ -338,7 +338,7 @@ void RestaurantOwner::loadRestaurantOrders()
 
     ui->listOrders->clear();
     ui->listOrderDetails->clear();
-    ui->lblCustomerID->setText(0);
+    ui->lblCustomerID->setText("0");
 
     ui->lblTotalPrice->setText("Total Cost : 0.00" );
 
@@ -349,17 +349,17 @@ void RestaurantOwner::loadRestaurantOrders()
 
     for(int i = 0 ; i <= 1 ; i++){
 
-        for (auto &ord : AllOrders)
+        for (auto &OrderInfo : AllOrders)
         {
-            if(i == 0 && ord.getUserLevel() != "VIP")continue;
-            if(i == 1 && ord.getUserLevel() == "VIP")continue;
+            if(i == 0 && OrderInfo.getUserLevel() != "VIP")continue;
+            if(i == 1 && OrderInfo.getUserLevel() == "VIP")continue;
 
-            int OrderId = ord.getID();
+            int OrderId = OrderInfo.getID();
 
-            QString CustomerID = QString::number(ord.getUserID());
+            QString CustomerID = QString::number(OrderInfo.getUserID());
 
-            double TotalPrice = ord.getPrice();
-            QString status = QString::fromStdString(ord.getStatus());
+            double TotalPrice = OrderInfo.getPrice();
+            QString status = QString::fromStdString(OrderInfo.getStatus());
 
             QString cardText = "Order ID : " + QString::number(OrderId) + "\n" + status;
             QListWidgetItem *item = new QListWidgetItem(cardText);

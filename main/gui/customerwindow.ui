@@ -81,7 +81,7 @@ QWidget {
 }
 
 #lblDetailPrice { font-size: 20px; font-weight: bold; color: rgb(208, 169, 255); margin-bottom: 15px; }
-#lblDetailDesc { font-size: 13px; color: #b2b2b2; background-color: #2b2b36; padding: 15px; border-radius: 8px; }
+#lblDetailDesc { font-size: 12px; color: #b2b2b2; background-color: #2b2b36; padding: 15px; border-radius: 8px; }
 #lblDetailStatus { font-size: 14px; font-weight: bold; color: #2ed573; margin-top: 10px; }
 
 
@@ -479,6 +479,12 @@ QListWidget::item:selected {
          <height>441</height>
         </rect>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">
 QGroupBox * {
@@ -514,7 +520,7 @@ QGroupBox::title {
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>50</y>
+          <y>40</y>
           <width>561</width>
           <height>91</height>
          </rect>
@@ -532,7 +538,7 @@ QGroupBox::title {
           <x>10</x>
           <y>140</y>
           <width>561</width>
-          <height>81</height>
+          <height>71</height>
          </rect>
         </property>
         <property name="text">
@@ -546,9 +552,9 @@ QGroupBox::title {
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>230</y>
-          <width>551</width>
-          <height>91</height>
+          <y>220</y>
+          <width>561</width>
+          <height>71</height>
          </rect>
         </property>
         <property name="text">
@@ -562,13 +568,28 @@ QGroupBox::title {
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>320</y>
-          <width>551</width>
-          <height>101</height>
+          <y>300</y>
+          <width>561</width>
+          <height>131</height>
          </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel#desclbl {
+    font-size: 15px;;
+    padding: 2px;
+}</string>
         </property>
         <property name="text">
          <string>Description</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -699,6 +720,9 @@ QPushButton:hover {
            <property name="text">
             <string> TextLabel</string>
            </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -716,12 +740,18 @@ QPushButton:hover {
            <property name="text">
             <string> TextLabel</string>
            </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="QLabel" name="lblDetailStatus">
            <property name="text">
             <string> TextLabel</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -777,6 +807,9 @@ QPushButton:hover {
         </property>
         <property name="text">
          <string>Total = 0</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QPushButton" name="btnCheckout">
