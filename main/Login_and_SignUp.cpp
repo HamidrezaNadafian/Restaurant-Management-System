@@ -277,3 +277,20 @@ vector<LevelLog> LOGINDAO::getLevelHistory()
     sqlite3_finalize(stmt);
     return AllLevelChanges;
 }
+
+int LOGINDAO::isFirstTimeUpgrade(string Username)
+{
+    sqlite3_stmt* stmt = nullptr;
+    const char* sql = "SELECT COUNT(*) FROM LevelHistory WHERE Username = ? AND NewLevel != 'Normal'";
+    int count = -1;
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) == SQLITE_OK)
+    {
+        sqlite3_bind_text(stmt, 1, Username.c_str(), -1, SQLITE_TRANSIENT);
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            count = sqlite3_column_int(stmt, 0);
+        }
+    }
+    sqlite3_finalize(stmt);
+    return count ;
+}

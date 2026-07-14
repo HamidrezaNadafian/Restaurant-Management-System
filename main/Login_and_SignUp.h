@@ -46,6 +46,8 @@ public:
 
     void AddLevelChange(string Username, string OldLevel, string NewLevel);
     std::vector<LevelLog> getLevelHistory();
+
+    int isFirstTimeUpgrade(string Username);
 };
 
 

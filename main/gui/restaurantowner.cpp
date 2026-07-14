@@ -456,7 +456,7 @@ void RestaurantOwner::ChangeOrderStatus(const std::string& NewStatus)
 
 
         string OldLevel = "Normal";
-        if (customer->getMembership()) {
+        if(customer->getMembership()){
             OldLevel = customer->getMembership()->getLevelName();
         }
 
@@ -466,11 +466,25 @@ void RestaurantOwner::ChangeOrderStatus(const std::string& NewStatus)
 
         string NewLevel = customer->getMembership()->getLevelName();
 
-        if (OldLevel != NewLevel) {
+        if(OldLevel != NewLevel) {
+
+            if(OldLevel == "Normal" && NewLevel != "Normal"){
+
+                int CountUpgrade =  dbaslog.isFirstTimeUpgrade(Username);
+
+                if(CountUpgrade == 0)
+                {
+                    int Coupons = customer->getCoupons();
+                    int NewCoupons = Coupons + 1;
+                    dbaslog.updateCoupons(CustomerId , NewCoupons);
+
+                }
+            }
+
             dbaslog.AddLevelChange(Username, OldLevel, NewLevel);
         }
 
-        if (NewPoints < 0) NewPoints = 0;
+        if(NewPoints < 0)NewPoints = 0;
 
         dbaslog.updateLoyalty(CustomerId , NewPoints , NewLevel);
         delete customer;
