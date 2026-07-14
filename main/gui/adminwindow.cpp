@@ -205,15 +205,16 @@ void AdminWindow::on_btnDistributeCoupons_clicked()
 
     for(auto* cust : allCustomers)
     {
+        if (cust && cust->getMembership())
+        {
+            int AddCoupons = cust->getMembership()->getCoupons();
 
+            if(AddCoupons > 0){
 
-        int AddCoupons = cust->getMembership()->getCoupons();
+                int CurrentCoupons = cust->getCoupons();
+                dbaslog.updateCoupons(cust->getID(), CurrentCoupons + AddCoupons);
+            }
 
-
-        if(AddCoupons > 0){
-
-            int CurrentCoupons = cust->getCoupons();
-            dbaslog.updateCoupons(cust->getID(), CurrentCoupons + AddCoupons);
         }
     }
 
@@ -229,21 +230,31 @@ void AdminWindow::loadUsersList()
     vector<Customer*> allCustomers = dbaslog.getAllCustomers();
     for(auto* cust : allCustomers)
     {
-        int ID = cust->getID();
-        QString name = QString::fromStdString(cust->getUsername());
-        int points = cust->getPoints();
-        QString level = QString::fromStdString(cust->getMembership()->getLevelName());
+        if (cust) {
+            int ID = cust->getID();
+            QString name = QString::fromStdString(cust->getUsername());
+            int points = cust->getPoints();
 
-        QString displayText = name + "   |   Level: " + level + "   |   Points: " + QString::number(points);
+            QString level = "Unknown";
+            if (cust->getMembership()) {
+                level = QString::fromStdString(cust->getMembership()->getLevelName());
+            }
 
-        QListWidgetItem* item = new QListWidgetItem(displayText);
+            QString displayText = name + "   |   Level: " + level + "   |   Points: " + QString::number(points);
 
-        item->setData(Qt::UserRole, ID);
-        item->setData(Qt::UserRole + 1, name);
-        item->setData(Qt::UserRole + 2, points);
-        item->setData(Qt::UserRole + 3, level);
+            QListWidgetItem* item = new QListWidgetItem(displayText);
 
-        ui->listWidgetUsers->addItem(item);
+            item->setData(Qt::UserRole, ID);
+            item->setData(Qt::UserRole + 1, name);
+            item->setData(Qt::UserRole + 2, points);
+            item->setData(Qt::UserRole + 3, level);
+
+            ui->listWidgetUsers->addItem(item);
+        }
+    }
+
+    for(auto* cust : allCustomers) {
+        delete cust;
     }
 }
 

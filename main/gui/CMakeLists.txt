@@ -56,6 +56,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         customerwindow.h customerwindow.cpp customerwindow.ui
         restaurantowner.h restaurantowner.cpp restaurantowner.ui
         adminwindow.h adminwindow.cpp adminwindow.ui
+        ../OpenDataBase.h
 
 
     )
