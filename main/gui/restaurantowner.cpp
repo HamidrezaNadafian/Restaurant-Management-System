@@ -344,6 +344,7 @@ void RestaurantOwner::loadRestaurantOrders()
 
     DataBase dbmain;
     OrderDAO ord(dbmain);
+    LOGINDAO dbaslog(dbmain);
 
     vector<Order> AllOrders = ord.AllOrders("restaurantId" , EditRestaurantId);
 
@@ -351,8 +352,21 @@ void RestaurantOwner::loadRestaurantOrders()
 
         for (auto &OrderInfo : AllOrders)
         {
-            if(i == 0 && OrderInfo.getUserLevel() != "VIP")continue;
-            if(i == 1 && OrderInfo.getUserLevel() == "VIP")continue;
+            int Customerid = OrderInfo.getUserID();
+            string Username = dbaslog.getUsernameById(Customerid);
+            Customer* customer = dbaslog.getCustomerByUsername(Username);
+
+            string CurrentUserLevel = "Normal";
+            if (customer) {
+                if (customer->getMembership()) {
+                    CurrentUserLevel = customer->getMembership()->getLevelName();
+                }
+                delete customer;
+            }
+
+            if(i == 0 && CurrentUserLevel != "VIP")continue;
+            if(i == 1 && CurrentUserLevel == "VIP")continue;
+
 
             int OrderId = OrderInfo.getID();
 
@@ -361,10 +375,13 @@ void RestaurantOwner::loadRestaurantOrders()
             double TotalPrice = OrderInfo.getPrice();
             QString status = QString::fromStdString(OrderInfo.getStatus());
 
-            QString cardText = "Order ID : " + QString::number(OrderId) + "\n" + status;
+            int isVIP = 1 - i;
+            QString vipIcon= (isVIP == 1) ? "💎 " : "";
+
+            QString cardText = vipIcon + "Order ID : " + QString::number(OrderId) + "\n" + status;
             QListWidgetItem *item = new QListWidgetItem(cardText);
 
-            int isVIP = 1 - i;
+
 
             item->setData(Qt::UserRole, OrderId);
             item->setData(Qt::UserRole + 1, CustomerID);
@@ -392,7 +409,7 @@ void RestaurantOwner::on_listOrders_itemClicked(QListWidgetItem *item)
     else VIPICON = "";
 
     ui->lblCustomerID->setText(VIPICON + "Customer ID :"  + QString::number(CustomerID));
-    ui->lblTotalPrice->setText("Total Cost : $ " + QString::number(totalPrice));
+    ui->lblTotalPrice->setText("Total Cost : $ " + QString::number(totalPrice, 'f', 2));
 
 
     DataBase dbmain;

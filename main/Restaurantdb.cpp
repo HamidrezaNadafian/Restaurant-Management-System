@@ -111,5 +111,7 @@ vector<Restaurant> RestaurantDAO :: getRestaurants()
             ResturantLIST.push_back(rest);
         }
     }
+    sqlite3_finalize(stmt);
+    
     return ResturantLIST;
 }

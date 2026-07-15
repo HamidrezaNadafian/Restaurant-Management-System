@@ -276,6 +276,18 @@ void AdminWindow::ChangeUserLevel(const QString& levelName, int newPoints)
     if(OldLevel != levelName){
         string Username = dbaslog.getUsernameById(UserId);
 
+        if(OldLevel == "Normal" && levelName != "Normal") {
+            int CountUpgrade = dbaslog.isFirstTimeUpgrade(Username);
+            if(CountUpgrade == 0) {
+                Customer* cust = dbaslog.getCustomerByUsername(Username);
+                if(cust) {
+                    int currentCoupons = cust->getCoupons();
+                    dbaslog.updateCoupons(UserId, currentCoupons + 1);
+                    delete cust;
+                }
+            }
+        }
+
         dbaslog.AddLevelChange(Username, OldLevel.toStdString(), levelName.toStdString());
     }
 

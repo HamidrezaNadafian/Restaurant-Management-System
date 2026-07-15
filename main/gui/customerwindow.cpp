@@ -167,12 +167,11 @@ void customerwindow::loadMenu(int restaurantId)
     }
 
     currentMenuItems.clear();
-    currentMenuItems = menuitm.MenuForRestaurant(restaurantId);
 
+    vector<unique_ptr<MenuItem>> allItems = menuitm.MenuForRestaurant(restaurantId);
 
+    for(auto& item : allItems) {
 
-    for(auto& item : currentMenuItems) {
-        qDebug() << "S" ;
         if (item->getIsSpecial() == 1 && (UserLevel == "Normal" || UserLevel == "Silver")) {
             continue;
         }
@@ -193,6 +192,7 @@ void customerwindow::loadMenu(int restaurantId)
 
         ui->menuListWidget->addItem(finalLine);
 
+        currentMenuItems.push_back(std::move(item));
     }
 }
 
@@ -232,7 +232,7 @@ void customerwindow::showItemDetails(int currentRow)
 void customerwindow::addToCart(QListWidgetItem *item)
 {
     int row = ui->menuListWidget->row(item);
-
+    if(row < 0 || row >= currentMenuItems.size()) return;
     const auto& selectedItem = currentMenuItems[row];
 
     if (selectedItem->getAvailable() <= 0){
@@ -590,11 +590,12 @@ void customerwindow::RefreshCart()
 
     if (CurrentUser) {
         int availableCoupons = CurrentUser->getCoupons();
-        if (availableCoupons >= 0 && !isCouponApplied) {
+
+        if (availableCoupons > 0 && !isCouponApplied) {
             ui->btnUseCoupon->setText(QString("%1 Coupon").arg(availableCoupons));
             ui->btnUseCoupon->setEnabled(true);
         }
-        else if(availableCoupons < 0){
+        else if(availableCoupons <= 0 && !isCouponApplied){
             ui->btnUseCoupon->setText("0 Coupons");
             ui->btnUseCoupon->setEnabled(false);
         }
